@@ -1,15 +1,13 @@
-﻿<%@ Page Title="Cadastre-se" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Register.aspx.cs" Inherits="PW_TP.Account.Register" %>
+﻿<%@ Page Title="Registe-se" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Register.aspx.cs" Inherits="PW_TP.Account.Register" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <h2><%: Title %>.</h2>
-    <p class="text-danger">
-        <asp:Literal runat="server" ID="ErrorMessage" />
-    </p>
-   
     <div class="form-horizontal">
-        <h4>Crie uma conta de utilizador/oficina</h4>
+        <h4>Crie uma conta de utilizador ou de oficina</h4>
         <hr />
-        <asp:ValidationSummary runat="server" CssClass="text-danger" BorderColor="#fa3250" BorderStyle="Dashed" BorderWidth="2px" ShowMessageBox="true"/>
+        <p class="text-danger">
+        <asp:Literal runat="server" ID="ErrorMessage" /> </p>
+        <asp:ValidationSummary runat="server" CssClass="text-danger" BorderColor="#fa3250" BorderStyle="Dashed" BorderWidth="2px"/>
         <br /><br />
         <div class="form-group">
             <asp:Label runat="server" AssociatedControlID="Email" CssClass="col-md-2 control-label">Email</asp:Label>
@@ -48,13 +46,14 @@
         </div>
         <div class="radio">
           <label>
-            <asp:RadioButton ID="RBtnOficina" runat="server" GroupName="RBtns" OnCheckedChanged="RBtnOficina_CheckedChanged" AutoPostBack="true"/> <strong>Oficina</strong>
+            <asp:RadioButton ID="RBtnOficina" runat="server" GroupName="RBtns" OnCheckedChanged="RBtnOficina_CheckedChanged" AutoPostBack="true" /> <strong>Oficina</strong>
           </label>
         </div>
       </div>
     </div>
+      
     <br /><br /><br />
-        <asp:Panel runat="server"  ID="PainelOficina">
+        <asp:Panel runat="server"  ID="PainelOficina" Visible="false">
             <br/>
             <div class="panel panel-primary">
                 <div class="panel-heading">
@@ -88,7 +87,7 @@
               </div>
          </div>
         </asp:Panel>
-        <asp:Panel runat="server"  ID="PainelUtilizador">
+        <asp:Panel runat="server"  ID="PainelUtilizador" Visible="false">
         <br />
         <div class="panel panel-primary">
                 <div class="panel-heading">

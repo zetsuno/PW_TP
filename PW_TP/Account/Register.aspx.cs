@@ -13,22 +13,27 @@ namespace PW_TP.Account
     {
         protected void Page_Init(object sender, EventArgs e) {
 
-            PainelOficina.Visible = false;
-            PainelUtilizador.Visible = false;
+            
         }
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            
             if (!Page.IsPostBack)
-            {
-                
-
+            { 
             }
 
         }
 
         protected void CreateUser_Click(object sender, EventArgs e)
         {
+
+            if(RBtnCliente.Checked == false && RBtnOficina.Checked == false)
+            {
+                ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + "Por favor selecione um tipo de conta" + "');", true); //RadioButton Check Popup Window
+                return;
+            }
+
             var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
             var signInManager = Context.GetOwinContext().Get<ApplicationSignInManager>();
             var user = new ApplicationUser() { UserName = Email.Text, Email = Email.Text };
@@ -52,9 +57,8 @@ namespace PW_TP.Account
 
         protected void RBtnOficina_CheckedChanged(object sender, EventArgs e)
         {
-            PainelOficina.Visible = true;
             PainelUtilizador.Visible = false;
-            
+            PainelOficina.Visible = true;
         }
 
         protected void RBtnCliente_CheckedChanged(object sender, EventArgs e)
