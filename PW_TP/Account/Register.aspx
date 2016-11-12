@@ -5,11 +5,12 @@
     <p class="text-danger">
         <asp:Literal runat="server" ID="ErrorMessage" />
     </p>
-
+   
     <div class="form-horizontal">
         <h4>Crie uma conta de utilizador/oficina</h4>
         <hr />
-        <asp:ValidationSummary runat="server" CssClass="text-danger" />
+        <asp:ValidationSummary runat="server" CssClass="text-danger" BorderColor="#fa3250" BorderStyle="Dashed" BorderWidth="2px" ShowMessageBox="true"/>
+        <br /><br />
         <div class="form-group">
             <asp:Label runat="server" AssociatedControlID="Email" CssClass="col-md-2 control-label">Email</asp:Label>
             <div class="col-md-10">
@@ -35,25 +36,26 @@
                 <asp:CompareValidator runat="server" ControlToCompare="Password" ControlToValidate="ConfirmPassword"
                     CssClass="text-danger" Display="Dynamic" ErrorMessage="As passwords não coincidem uma com a outra." />
             </div>
-       
+           </div>
+      <asp:UpdatePanel ID="UpdatePanel1" runat="server" ChildrenAsTriggers="true" UpdateMode="Always"  >
+        <ContentTemplate>
        <label class="col-lg-2 control-label">Tipo de Conta</label>
       <div class="col-lg-10">
         <div class="radio">
           <label>
-            <input name="optionsRadios" id="TipoUtilizadorRadio" type="radio" checked="" value="cliente">
-           Cliente
+            <asp:RadioButton ID="RBtnCliente" runat="server" GroupName="RBtns" OnCheckedChanged="RBtnCliente_CheckedChanged" AutoPostBack="true"/> <strong>Cliente</strong>
           </label>
         </div>
         <div class="radio">
           <label>
-            <input name="optionsRadios" id="TipoUtilizadorRadio2" type="radio" value="oficina">
-           Oficina
+            <asp:RadioButton ID="RBtnOficina" runat="server" GroupName="RBtns" OnCheckedChanged="RBtnOficina_CheckedChanged" AutoPostBack="true"/> <strong>Oficina</strong>
           </label>
         </div>
       </div>
     </div>
-        <br />
-        <asp:Panel runat="server"  ID="PainelOficina" Visible="true" Enabled="true">
+    <br /><br /><br />
+        <asp:Panel runat="server"  ID="PainelOficina">
+            <br/>
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">Informação da Oficina</h3>
@@ -86,7 +88,8 @@
               </div>
          </div>
         </asp:Panel>
-        <asp:Panel runat="server"  ID="PainelUtilizador" Visible="true" Enabled="true">
+        <asp:Panel runat="server"  ID="PainelUtilizador">
+        <br />
         <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">Informação de Cliente</h3>
@@ -107,7 +110,8 @@
               </div>
          </div>
         </asp:Panel>
-        <br />
+         </ContentTemplate>
+    </asp:UpdatePanel>
         <div class="form-group">
             <div class="col-md-offset-1 col-md-10">
                <br /><asp:Button runat="server" OnClick="CreateUser_Click" Text="Registar-me" CssClass="btn btn-default" />

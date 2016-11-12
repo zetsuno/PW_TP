@@ -11,9 +11,19 @@ namespace PW_TP.Account
 {
     public partial class Register : Page
     {
+        protected void Page_Init(object sender, EventArgs e) {
+
+            PainelOficina.Visible = false;
+            PainelUtilizador.Visible = false;
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!Page.IsPostBack)
+            {
+                
 
+            }
 
         }
 
@@ -38,6 +48,19 @@ namespace PW_TP.Account
             {
                 ErrorMessage.Text = result.Errors.FirstOrDefault();
             }
+        }
+
+        protected void RBtnOficina_CheckedChanged(object sender, EventArgs e)
+        {
+            PainelOficina.Visible = true;
+            PainelUtilizador.Visible = false;
+            
+        }
+
+        protected void RBtnCliente_CheckedChanged(object sender, EventArgs e)
+        {
+            PainelOficina.Visible = false;
+            PainelUtilizador.Visible = true;
         }
     }
 }
