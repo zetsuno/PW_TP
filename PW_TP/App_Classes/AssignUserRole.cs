@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Web.ModelBinding;
 using PW_TP.Models;
 using System.Web.Security;
+using System.Data.SqlClient;
 
 namespace PW_TP.App_Classes
 {
@@ -23,12 +24,33 @@ namespace PW_TP.App_Classes
             {
                 var user = UserManager.FindByEmail(email);
                 UserManager.AddToRole(user.Id, roleName);
+                AddUserAspNetID(user.Id, email);
                 context.SaveChanges();
             }
             catch
             {
                 throw;
             }
+        }
+
+        public void AddUserAspNetID(string id, string email)
+        {
+
+            string StrCon = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            SqlConnection SqlCon = new SqlConnection(StrCon);
+
+            SqlCon.Open();
+            SqlCommand cmd = SqlCon.CreateCommand();
+            cmd.CommandType = System.Data.CommandType.Text;
+
+            cmd.Parameters.AddWithValue("@param1", id);
+            cmd.Parameters.AddWithValue("@email", email);
+          
+
+            cmd.CommandText = "UPDATE Users SET AspNetUserID=@param1 WHERE Email=@email";
+            cmd.ExecuteNonQuery();
+            SqlCon.Close();
+
         }
     }
 }
