@@ -36,8 +36,7 @@ namespace PW_TP.App_Classes
         public void AddUserAspNetID(string id, string email)
         {
 
-            string StrCon = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-            SqlConnection SqlCon = new SqlConnection(StrCon);
+            SqlConnection SqlCon = GetSqlCon.GetCon();
 
             SqlCon.Open();
             SqlCommand cmd = SqlCon.CreateCommand();

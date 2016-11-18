@@ -344,6 +344,7 @@
       <DependentUpon>VerifyPhoneNumber.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Classes\AssignUserRole.cs" />
+    <Compile Include="App_Classes\GetSqlCon.cs" />
     <Compile Include="App_Classes\RegisterUser.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="About.aspx.cs">
