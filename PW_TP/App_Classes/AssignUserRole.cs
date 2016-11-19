@@ -38,15 +38,14 @@ namespace PW_TP.App_Classes
 
             SqlConnection SqlCon = GetSqlCon.GetCon();
 
-            SqlCon.Open();
-            SqlCommand cmd = SqlCon.CreateCommand();
-            cmd.CommandType = System.Data.CommandType.Text;
+            
+            SqlCommand cmd = new SqlCommand("GetAspNetUserID", SqlCon);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
             cmd.Parameters.AddWithValue("@param1", id);
             cmd.Parameters.AddWithValue("@email", email);
           
-
-            cmd.CommandText = "UPDATE Users SET AspNetUserID=@param1 WHERE Email=@email";
+            SqlCon.Open();
             cmd.ExecuteNonQuery();
             SqlCon.Close();
 

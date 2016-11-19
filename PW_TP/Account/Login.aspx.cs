@@ -5,6 +5,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Owin;
 using PW_TP.Models;
+using PW_TP.App_Classes;
 
 namespace PW_TP.Account
 {
@@ -31,9 +32,14 @@ namespace PW_TP.Account
                 var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
                 var signinManager = Context.GetOwinContext().GetUserManager<ApplicationSignInManager>();
 
+                if(CheckVerified.CheckAccount(Email.Text) == false)
+                {
+                    Response.Redirect("ValidationRequired.aspx");
+                    return;
+                }
                 // This doen't count login failures towards account lockout
                 // To enable password failures to trigger lockout, change to shouldLockout: true
-                var result = signinManager.PasswordSignIn(Email.Text, Password.Text, RememberMe.Checked, shouldLockout: false);
+                var result = signinManager.PasswordSignIn(Email.Text, Password.Text, RememberMe.Checked, shouldLockout: true);
 
                 switch (result)
                 {
