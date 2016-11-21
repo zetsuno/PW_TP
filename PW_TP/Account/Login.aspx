@@ -4,7 +4,7 @@
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <h2><%: Title %>.</h2>
-
+    <asp:Panel runat="server" ID="HideLoginWhenErr">
     <div class="row">
         <div class="col-md-8">
             <section id="loginForm">
@@ -62,4 +62,11 @@
             </section>
         </div>
     </div>
+  </asp:Panel>
+    <asp:Panel runat="server" ID="LoginErrMsgPanel" Visible="false">
+        <div class="alert alert-dismissible alert-danger">
+            <button class="close" type="button" data-dismiss="alert">&times;</button>
+            <h3>Erro!</h3><br />O utilizador já se encontra logado. Faça log-off antes de tentar fazer log-in outra vez.
+        </div>
+    </asp:Panel>
 </asp:Content>

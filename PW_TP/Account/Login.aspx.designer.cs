@@ -13,6 +13,15 @@ namespace PW_TP.Account {
     public partial class Login {
         
         /// <summary>
+        /// HideLoginWhenErr control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel HideLoginWhenErr;
+        
+        /// <summary>
         /// ErrorMessage control.
         /// </summary>
         /// <remarks>
@@ -74,5 +83,14 @@ namespace PW_TP.Account {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::PW_TP.Account.OpenAuthProviders OpenAuthLogin;
+        
+        /// <summary>
+        /// LoginErrMsgPanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel LoginErrMsgPanel;
     }
 }

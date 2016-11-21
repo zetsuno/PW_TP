@@ -23,6 +23,7 @@
                 <asp:TextBox runat="server" ID="Password" TextMode="Password" CssClass="form-control" />
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="Password"
                     CssClass="text-danger" ErrorMessage="A password é obrigatória." />
+                <asp:RegularExpressionValidator ID="RegExPassword" runat="server" CssClass="text-danger"  Display="Dynamic"  EnableClientScript="true" SetFocusOnError="true"  ErrorMessage="Password requer pelo menos 8 caracteres, um caracter capitalizado, um caracter numeral e um caracter especial." ControlToValidate="Password"  ValidationExpression="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}"></asp:RegularExpressionValidator>
             </div>
         </div>
         <div class="form-group">

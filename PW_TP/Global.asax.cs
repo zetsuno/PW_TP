@@ -17,5 +17,16 @@ namespace PW_TP
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+
+        protected void Application_EndRequest(object sender, EventArgs e)
+        {
+            if (Response.StatusCode == 401 && Request.IsAuthenticated)
+            {
+                Response.StatusCode = 303;
+                Response.Clear();
+                Response.Redirect("~/UnauthorizedAccess.html");
+                Response.End();
+            }
+        }
     }
 }

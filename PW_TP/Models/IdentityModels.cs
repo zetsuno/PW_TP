@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using PW_TP.Models;
+using Microsoft.Owin.Security.Cookies;
 
 namespace PW_TP.Models
 {
