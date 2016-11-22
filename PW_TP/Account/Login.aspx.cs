@@ -40,7 +40,7 @@ namespace PW_TP.Account
             var returnUrl = HttpUtility.UrlEncode(Request.QueryString["ReturnUrl"]);
             if (!String.IsNullOrEmpty(returnUrl))
             {
-                RegisterHyperLink.NavigateUrl += "?ReturnUrl=" + returnUrl;
+                Response.Redirect("~/UnauthorizedAccess.aspx");
             }
         }
 
@@ -52,11 +52,7 @@ namespace PW_TP.Account
                 var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
                 var signinManager = Context.GetOwinContext().GetUserManager<ApplicationSignInManager>();
 
-                if(CheckVerified.CheckAccount(Email.Text) == false)
-                {
-                    Response.Redirect("ValidationRequired.aspx");
-                    return;
-                }
+              
                 // This doen't count login failures towards account lockout
                 // To enable password failures to trigger lockout, change to shouldLockout: true
                 var result = signinManager.PasswordSignIn(Email.Text, Password.Text, RememberMe.Checked, shouldLockout: true);
@@ -64,6 +60,11 @@ namespace PW_TP.Account
                 switch (result)
                 {
                     case SignInStatus.Success:
+                        if (CheckVerified.CheckAccount(Email.Text) == false)
+                        {
+                            Response.Redirect("ValidationRequired.aspx");
+                            return;
+                        }
                         IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
                         break;
                     case SignInStatus.LockedOut:

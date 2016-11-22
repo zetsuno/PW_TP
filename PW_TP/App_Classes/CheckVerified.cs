@@ -21,9 +21,9 @@ namespace PW_TP.App_Classes
             int value = (int)cmd.ExecuteScalar();
             SqlCon.Close();
 
-            if (value == 0) return false;
+            if (value == 1) return true;
 
-            return true;
+            return false;
         }
     }
 }
