@@ -46,7 +46,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <li><img src="Logo_site.png" style="padding: 2%; width: 28%; height: 28%; position: inherit; " />
+                    <li><img src="/Assets/Logo_site.png" style="padding: 2%; width: 28%; height: 28%; position: inherit; " />
                     <a class="navbar-brand" runat="server" href="~/" style="position: fixed; padding-left: 2%;">Bicycle shop</a></li>
                 </div>
                 <div class="navbar-collapse collapse">

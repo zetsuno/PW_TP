@@ -172,6 +172,7 @@
     <Content Include="Account\ValidationRequired.aspx" />
     <Content Include="Account\VerifyPhoneNumber.aspx" />
     <Content Include="Administration\Manage.aspx" />
+    <Content Include="Assets\Logo_site.png" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
