@@ -62,7 +62,8 @@ namespace PW_TP.Account
                     case SignInStatus.Success:
                         if (CheckVerified.CheckAccount(Email.Text) == false)
                         {
-                            Response.Redirect("ValidationRequired.aspx");
+                            Context.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+                            Response.Redirect("ValidationRequired.aspx");    
                             return;
                         }
                         IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);

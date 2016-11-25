@@ -102,10 +102,10 @@
                     <asp:RegularExpressionValidator ID="RegExNomeCliente" runat="server" Font-Bold="true" CssClass="text-danger" Display="Dynamic"  EnableClientScript="true" SetFocusOnError="true"  ErrorMessage="Nome inválido." ControlToValidate="NomeCliente"  ValidationExpression="^[a-zA-Z''-'.àáâäãåacceèéêëeiìíîïlnòóôöõøùúûüuuÿýzzñçcšžÀÁÂÄÃÅACCEEÈÉÊËÌÍÎÏILNÒÓÔÖÕØÙÚÛÜUUŸÝZZÑßÇŒÆCŠŽ?ð\s]{1,40}$"></asp:RegularExpressionValidator><br/>
                 </div>
                 <div class="col-ld-10">
-                    <asp:Label runat="server" Font-Bold="true" CssClass="col-md-2 control-label">NIF do Cliente</asp:Label>                    
-                    <asp:TextBox runat="server" ID="NIFCliente" CssClass="form-control"/>
-                    <asp:RequiredFieldValidator runat="server" ControlToValidate="NIFCliente" CssClass="text-danger" Display="Dynamic" ErrorMessage="O NIF da oficina é necessário." />
-                    <asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server" CssClass="text-danger" Font-Bold="true" Display="Dynamic"  EnableClientScript="true" SetFocusOnError="true"  ErrorMessage="Formato de NIF inválido." ControlToValidate="NIFCliente"  ValidationExpression="^[0-9]{9}$"></asp:RegularExpressionValidator><br/>
+                    <asp:Label runat="server" Font-Bold="true" CssClass="col-md-2 control-label">Nº Telefone</asp:Label>                    
+                    <asp:TextBox runat="server" ID="TelefoneClient" CssClass="form-control"/>
+                    <asp:RequiredFieldValidator runat="server" ControlToValidate="TelefoneClient" CssClass="text-danger" Display="Dynamic" ErrorMessage="O NIF da oficina é necessário." />
+                    <asp:RegularExpressionValidator ID="RegExTelefoneClient" runat="server" CssClass="text-danger" Font-Bold="true" Display="Dynamic"  EnableClientScript="true" SetFocusOnError="true"  ErrorMessage="Formato de NIF inválido." ControlToValidate="TelefoneClient"  ValidationExpression="^[0-9]{9}$"></asp:RegularExpressionValidator><br/>
                 </div>
               </div>
          </div>

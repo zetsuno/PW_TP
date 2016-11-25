@@ -9,20 +9,16 @@ namespace PW_TP.App_Classes
     public static class RegisterUser
     {
         
-        public static void RegisterUserTypeClient(string username, string password, string email, string usernif) {
+        public static void RegisterUserTypeClient(string username, string email, string telephone) {
 
-            int ClientPrivilege = 3, ClientVerified = 1;
             SqlConnection SqlCon = GetSqlCon.GetCon();
 
             SqlCommand cmd = new SqlCommand("RegisterUserTypeClient", SqlCon);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
-            cmd.Parameters.AddWithValue("@param1", ClientPrivilege);
-            cmd.Parameters.AddWithValue("@param2", ClientVerified);
-            cmd.Parameters.AddWithValue("@param3", username);
-            cmd.Parameters.AddWithValue("@param4", password);
-            cmd.Parameters.AddWithValue("@param5", email);
-            cmd.Parameters.AddWithValue("@param6", usernif);
+            cmd.Parameters.AddWithValue("@param1", username);
+            cmd.Parameters.AddWithValue("@param2", telephone);
+            cmd.Parameters.AddWithValue("@email", email);
 
             SqlCon.Open();
             cmd.ExecuteNonQuery();
@@ -30,23 +26,23 @@ namespace PW_TP.App_Classes
 
         }
 
-        public static void RegisterUserTypeWorkshop(string email, string password, string workshopname, string workshopnif, string workshopowner, string workshopownernif)
+        public static void RegisterUserTypeWorkshop(string email, string workshopname, string workshopnif, string workshopowner, string workshopownernif)
         {
-            int ClientPrivilege = 2, ClientVerified = 0;
+            
             SqlConnection SqlCon = GetSqlCon.GetCon();
-
+            DateTime now = DateTime.Now;
             SqlCommand cmd = new SqlCommand("RegisterUserTypeWorkshop", SqlCon);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            now.AddDays(1);
+          
+            cmd.Parameters.AddWithValue("@param1", workshopname);
+            cmd.Parameters.AddWithValue("@param2", workshopnif);
+            cmd.Parameters.AddWithValue("@param3", workshopowner);
+            cmd.Parameters.AddWithValue("@param4", workshopownernif);
+            cmd.Parameters.AddWithValue("@param5", now);
+            cmd.Parameters.AddWithValue("@param6", 0);
+            cmd.Parameters.AddWithValue("@email", email);
 
-            cmd.Parameters.AddWithValue("@param1", ClientPrivilege);
-            cmd.Parameters.AddWithValue("@param2", ClientVerified);
-            cmd.Parameters.AddWithValue("@param3", password);
-            cmd.Parameters.AddWithValue("@param4", email);
-            cmd.Parameters.AddWithValue("@param5", workshopname);
-            cmd.Parameters.AddWithValue("@param6", workshopnif);
-            cmd.Parameters.AddWithValue("@param7", workshopowner);
-            cmd.Parameters.AddWithValue("@param8", workshopownernif);
-            
             SqlCon.Open();
             cmd.ExecuteNonQuery();
             SqlCon.Close();

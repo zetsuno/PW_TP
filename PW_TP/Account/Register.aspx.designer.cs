@@ -193,21 +193,21 @@ namespace PW_TP.Account {
         protected global::System.Web.UI.WebControls.RegularExpressionValidator RegExNomeCliente;
         
         /// <summary>
-        /// NIFCliente control.
+        /// TelefoneClient control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox NIFCliente;
+        protected global::System.Web.UI.WebControls.TextBox TelefoneClient;
         
         /// <summary>
-        /// RegularExpressionValidator2 control.
+        /// RegExTelefoneClient control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidator2;
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator RegExTelefoneClient;
     }
 }

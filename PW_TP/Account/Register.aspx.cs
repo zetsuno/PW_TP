@@ -32,13 +32,13 @@ namespace PW_TP.Account
 
             if (RBtnCliente.Checked == true)
             {
-                RegisterUser.RegisterUserTypeClient(NomeCliente.Text, Password.Text, Email.Text, NIFCliente.Text);
+                RegisterUser.RegisterUserTypeClient(NomeCliente.Text, Email.Text, TelefoneClient.Text);
                 Security c = new Security();
                 c.AddUserToRole(Email.Text, "client");
             }
             if (RBtnOficina.Checked == true)
             {
-                RegisterUser.RegisterUserTypeWorkshop(Email.Text, Password.Text, NomeOficina.Text, nifOficina.Text, TitularOficina.Text, NIFTitularOficina.Text);
+                RegisterUser.RegisterUserTypeWorkshop(Email.Text, NomeOficina.Text, nifOficina.Text, TitularOficina.Text, NIFTitularOficina.Text);
                 Security w = new Security();
                 w.AddUserToRole(Email.Text, "workshop");
                 Response.Redirect("ValidationRequired.aspx");
@@ -50,7 +50,7 @@ namespace PW_TP.Account
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                 //string code = manager.GenerateEmailConfirmationToken(user.Id);
                 //string callbackUrl = IdentityHelper.GetUserConfirmationRedirectUrl(code, user.Id, Request);
-                //manager.SendEmail(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>.");
+               // manager.SendEmail(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>.");
 
                 signInManager.SignIn( user, isPersistent: false, rememberBrowser: false);
                 IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);

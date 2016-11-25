@@ -24,7 +24,6 @@ namespace PW_TP.App_Classes
             {
                 var user = UserManager.FindByEmail(email);
                 UserManager.AddToRole(user.Id, roleName);
-                AddUserAspNetID(user.Id, email);
                 context.SaveChanges();
             }
             catch
@@ -33,22 +32,5 @@ namespace PW_TP.App_Classes
             }
         }
 
-        public void AddUserAspNetID(string id, string email)
-        {
-
-            SqlConnection SqlCon = GetSqlCon.GetCon();
-
-            
-            SqlCommand cmd = new SqlCommand("GetAspNetUserID", SqlCon);
-            cmd.CommandType = System.Data.CommandType.StoredProcedure;
-
-            cmd.Parameters.AddWithValue("@param1", id);
-            cmd.Parameters.AddWithValue("@email", email);
-          
-            SqlCon.Open();
-            cmd.ExecuteNonQuery();
-            SqlCon.Close();
-
-        }
     }
 }

@@ -11,18 +11,17 @@ namespace PW_TP.App_Classes
         public static bool CheckAccount(string email)
         {
             SqlConnection SqlCon = GetSqlCon.GetCon();
-
-            
+           
             SqlCommand cmd = new SqlCommand("CheckVerifiedAccount", SqlCon);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@email", email);
 
             SqlCon.Open();
-            int value = (int)cmd.ExecuteScalar();
+            bool value = (bool)cmd.ExecuteScalar();
             SqlCon.Close();
 
-            if (value == 1) return true;
-
+            if (value == true) return true;
+          
             return false;
         }
     }
