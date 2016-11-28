@@ -24,5 +24,23 @@ namespace PW_TP.App_Classes
           
             return false;
         }
+
+        public static bool EnableAccount(string id)
+        {
+            SqlConnection SqlCon = GetSqlCon.GetCon();
+
+            SqlCommand cmd = new SqlCommand("ActivateUser", SqlCon);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@id", id);
+
+            SqlCon.Open();
+            int value = cmd.ExecuteNonQuery();
+            SqlCon.Close();
+
+            if (value == 1) return true;
+
+            return false;
+        }
+
     }
 }

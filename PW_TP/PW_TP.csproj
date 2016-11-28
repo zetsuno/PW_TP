@@ -358,6 +358,7 @@
     </Compile>
     <Compile Include="App_Classes\AssignUserRole.cs" />
     <Compile Include="App_Classes\CheckVerified.cs" />
+    <Compile Include="App_Classes\CountTableEntries.cs" />
     <Compile Include="App_Classes\GetSqlCon.cs" />
     <Compile Include="App_Classes\RegisterUser.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
