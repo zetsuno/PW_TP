@@ -14,14 +14,12 @@ namespace PW_TP.Administration
 
         protected void Page_Init(object sender, EventArgs e)
         {
-            int value = CountTableEntries.GetToVerifyCount();
-            BadgeCountToVerify.Text = value.ToString();
-            int value2 = CountTableEntries.AllAccsCount();
-            BadgeCountAll.Text = value2.ToString();
+            UpdateBadges();
         }
+
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            
         }
 
         protected void ButtonActivateAcc_Click(object sender, EventArgs e)
@@ -44,13 +42,27 @@ namespace PW_TP.Administration
 
                 // Add code here to add the item to the shopping cart.
                 string id = row.Cells[1].Text;
-                bool value = CheckVerified.EnableAccount(id);
-                if(value == true) ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + "Conta verificada com sucesso" + "');", true);
+                CheckVerified.EnableAccount(id);
+                GridViewToValidate.DataBind();
+                UpdateBadges();
+
+            }
+            if (e.CommandName == "EditData")
+            {
+
+
             }
 
+                EditTablesUpdatePanel.Update();
         }
         
-        
+        protected void UpdateBadges()
+        {
+            int value = CountTableEntries.GetToVerifyCount();
+            BadgeCountToVerify.Text = value.ToString();
+            int value2 = CountTableEntries.AllAccsCount();
+            BadgeCountAll.Text = value2.ToString();
+        }
 
     }
 }

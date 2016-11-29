@@ -40,15 +40,6 @@ namespace PW_TP.Administration {
         protected global::System.Web.UI.WebControls.GridView GridViewTotal;
         
         /// <summary>
-        /// BtnEditAll control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnEditAll;
-        
-        /// <summary>
         /// SqlDSToBeVerified control.
         /// </summary>
         /// <remarks>
@@ -65,15 +56,6 @@ namespace PW_TP.Administration {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView GridViewToValidate;
-        
-        /// <summary>
-        /// BtnEditNotVerified control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnEditNotVerified;
         
         /// <summary>
         /// BadgeCountAll control.

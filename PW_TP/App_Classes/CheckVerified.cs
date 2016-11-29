@@ -11,35 +11,47 @@ namespace PW_TP.App_Classes
         public static bool CheckAccount(string email)
         {
             SqlConnection SqlCon = GetSqlCon.GetCon();
-           
+            bool value;
             SqlCommand cmd = new SqlCommand("CheckVerifiedAccount", SqlCon);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@email", email);
 
-            SqlCon.Open();
-            bool value = (bool)cmd.ExecuteScalar();
-            SqlCon.Close();
+            try
+            {
+                SqlCon.Open();
+                value = (bool)cmd.ExecuteScalar();
+                SqlCon.Close();
+            }
+            catch
+            {
+                throw;
+            }
 
             if (value == true) return true;
           
             return false;
         }
 
-        public static bool EnableAccount(string id)
+        public static void EnableAccount(string id)
         {
             SqlConnection SqlCon = GetSqlCon.GetCon();
-
+           
             SqlCommand cmd = new SqlCommand("ActivateUser", SqlCon);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@id", id);
 
-            SqlCon.Open();
-            int value = cmd.ExecuteNonQuery();
-            SqlCon.Close();
+            try
+            {
+                SqlCon.Open();
+                cmd.ExecuteNonQuery();
+                SqlCon.Close();
+            }
+            catch
+            {
+                throw;
+            }
 
-            if (value == 1) return true;
-
-            return false;
+           
         }
 
     }

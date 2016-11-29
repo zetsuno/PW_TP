@@ -20,32 +20,43 @@ namespace PW_TP.App_Classes
             cmd.Parameters.AddWithValue("@param2", telephone);
             cmd.Parameters.AddWithValue("@email", email);
 
-            SqlCon.Open();
-            cmd.ExecuteNonQuery();
-            SqlCon.Close();
-
+            try
+            {
+                SqlCon.Open();
+                cmd.ExecuteNonQuery();
+                SqlCon.Close();
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         public static void RegisterUserTypeWorkshop(string email, string workshopname, string workshopnif, string workshopowner, string workshopownernif)
         {
             
             SqlConnection SqlCon = GetSqlCon.GetCon();
-            DateTime now = DateTime.Now;
+           
             SqlCommand cmd = new SqlCommand("RegisterUserTypeWorkshop", SqlCon);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
-            now.AddDays(1);
-          
+           
             cmd.Parameters.AddWithValue("@param1", workshopname);
             cmd.Parameters.AddWithValue("@param2", workshopnif);
             cmd.Parameters.AddWithValue("@param3", workshopowner);
             cmd.Parameters.AddWithValue("@param4", workshopownernif);
-            cmd.Parameters.AddWithValue("@param5", now);
-            cmd.Parameters.AddWithValue("@param6", 0);
+            cmd.Parameters.AddWithValue("@param5", 0);
             cmd.Parameters.AddWithValue("@email", email);
 
-            SqlCon.Open();
-            cmd.ExecuteNonQuery();
-            SqlCon.Close();
+            try
+            {
+                SqlCon.Open();
+                cmd.ExecuteNonQuery();
+                SqlCon.Close();
+            }
+            catch
+            {
+                throw;
+            }
         }
     }
 }
