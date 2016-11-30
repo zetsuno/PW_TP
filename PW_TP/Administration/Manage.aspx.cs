@@ -47,15 +47,36 @@ namespace PW_TP.Administration
                 UpdateBadges();
 
             }
+
+            EditTablesUpdatePanel.Update();
+        }
+
+        protected void GridViewTotal_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
             if (e.CommandName == "EditData")
             {
+                int index = Convert.ToInt32(e.CommandArgument);
+                GridViewTotal.EditIndex = index;
 
+                /*operações de edição*/
+
+                GridViewTotal.DataBind();
 
             }
 
-                EditTablesUpdatePanel.Update();
+            if (e.CommandName == "DeleteData")
+            {
+                int index = Convert.ToInt32(e.CommandArgument);
+                GridViewRow row = GridViewTotal.Rows[index];
+                string id = row.Cells[1].Text;
+                DeleteUser.RemoverUserFromDB(id);
+                GridViewTotal.DataBind();
+                UpdateBadges();
+            }
+            EditTablesUpdatePanel.Update();
         }
-        
+
+
         protected void UpdateBadges()
         {
             int value = CountTableEntries.GetToVerifyCount();
