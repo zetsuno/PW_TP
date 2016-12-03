@@ -25,6 +25,7 @@ namespace PW_TP.App_Classes
                 var user = UserManager.FindByEmail(email);
                 UserManager.AddToRole(user.Id, roleName);
                 context.SaveChanges();
+                
             }
             catch
             {

@@ -14,34 +14,138 @@
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade active in" id="total">
                         <asp:SqlDataSource ID="SqlDSAdminTable" runat="server" ConnectionString="<%$ ConnectionStrings:DefaultConnection %>" SelectCommand="SELECT * FROM [AspNetUsers]"></asp:SqlDataSource>
-                        <asp:GridView ID="GridViewTotal" runat="server" CssClass="list-group-item table-condensed table-hover table-responsive" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="false" DataKeyNames="Id" DataSourceID="SqlDSAdminTable" OnRowCommand="GridViewTotal_RowCommand">
+                        <asp:GridView ID="GridViewTotal" runat="server" CssClass="list-group-item table-condensed table-hover table-responsive" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="false" DataKeyNames="Id" DataSourceID="SqlDSAdminTable" OnRowCommand="GridViewTotal_RowCommand" OnRowDataBound="GridViewTotal_RowDataBound" OnRowUpdating="GridViewTotal_RowUpdating" >
                             <Columns>
                                 <asp:TemplateField ShowHeader="false">
                                     <ItemTemplate>
                                         <asp:Button ID="ButtonEdit" runat="server" CssClass="btn btn-success" CausesValidation="false" CommandName="EditData"
-                                            Text="Edit" CommandArgument="<%# ((GridViewRow) Container).RowIndex%>" Width="100px" />
+                                            Text="Edit" CommandArgument="<%# ((GridViewRow) Container).RowIndex%>" Width="100px" Visible="true" />
                                         <asp:Button ID="ButtonDelete" runat="server" CssClass="btn btn-danger" CausesValidation="false" CommandName="DeleteData"
-                                            Text="Delete" CommandArgument="<%# ((GridViewRow) Container).RowIndex%>" Width="100px" OnClientClick="return confirm('Are you sure you want to delete the user?')" />
+                                            Text="Delete" CommandArgument="<%# ((GridViewRow) Container).RowIndex%>" Width="100px" OnClientClick="return confirm('Are you sure you want to delete the user?')" Visible="true" />
+                                         <asp:Button ID="ButtonConfirmEdit" runat="server" CssClass="btn btn-primary" CausesValidation="false" CommandName="UpdateData"
+                                            Text="Confirm" CommandArgument="<%# ((GridViewRow) Container).RowIndex%>" Width="100px" Visible="false" OnClientClick="return confirm('Are you sure you want to update the user data?')" />
+                                         <asp:Button ID="ButtonCancelEdit" runat="server" CssClass="btn btn-danger" CausesValidation="false" CommandName="CancelEdit"
+                                            Text="Cancel" CommandArgument="<%# ((GridViewRow) Container).RowIndex%>" Width="100px"  Visible="false" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:BoundField DataField="Id" HeaderText="Id" ReadOnly="True" SortExpression="Id"></asp:BoundField>
-                                <asp:BoundField DataField="Email" HeaderText="Email" SortExpression="Email"></asp:BoundField>
-                                <asp:BoundField DataField="EmailConfirmed" HeaderText="EmailConfirmed" SortExpression="EmailConfirmed"></asp:BoundField>
-                                <asp:BoundField DataField="PasswordHash" HeaderText="PasswordHash" SortExpression="PasswordHash"></asp:BoundField>
-                                <asp:BoundField DataField="SecurityStamp" HeaderText="SecurityStamp" SortExpression="SecurityStamp"></asp:BoundField>
-                                <asp:BoundField DataField="PhoneNumber" HeaderText="PhoneNumber" SortExpression="PhoneNumber"></asp:BoundField>
-                                <asp:BoundField DataField="PhoneNumberConfirmed" HeaderText="PhoneNumberConfirmed" SortExpression="PhoneNumberConfirmed"></asp:BoundField>
-                                <asp:BoundField DataField="TwoFactorEnabled" HeaderText="TwoFactorEnabled" SortExpression="TwoFactorEnabled"></asp:BoundField>
-                                <asp:BoundField DataField="LockoutEndDateUtc" HeaderText="LockoutEndDateUtc" SortExpression="LockoutEndDateUtc"></asp:BoundField>
-                                <asp:BoundField DataField="LockoutEnabled" HeaderText="LockoutEnabled" SortExpression="LockoutEnabled"></asp:BoundField>
-                                <asp:BoundField DataField="AccessFailedCount" HeaderText="AccessFailedCount" SortExpression="AccessFailedCount"></asp:BoundField>
-                                <asp:BoundField DataField="UserName" HeaderText="UserName" SortExpression="UserName"></asp:BoundField>
-                                <asp:BoundField DataField="WorkshopName" HeaderText="WorkshopName" SortExpression="WorkshopName"></asp:BoundField>
-                                <asp:BoundField DataField="WorkshopNIF" HeaderText="WorkshopNIF" SortExpression="WorkshopNIF"></asp:BoundField>
-                                <asp:BoundField DataField="WorkshopOwner" HeaderText="WorkshopOwner" SortExpression="WorkshopOwner"></asp:BoundField>
-                                <asp:BoundField DataField="WorkshopOwnerNIF" HeaderText="WorkshopOwnerNIF" SortExpression="WorkshopOwnerNIF"></asp:BoundField>
-                                <asp:BoundField DataField="IsEnabled" HeaderText="IsEnabled" SortExpression="IsEnabled"></asp:BoundField>
-                                <asp:BoundField DataField="DisplayName" HeaderText="DisplayName" SortExpression="DisplayName"></asp:BoundField>
+                                <asp:BoundField DataField="Id" HeaderText="Id" ReadOnly="True" SortExpression="Id" ></asp:BoundField> 
+                                <asp:BoundField DataField="Email" HeaderText="Email" SortExpression="Email" ReadOnly="true"></asp:BoundField>
+                                 <asp:TemplateField>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="txtEmail" CssClass="advancedSearchTextBox"  runat="server" Text='<%# Bind("Email") %>'></asp:TextBox>
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
+                                <asp:BoundField DataField="EmailConfirmed" HeaderText="EmailConfirmed" SortExpression="EmailConfirmed" ReadOnly="true"></asp:BoundField>
+                                <asp:TemplateField>
+                                    <EditItemTemplate>
+                                        <asp:DropDownList ID="ddlEmailConfirmed" runat="server">
+                                            <asp:ListItem Selected="True" Value="0">False</asp:ListItem>
+                                            <asp:ListItem Value="1">True</asp:ListItem>
+                                        </asp:DropDownList>
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
+                                <asp:BoundField DataField="PasswordHash" HeaderText="PasswordHash" SortExpression="PasswordHash" ReadOnly="true"></asp:BoundField>
+                                <asp:TemplateField>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="txtPasswordHash" CssClass="advancedSearchTextBox" runat="server" Text='<%# Bind("PasswordHash") %>'></asp:TextBox>
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
+                                <asp:BoundField DataField="SecurityStamp" HeaderText="SecurityStamp"  SortExpression="SecurityStamp" ReadOnly="true"></asp:BoundField>
+                                 <asp:TemplateField>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="txtSecurityStamp" CssClass="advancedSearchTextBox"  runat="server" Text='<%# Bind("SecurityStamp") %>'></asp:TextBox>
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
+                                <asp:BoundField DataField="PhoneNumber" HeaderText="PhoneNumber" SortExpression="PhoneNumber" ReadOnly="true"></asp:BoundField>
+                                 <asp:TemplateField>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="txtPhoneNumber" CssClass="advancedSearchTextBox"  runat="server" Text='<%# Bind("PhoneNumber") %>'></asp:TextBox>
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
+                                <asp:BoundField DataField="PhoneNumberConfirmed" HeaderText="PhoneNumberConfirmed" SortExpression="PhoneNumberConfirmed" ReadOnly="true"></asp:BoundField>
+                               <asp:TemplateField>
+                                    <EditItemTemplate>
+                                        <asp:DropDownList ID="ddlPhoneNumberConfirmed" runat="server">
+                                            <asp:ListItem Selected="True" Value="0">False</asp:ListItem>
+                                            <asp:ListItem Value="1">True</asp:ListItem>
+                                        </asp:DropDownList>
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
+                                <asp:BoundField DataField="TwoFactorEnabled" HeaderText="TwoFactorEnabled" SortExpression="TwoFactorEnabled" ReadOnly="true"></asp:BoundField>
+                                <asp:TemplateField>
+                                    <EditItemTemplate>
+                                        <asp:DropDownList ID="ddlTwoFactorEnabled" runat="server">
+                                            <asp:ListItem Selected="True" Value="0">False</asp:ListItem>
+                                            <asp:ListItem Value="1">True</asp:ListItem>
+                                        </asp:DropDownList>
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
+                                <asp:BoundField DataField="LockoutEndDateUtc" HeaderText="LockoutEndDateUtc" SortExpression="LockoutEndDateUtc" ReadOnly="true"></asp:BoundField>
+                                 <asp:TemplateField>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="txtLockoutEndDateUtc" CssClass="advancedSearchTextBox"  runat="server" Text='<%# Bind("LockoutEndDateUtc") %>'></asp:TextBox>
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
+                                <asp:BoundField DataField="LockoutEnabled" HeaderText="LockoutEnabled" SortExpression="LockoutEnabled" ReadOnly="true"></asp:BoundField>
+                                <asp:TemplateField>
+                                    <EditItemTemplate>
+                                        <asp:DropDownList ID="ddlLockoutEnabled" runat="server">
+                                            <asp:ListItem Selected="True" Value="0">False</asp:ListItem>
+                                            <asp:ListItem Value="1">True</asp:ListItem>
+                                        </asp:DropDownList>
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
+                                <asp:BoundField DataField="AccessFailedCount" HeaderText="AccessFailedCount" SortExpression="AccessFailedCount" ReadOnly="true"></asp:BoundField>
+                                  <asp:TemplateField>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="txtAccessFailedCount" CssClass="advancedSearchTextBox"  runat="server" Text='<%# Bind("AccessFailedCount") %>'></asp:TextBox>
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
+                                <asp:BoundField DataField="UserName" HeaderText="UserName" SortExpression="UserName" ReadOnly="true"></asp:BoundField>
+                                 <asp:TemplateField>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="txtUserName" CssClass="advancedSearchTextBox"  runat="server" Text='<%# Bind("UserName") %>'></asp:TextBox>
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
+                                <asp:BoundField DataField="WorkshopName" HeaderText="WorkshopName" SortExpression="WorkshopName" ReadOnly="true"></asp:BoundField>
+                                 <asp:TemplateField>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="txtWorkshopName" CssClass="advancedSearchTextBox"  runat="server" Text='<%# Bind("WorkshopName") %>'></asp:TextBox>
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
+                                <asp:BoundField DataField="WorkshopNIF" HeaderText="WorkshopNIF" SortExpression="WorkshopNIF" ReadOnly="true"></asp:BoundField>
+                                 <asp:TemplateField>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="txtWorkshopNIF" CssClass="advancedSearchTextBox"  runat="server" Text='<%# Bind("WorkshopNIF") %>'></asp:TextBox>
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
+                                <asp:BoundField DataField="WorkshopOwner" HeaderText="WorkshopOwner" SortExpression="WorkshopOwner" ReadOnly="true"></asp:BoundField>
+                                 <asp:TemplateField>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="txtWorkshopOwner" CssClass="advancedSearchTextBox"  runat="server" Text='<%# Bind("WorkshopOwner") %>'></asp:TextBox>
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
+                                <asp:BoundField DataField="WorkshopOwnerNIF" HeaderText="WorkshopOwnerNIF" SortExpression="WorkshopOwnerNIF" ReadOnly="true"></asp:BoundField>
+                                <asp:TemplateField>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="txtWorkshopOwnerNIF" CssClass="advancedSearchTextBox"  runat="server" Text='<%# Bind("WorkshopOwnerNIF") %>'></asp:TextBox>
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
+                                <asp:BoundField DataField="IsEnabled" HeaderText="IsEnabled" SortExpression="IsEnabled" ReadOnly="true"></asp:BoundField>
+                                 <asp:TemplateField>
+                                    <EditItemTemplate>
+                                        <asp:DropDownList ID="ddlIsEnabled" runat="server">
+                                            <asp:ListItem Selected="True" Value="1">True</asp:ListItem>
+                                            <asp:ListItem Value="0">False</asp:ListItem> 
+                                        </asp:DropDownList>
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
+                                <asp:BoundField DataField="DisplayName" HeaderText="DisplayName" SortExpression="DisplayName" ReadOnly="true"></asp:BoundField>
+                                <asp:TemplateField>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="txtDisplayName" CssClass="advancedSearchTextBox"  runat="server" Text='<%# Bind("DisplayName") %>'></asp:TextBox>
+                                    </EditItemTemplate>
+                                </asp:TemplateField>                        
                             </Columns>
                         </asp:GridView>
                         <br />
