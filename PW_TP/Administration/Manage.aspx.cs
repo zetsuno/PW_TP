@@ -25,37 +25,25 @@ namespace PW_TP.Administration
         {
             if (!IsPostBack)
             {
-                GridViewTotal.DataBind();
+                
             }
         }
-
-        protected void ButtonActivateAcc_Click(object sender, EventArgs e)
-        {
-            
-        }
-
         protected void GridViewToValidate_RowCommand(object sender, GridViewCommandEventArgs e)
         {
 
             if (e.CommandName == "ActivateAcc")
             { 
-                // Retrieve the row index stored in the 
-                // CommandArgument property.
                 int index = Convert.ToInt32(e.CommandArgument);
-                
-                // Retrieve the row that contains the button 
-                // from the Rows collection.
                 GridViewRow row = GridViewToValidate.Rows[index];
-
-                // Add code here to add the item to the shopping cart.
                 string id = row.Cells[1].Text;
+
                 CheckVerified.EnableAccount(id);
-                GridViewToValidate.DataBind();
-                UpdateBadges();
-
             }
-
-            EditTablesUpdatePanel.Update();
+ 
+           UpdateBadges();
+           GridViewTotal.DataBind();
+           GridViewToValidate.DataBind();
+           EditTablesUpdatePanel.Update();   
         }
 
         protected void GridViewTotal_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -64,9 +52,7 @@ namespace PW_TP.Administration
             {
                 int index = Convert.ToInt32(e.CommandArgument);
                 GridViewTotal.EditIndex = index;
-                _counter = index;
-                
-                
+                _counter = index;    
             }
 
             if (e.CommandName == "DeleteData")
@@ -74,22 +60,17 @@ namespace PW_TP.Administration
                 int index = Convert.ToInt32(e.CommandArgument);
                 GridViewRow row = GridViewTotal.Rows[index];
                 string id = row.Cells[1].Text;
-                DeleteUser.RemoverUserFromDB(id);
-                UpdateBadges();
+                DeleteUser.RemoverUserFromDB(id);   
             }
 
             if(e.CommandName == "CancelEdit")
             {
                 _counter = -1;
                 GridViewTotal.EditIndex = _counter;
-                
-
             }
 
             if (e.CommandName == "UpdateData")
-            {
-                
-                
+            {   
                 int index = Convert.ToInt32(e.CommandArgument);
                 GridViewRow row = GridViewTotal.Rows[index];
 
@@ -119,9 +100,12 @@ namespace PW_TP.Administration
  
                 GridViewTotal.EditIndex = -1;
             }
+
+            UpdateBadges();
             GridViewTotal.DataBind();
+            GridViewToValidate.DataBind();
             EditTablesUpdatePanel.Update();
-         }
+        }
 
 
          protected void GridViewTotal_RowDataBound(object sender, GridViewRowEventArgs e)
