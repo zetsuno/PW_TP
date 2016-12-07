@@ -14,7 +14,19 @@ namespace PW_TP.Account
     public partial class Register : Page
     {
 
-        protected void Page_Load(object sender, EventArgs e){}
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+
+                // if they came to the page directly, ReturnUrl will be null.
+                if (String.IsNullOrEmpty(Request["ReturnUrl"]))
+                {
+                   
+                    Response.Redirect("~/UnauthorizedAccess.aspx");
+                }
+            }
+        }
 
         protected void CreateUser_Click(object sender, EventArgs e)
         {

@@ -13,6 +13,14 @@ namespace PW_TP.Account
 {
     public partial class AddPhoneNumber : System.Web.UI.Page
     {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                Response.Redirect("~/UnauthorizedAccess.aspx");
+
+            }
+        }
         protected void PhoneNumber_Click(object sender, EventArgs e)
         {
             var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();

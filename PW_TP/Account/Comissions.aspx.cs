@@ -11,7 +11,18 @@ namespace PW_TP.Account
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                Response.Redirect("~/UnauthorizedAccess.aspx");
+                
 
+                
+            }
         }
+        
+        
+         
+        
+
     }
 }
