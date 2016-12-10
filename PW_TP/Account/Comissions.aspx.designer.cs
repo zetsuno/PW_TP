@@ -58,6 +58,15 @@ namespace PW_TP.Account {
         protected global::System.Web.UI.WebControls.DropDownList DdlTipo;
         
         /// <summary>
+        /// RFVDdlTipo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFVDdlTipo;
+        
+        /// <summary>
         /// SqlDataSourceDdlOficinas control.
         /// </summary>
         /// <remarks>
@@ -76,6 +85,15 @@ namespace PW_TP.Account {
         protected global::System.Web.UI.WebControls.DropDownList DdlOficinas;
         
         /// <summary>
+        /// RFVDdlOficinas control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFVDdlOficinas;
+        
+        /// <summary>
         /// TbAno control.
         /// </summary>
         /// <remarks>
@@ -85,13 +103,13 @@ namespace PW_TP.Account {
         protected global::System.Web.UI.WebControls.TextBox TbAno;
         
         /// <summary>
-        /// RegExAno control.
+        /// RngValTbAno control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator RegExAno;
+        protected global::System.Web.UI.WebControls.RangeValidator RngValTbAno;
         
         /// <summary>
         /// TbDetails control.

@@ -11,6 +11,7 @@ namespace PW_TP.App_Classes
         
         public static void RegisterUserTypeClient(string username, string email, string telephone) {
 
+            
             SqlConnection SqlCon = GetSqlCon.GetCon();
 
             SqlCommand cmd = new SqlCommand("RegisterUserTypeClient", SqlCon);
