@@ -38,8 +38,8 @@
            </div>
       <asp:UpdatePanel ID="UpdatePanel1" runat="server" ChildrenAsTriggers="true" UpdateMode="Always"  >
         <ContentTemplate>
-       <label class="col-lg-2 control-label">Tipo de Conta</label>
-      <div class="col-lg-10">
+       <label class="col-md-2 control-label">Tipo de Conta</label>
+      <div class="col-md-10">
         <div class="radio">
           <label>
             <asp:RadioButton ID="RBtnCliente" runat="server" GroupName="RBtns" OnCheckedChanged="RBtnCliente_CheckedChanged" AutoPostBack="true"/> <strong>Cliente</strong>
@@ -113,8 +113,9 @@
          </ContentTemplate>
     </asp:UpdatePanel>
         <div class="form-group">
-            <div class="col-md-offset-1 col-md-10">
-               <br /><asp:Button runat="server" OnClick="CreateUser_Click" Text="Registar-me" CssClass="btn btn-default" />
+            <div class="col-md-10">
+                <br />
+                <asp:Button runat="server" OnClick="CreateUser_Click" Text="Registar-me" CssClass="btn btn-primary col-lg-2 col-lg-offset-2 col-lg-pull-2" />
             </div>
         </div>
     </div>

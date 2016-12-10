@@ -49,6 +49,15 @@ namespace PW_TP.Account {
         protected global::System.Web.UI.WebControls.RegularExpressionValidator RegExModelo;
         
         /// <summary>
+        /// DdlTipo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DdlTipo;
+        
+        /// <summary>
         /// SqlDataSourceDdlOficinas control.
         /// </summary>
         /// <remarks>
@@ -65,6 +74,51 @@ namespace PW_TP.Account {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList DdlOficinas;
+        
+        /// <summary>
+        /// TbAno control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TbAno;
+        
+        /// <summary>
+        /// RegExAno control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator RegExAno;
+        
+        /// <summary>
+        /// TbDetails control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TbDetails;
+        
+        /// <summary>
+        /// RFVDetails control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFVDetails;
+        
+        /// <summary>
+        /// BtnCreateComission control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnCreateComission;
         
         /// <summary>
         /// BadgeCountActiveComissions control.

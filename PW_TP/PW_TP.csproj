@@ -158,6 +158,7 @@
   <ItemGroup>
     <Content Include="About.aspx" />
     <Content Include="Account\AddPhoneNumber.aspx" />
+    <Content Include="Account\ComissionCreated.aspx" />
     <Content Include="Account\Comissions.aspx" />
     <Content Include="Account\Confirm.aspx" />
     <Content Include="Account\Forgot.aspx" />
@@ -265,6 +266,13 @@
     </Compile>
     <Compile Include="Account\AddPhoneNumber.aspx.designer.cs">
       <DependentUpon>AddPhoneNumber.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Account\ComissionCreated.aspx.cs">
+      <DependentUpon>ComissionCreated.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Account\ComissionCreated.aspx.designer.cs">
+      <DependentUpon>ComissionCreated.aspx</DependentUpon>
     </Compile>
     <Compile Include="Account\Comissions.aspx.cs">
       <DependentUpon>Comissions.aspx</DependentUpon>
@@ -387,6 +395,7 @@
     </Compile>
     <Compile Include="App_Classes\AssignUserRole.cs" />
     <Compile Include="App_Classes\CheckVerified.cs" />
+    <Compile Include="App_Classes\ComissionFuncs.cs" />
     <Compile Include="App_Classes\CountTableEntries.cs" />
     <Compile Include="App_Classes\DeleteUser.cs" />
     <Compile Include="App_Classes\GetSqlCon.cs" />
