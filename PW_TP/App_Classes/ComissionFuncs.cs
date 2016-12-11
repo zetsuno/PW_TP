@@ -67,6 +67,50 @@ namespace PW_TP.App_Classes
 
             return workshopid;
         }
+
+        public static int CountActiveComissions()
+        {
+            SqlConnection SqlCon = GetSqlCon.GetCon();
+            int value;
+            SqlCommand cmd = new SqlCommand("CountActiveComissions", SqlCon);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@param1", 1);
+
+            try
+            {
+                SqlCon.Open();
+                value = (int)cmd.ExecuteScalar();
+                SqlCon.Close();
+            }
+            catch
+            {
+                throw;
+            }
+
+            return value;
+        }
+
+        public static int CountPendingComissions()
+        {
+            SqlConnection SqlCon = GetSqlCon.GetCon();
+            int value;
+            SqlCommand cmd = new SqlCommand("CountPendingComissions", SqlCon);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@param1", 0);
+
+            try
+            {
+                SqlCon.Open();
+                value = (int)cmd.ExecuteScalar();
+                SqlCon.Close();
+            }
+            catch
+            {
+                throw;
+            }
+
+            return value;
+        }
     }
 
         

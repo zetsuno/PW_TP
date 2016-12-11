@@ -13,6 +13,12 @@ namespace PW_TP.Account
 {
     public partial class Comissions : System.Web.UI.Page
     {
+        protected void Page_Init(object sender, EventArgs e)
+        {
+            UpdateBadges();
+
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!User.Identity.IsAuthenticated)
@@ -21,7 +27,7 @@ namespace PW_TP.Account
             }
             if (!Page.IsPostBack)
             {
-               
+                
             }
         }
 
@@ -36,6 +42,15 @@ namespace PW_TP.Account
             
             ComissionFuncs.CreateComission(TbModelo.Text, DdlTipo.SelectedValue, DdlOficinas.SelectedValue, Ano, TbDetails.Text, user.Id);
             Response.Redirect("ComissionCreated.aspx");
+        }
+
+        protected void UpdateBadges()
+        {
+            int value = ComissionFuncs.CountActiveComissions();
+            BadgeCountActiveComissions.Text  = value.ToString();
+            int value2 = ComissionFuncs.CountPendingComissions();
+            BadgeCountPendingComissions.Text = value2.ToString();
+            BadgeComissions.Text = (value2 + value).ToString();
         }
 
        

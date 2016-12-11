@@ -139,6 +139,42 @@ namespace PW_TP.Account {
         protected global::System.Web.UI.WebControls.Button BtnCreateComission;
         
         /// <summary>
+        /// SQLDSActiveComissions control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource SQLDSActiveComissions;
+        
+        /// <summary>
+        /// GridViewActiveComissions control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GridViewActiveComissions;
+        
+        /// <summary>
+        /// SQLDSPendingComissions control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource SQLDSPendingComissions;
+        
+        /// <summary>
+        /// GridViewComissionsPending control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GridViewComissionsPending;
+        
+        /// <summary>
         /// BadgeCountActiveComissions control.
         /// </summary>
         /// <remarks>
@@ -146,5 +182,23 @@ namespace PW_TP.Account {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label BadgeCountActiveComissions;
+        
+        /// <summary>
+        /// BadgeCountPendingComissions control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label BadgeCountPendingComissions;
+        
+        /// <summary>
+        /// BadgeComissions control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label BadgeComissions;
     }
 }

@@ -21,7 +21,7 @@
                 <ul class="nav nav-tabs" id="mytabs" role="tablist">
                     <li class="active"><a aria-expanded="true" role="tab"  href="#tab1" data-toggle="tab">Informação   </a></li>
                     <li><a aria-expanded="true" role="tab"  href="#tab2" data-toggle="tab">Criar Comissão</a></li>
-                    <li><a aria-expanded="true" role="tab"  href="#tab3" data-toggle="tab">Comissões Ativas   <span class="badge"><%= BadgeCountActiveComissions.Text%></span></a></li>
+                    <li><a aria-expanded="true" role="tab"  href="#tab3" data-toggle="tab">Comissões Ativas   <span class="badge"><%= BadgeComissions.Text%></span></a></li>
                 </ul>
                 <br />
                 <div class="tab-content"  id="myTabContent">
@@ -38,7 +38,7 @@
                     <div class="tab-pane fade" id="tab2">
                          <br /><br />
                         <div class="form-horizontal col-md-6">
-                            <h4>Crie uma Comissão</h4>
+                            <h3>Crie uma Comissão</h3>
                             <hr />
                             <p class="text-danger">
                                 <asp:Literal runat="server" ID="ErrorMessage" />
@@ -103,14 +103,55 @@
                                 <asp:Button ID="BtnCreateComission" runat="server" CssClass="btn btn-primary col-md-3 col-md-offset-1" Text="Criar Comissão" OnClick="BtnCreateComission_Click" />
                             </div>
                         </div>
-                    <div class="tab-pane fade active in" id="tab3">
-       
-                    </div>
-                        </div>    
+                    
+                        </div>  
+                    <div class="tab-pane fade" id="tab3">
+                        <div class="form-group">
+                            <h3>Comissões Aceites - <%=BadgeCountActiveComissions.Text %></h3>
+                        <asp:SqlDataSource ID="SQLDSActiveComissions" runat="server" ConnectionString='<%$ ConnectionStrings:DefaultConnection %>' SelectCommand="GetActiveComissions" SelectCommandType="StoredProcedure">
+                            <SelectParameters>
+                                <asp:Parameter DefaultValue="1" Name="param1" Type="Int32"></asp:Parameter>
+                            </SelectParameters>
+                        </asp:SqlDataSource>
+                        <asp:GridView ID="GridViewActiveComissions" runat="server" ShowHeaderWhenEmpty="true" Width="1000px" CssClass="list-group-item table-condensed table-hover table-responsive" AllowPaging="True"  AutoGenerateColumns="false" DataSourceID="SQLDSActiveComissions">
+                            <Columns>
+                                <asp:BoundField DataField="CreationDate" HeaderText="Data de Criação" SortExpression="CreationDate"></asp:BoundField>
+                                <asp:CheckBoxField DataField="Accepted" HeaderText="Aceite" SortExpression="Accepted"></asp:CheckBoxField>
+                                <asp:BoundField DataField="BicycleModel" HeaderText="Modelo da Bicicleta" SortExpression="BicycleModel"></asp:BoundField>
+                                <asp:BoundField DataField="BicycleType" HeaderText="Tipo da Bicicleta" SortExpression="BicycleType"></asp:BoundField>
+                                <asp:BoundField DataField="YearOfAquisition" HeaderText="Ano de Aquisição" SortExpression="YearOfAquisition"></asp:BoundField>
+                                <asp:BoundField DataField="WorkshopName" HeaderText="Oficina Encarregue" SortExpression="WorkshopName"></asp:BoundField>
+                                <asp:BoundField DataField="Details" HeaderText="Detalhes" SortExpression="Details"></asp:BoundField>
+                            </Columns>
+                        </asp:GridView>
+                            </div>
+                        <br /><br />    
+                        <div class="form-group">
+                            <h3>Comissões Pendentes - <%=BadgeCountPendingComissions.Text %></h3>
+                            <asp:SqlDataSource ID="SQLDSPendingComissions" runat="server" ConnectionString='<%$ ConnectionStrings:DefaultConnection %>' SelectCommand="GetPendingComissions" SelectCommandType="StoredProcedure">
+                                <SelectParameters>
+                                    <asp:Parameter DefaultValue="0" Name="param1" Type="Int32"></asp:Parameter>
+                                </SelectParameters>
+                            </asp:SqlDataSource>
+                        <asp:GridView ID="GridViewComissionsPending" runat="server"  ShowHeaderWhenEmpty="true" Width="1000px" CssClass="list-group-item table-condensed table-hover table-responsive" AllowPaging="True"  AutoGenerateColumns="false" DataSourceID="SQLDSPendingComissions">
+                            <Columns>
+                                <asp:BoundField DataField="CreationDate" HeaderText="Data de criação" SortExpression="CreationDate"></asp:BoundField>
+                                <asp:CheckBoxField DataField="Accepted" HeaderText="Aceite" SortExpression="Accepted"></asp:CheckBoxField>
+                                <asp:BoundField DataField="BicycleModel" HeaderText="Modelo da Bicicleta" SortExpression="BicycleModel"></asp:BoundField>
+                                <asp:BoundField DataField="BicycleType" HeaderText="Tipo da Bicicleta" SortExpression="BicycleType"></asp:BoundField>
+                                <asp:BoundField DataField="YearOfAquisition" HeaderText="Ano de Aquisição" SortExpression="YearOfAquisition"></asp:BoundField>
+                                <asp:BoundField DataField="WorkshopName" HeaderText="Oficina Encarregue" SortExpression="WorkshopName"></asp:BoundField>
+                                <asp:BoundField DataField="Details" HeaderText="Detalhes" SortExpression="Details"></asp:BoundField>
+                            </Columns>
+                        </asp:GridView>
+                            </div>
+
+                    </div>  
                     
                 </div>
                 <asp:Label ID="BadgeCountActiveComissions" runat="server" Visible="false"></asp:Label>
-                
+                <asp:Label ID="BadgeCountPendingComissions" runat="server" Visible="false"></asp:Label>
+                <asp:Label ID="BadgeComissions" runat="server" Visible="false"></asp:Label>
             </ContentTemplate>
         </asp:UpdatePanel>
     </div>
