@@ -8,6 +8,8 @@ using PW_TP.App_Classes;
 using PW_TP.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace PW_TP.Account
 {
@@ -16,7 +18,8 @@ namespace PW_TP.Account
         protected void Page_Init(object sender, EventArgs e)
         {
             UpdateBadges();
-
+            
+            
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -28,6 +31,8 @@ namespace PW_TP.Account
             if (!Page.IsPostBack)
             {
                 
+                PopulateGridViews();
+                
             }
         }
 
@@ -36,23 +41,69 @@ namespace PW_TP.Account
             
             int Ano;
             int.TryParse(TbAno.Text, out Ano);
+            
             ApplicationDbContext context = new ApplicationDbContext();
             var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
             var user = UserManager.FindById(User.Identity.GetUserId());
-            
+
             ComissionFuncs.CreateComission(TbModelo.Text, DdlTipo.SelectedValue, DdlOficinas.SelectedValue, Ano, TbDetails.Text, user.Id);
             Response.Redirect("ComissionCreated.aspx");
         }
 
         protected void UpdateBadges()
         {
-            int value = ComissionFuncs.CountActiveComissions();
+            ApplicationDbContext context = new ApplicationDbContext();
+            var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+            string user = User.Identity.GetUserId();
+
+            int value = ComissionFuncs.CountActiveComissions(user);
             BadgeCountActiveComissions.Text  = value.ToString();
-            int value2 = ComissionFuncs.CountPendingComissions();
+            int value2 = ComissionFuncs.CountPendingComissions(user);
             BadgeCountPendingComissions.Text = value2.ToString();
             BadgeComissions.Text = (value2 + value).ToString();
         }
 
-       
+        protected void PopulateGridViews()
+        {
+            ApplicationDbContext context = new ApplicationDbContext();
+            var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+            var user = UserManager.FindById(User.Identity.GetUserId());
+
+            string storedprocedure = "GetActiveComissions";
+            SqlConnection cn = GetSqlCon.GetCon();
+
+            DataTable dt = new DataTable();
+            SqlCommand cmd = new SqlCommand(storedprocedure, cn);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@param1", user.Id);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            da.Fill(dt);
+            GridViewActiveComissions.DataSource = dt;
+            GridViewActiveComissions.DataBind();
+
+            string storedprocedure2 = "GetPendingComissions";
+            SqlConnection cn2 = GetSqlCon.GetCon();
+
+            DataTable dt2 = new DataTable();
+            SqlCommand cmd2 = new SqlCommand(storedprocedure2, cn2);
+            cmd2.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd2.Parameters.AddWithValue("@param1", user.Id);
+            SqlDataAdapter da2 = new SqlDataAdapter(cmd2);
+            da2.Fill(dt2);
+            GridViewComissionsPending.DataSource = dt2;
+            GridViewComissionsPending.DataBind();
+
+            string storedprocedure3 = "HistoryOfcomissions";
+            SqlConnection cn3 = GetSqlCon.GetCon();
+
+            DataTable dt3 = new DataTable();
+            SqlCommand cmd3 = new SqlCommand(storedprocedure3, cn3);
+            cmd3.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd3.Parameters.AddWithValue("@param1", user.Id);
+            SqlDataAdapter da3 = new SqlDataAdapter(cmd3);
+            da3.Fill(dt3);
+            HistoryOfComissions.DataSource = dt3;
+            HistoryOfComissions.DataBind();
+        }
     }
 }

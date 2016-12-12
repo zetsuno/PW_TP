@@ -68,13 +68,13 @@ namespace PW_TP.App_Classes
             return workshopid;
         }
 
-        public static int CountActiveComissions()
+        public static int CountActiveComissions(string id)
         {
             SqlConnection SqlCon = GetSqlCon.GetCon();
             int value;
             SqlCommand cmd = new SqlCommand("CountActiveComissions", SqlCon);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@param1", 1);
+            cmd.Parameters.AddWithValue("@param1", id);
 
             try
             {
@@ -90,13 +90,13 @@ namespace PW_TP.App_Classes
             return value;
         }
 
-        public static int CountPendingComissions()
+        public static int CountPendingComissions(string id)
         {
             SqlConnection SqlCon = GetSqlCon.GetCon();
             int value;
             SqlCommand cmd = new SqlCommand("CountPendingComissions", SqlCon);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@param1", 0);
+            cmd.Parameters.AddWithValue("@param1", id);
 
             try
             {
