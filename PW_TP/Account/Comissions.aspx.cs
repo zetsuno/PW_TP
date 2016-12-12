@@ -69,6 +69,7 @@ namespace PW_TP.Account
             var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
             var user = UserManager.FindById(User.Identity.GetUserId());
 
+            //Active
             string storedprocedure = "GetActiveComissions";
             SqlConnection cn = GetSqlCon.GetCon();
 
@@ -81,6 +82,7 @@ namespace PW_TP.Account
             GridViewActiveComissions.DataSource = dt;
             GridViewActiveComissions.DataBind();
 
+            //Pending
             string storedprocedure2 = "GetPendingComissions";
             SqlConnection cn2 = GetSqlCon.GetCon();
 
@@ -93,6 +95,7 @@ namespace PW_TP.Account
             GridViewComissionsPending.DataSource = dt2;
             GridViewComissionsPending.DataBind();
 
+            //History
             string storedprocedure3 = "HistoryOfcomissions";
             SqlConnection cn3 = GetSqlCon.GetCon();
 
