@@ -25,7 +25,7 @@
                                 <asp:BoundField DataField="BicycleType" HeaderText="Tipo da Bicicleta" SortExpression="BicycleType"></asp:BoundField>
                                 <asp:BoundField DataField="YearOfAquisition" HeaderText="Ano de Aquisição" SortExpression="YearOfAquisition"></asp:BoundField>
                                 <asp:BoundField DataField="Details" HeaderText="Detalhes" SortExpression="Details"></asp:BoundField>
-                                <asp:BoundField DataField="UserName" HeaderText="Nome de Utilizador" SortExpression="UserName"></asp:BoundField>
+                                <asp:BoundField DataField="DisplayName" HeaderText="Nome de Utilizador" SortExpression="DisplayName"></asp:BoundField>
                                 <asp:BoundField DataField="Email" HeaderText="Email" SortExpression="Email"></asp:BoundField>
                             </Columns>
                          </asp:GridView>
@@ -40,7 +40,7 @@
                                 <asp:BoundField DataField="BicycleType" HeaderText="Tipo da Bicicleta" SortExpression="BicycleType"></asp:BoundField>
                                 <asp:BoundField DataField="YearOfAquisition" HeaderText="Ano de Aquisição" SortExpression="YearOfAquisition"></asp:BoundField>
                                 <asp:BoundField DataField="Details" HeaderText="Detalhes" SortExpression="Details"></asp:BoundField>
-                                <asp:BoundField DataField="UserName" HeaderText="Nome de Utilizador" SortExpression="UserName"></asp:BoundField>
+                                <asp:BoundField DataField="DisplayName" HeaderText="Nome de Utilizador" SortExpression="DisplayName"></asp:BoundField>
                                 <asp:BoundField DataField="Email" HeaderText="Email" SortExpression="Email"></asp:BoundField>
                             </Columns>
                          </asp:GridView>
@@ -55,7 +55,7 @@
                                 <asp:BoundField DataField="BicycleType" HeaderText="Tipo da Bicicleta" SortExpression="BicycleType"></asp:BoundField>
                                 <asp:BoundField DataField="YearOfAquisition" HeaderText="Ano de Aquisição" SortExpression="YearOfAquisition"></asp:BoundField>
                                 <asp:BoundField DataField="Details" HeaderText="Detalhes" SortExpression="Details"></asp:BoundField>
-                                <asp:BoundField DataField="UserName" HeaderText="Nome de Utilizador" SortExpression="UserName"></asp:BoundField>
+                                <asp:BoundField DataField="DisplayName" HeaderText="Nome de Utilizador" SortExpression="DisplayName"></asp:BoundField>
                                 <asp:BoundField DataField="Email" HeaderText="Email" SortExpression="Email"></asp:BoundField>
                             </Columns>
                          </asp:GridView>
