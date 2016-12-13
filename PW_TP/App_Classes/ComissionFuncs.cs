@@ -111,6 +111,77 @@ namespace PW_TP.App_Classes
 
             return value;
         }
+
+        public static int CountActiveComissionsWorkshop(string id)
+        {
+            SqlConnection SqlCon = GetSqlCon.GetCon();
+            int value;
+            SqlCommand cmd = new SqlCommand("CountActiveComissionsWorkshop", SqlCon);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@param1", id);
+
+            try
+            {
+                SqlCon.Open();
+                value = (int)cmd.ExecuteScalar();
+                SqlCon.Close();
+            }
+            catch
+            {
+                throw;
+            }
+
+            return value;
+
+        }
+
+        public static int CountPendingComissionsWorkshop(string id)
+        {
+
+            SqlConnection SqlCon = GetSqlCon.GetCon();
+            int value;
+            SqlCommand cmd = new SqlCommand("CountPendingComissionsWorkshop", SqlCon);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@param1", id);
+
+            try
+            {
+                SqlCon.Open();
+                value = (int)cmd.ExecuteScalar();
+                SqlCon.Close();
+            }
+            catch
+            {
+                throw;
+            }
+
+            return value;
+
+        }
+
+        public static void ActivateComission(int id)
+        {
+
+            SqlConnection SqlCon = GetSqlCon.GetCon();
+
+            SqlCommand cmd = new SqlCommand("ActivateComission", SqlCon);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@param1", id);
+           
+
+            try
+            {
+                SqlCon.Open();
+                cmd.ExecuteNonQuery();
+                SqlCon.Close();
+            }
+            catch
+            {
+                throw;
+            }
+
+        }
     }
 
         

@@ -10,6 +10,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using PW_TP.App_Classes;
+using System.Globalization;
 
 namespace PW_TP.Workshop
 {
@@ -23,7 +24,7 @@ namespace PW_TP.Workshop
             }
             if (!Page.IsPostBack)
             {
-
+                UpdateBadges();
                 PopulateGridViews();
 
             }
@@ -74,6 +75,51 @@ namespace PW_TP.Workshop
             HistoryOfComissions.DataSource = dt3;
             HistoryOfComissions.DataBind();
 
+            //Clients
+            string storedprocedure4 = "GetWorkshopClients";
+            SqlConnection cn4 = GetSqlCon.GetCon();
+
+            DataTable dt4 = new DataTable();
+            SqlCommand cmd4 = new SqlCommand(storedprocedure4, cn4);
+            cmd4.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd4.Parameters.AddWithValue("@param1", user.Id);
+            SqlDataAdapter da4 = new SqlDataAdapter(cmd4);
+            da4.Fill(dt4);
+            Clientes.DataSource = dt4;
+            Clientes.DataBind();
+
+        }
+
+        protected void UpdateBadges()
+        {
+
+            ApplicationDbContext context = new ApplicationDbContext();
+            var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+            string user = User.Identity.GetUserId();
+
+            int value = ComissionFuncs.CountActiveComissionsWorkshop(user);
+            LabelComissoesAtivas.Text = value.ToString();
+            int value2 = ComissionFuncs.CountPendingComissionsWorkshop(user);
+            LabelComissoesPendentes.Text = value2.ToString();
+
+        }
+
+        protected void PendingComissions_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+
+            if (e.CommandName == "AcceptComission")
+            {
+                int index = Convert.ToInt32(e.CommandArgument), id;
+                GridViewRow row = PendingComissions.Rows[index];
+                int.TryParse(row.Cells[1].Text, out id);
+                
+                ComissionFuncs.ActivateComission(id);
+                
+            }
+
+            UpdateBadges();
+            PopulateGridViews();
+            WorkshopUpdatePanel.Update();
         }
     }
 }

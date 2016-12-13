@@ -13,13 +13,13 @@ namespace PW_TP.Workshop {
     public partial class Comissions {
         
         /// <summary>
-        /// EditTablesUpdatePanel control.
+        /// WorkshopUpdatePanel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel EditTablesUpdatePanel;
+        protected global::System.Web.UI.UpdatePanel WorkshopUpdatePanel;
         
         /// <summary>
         /// ActiveComissions control.
@@ -47,6 +47,15 @@ namespace PW_TP.Workshop {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView HistoryOfComissions;
+        
+        /// <summary>
+        /// Clientes control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView Clientes;
         
         /// <summary>
         /// LabelComissoesAtivas control.
