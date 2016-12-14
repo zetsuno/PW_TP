@@ -17,8 +17,14 @@
                 <div class="tab-content"  id="myTabContent">
                     <div class="tab-pane fade active in" id="tab1">
                         <h3>Comissões Ativas - <%= LabelComissoesAtivas.Text%></h3><br />
-                         <asp:GridView ID="ActiveComissions" runat="server" ShowHeaderWhenEmpty="true" Width="1000px" CssClass="list-group-item table-condensed table-hover table-responsive" AllowPaging="True"  AutoGenerateColumns="false">
+                         <asp:GridView ID="ActiveComissions" runat="server" ShowHeaderWhenEmpty="true" Width="1000px" CssClass="list-group-item table-condensed table-hover table-responsive" AllowPaging="True"  AutoGenerateColumns="false" OnRowCommand="Comissions_RowCommand">
                               <Columns>
+                                  <asp:TemplateField ShowHeader="false">
+                                    <ItemTemplate>
+                                        <asp:Button ID="BtnConcludeComission" runat="server" CssClass="btn btn-success" CausesValidation="false" CommandName="ConcludeComission"
+                                            Text="Concluir" CommandArgument="<%# ((GridViewRow) Container).RowIndex%>" Width="100px" Visible="true"  OnClientClick="return confirm('De certeza que quer concluir a comissão?')"/>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
                                 <asp:BoundField DataField="ComissionNo" HeaderText="Identificador da Comissão" SortExpression="ComissionNo"></asp:BoundField>
                                 <asp:BoundField DataField="CreationDate" HeaderText="Data de Criação" SortExpression="CreationDate"></asp:BoundField>
                                 <asp:CheckBoxField DataField="Accepted" HeaderText="Aceite" SortExpression="Accepted"></asp:CheckBoxField>
@@ -33,12 +39,14 @@
                     </div>
                     <div class="tab-pane fade" id="tab2">
                         <h3>Comissões Pendentes - <%= LabelComissoesPendentes.Text%></h3><br />
-                         <asp:GridView ID="PendingComissions" runat="server" ShowHeaderWhenEmpty="true" Width="1000px" CssClass="list-group-item table-condensed table-hover table-responsive" AllowPaging="True"  AutoGenerateColumns="false" OnRowCommand="PendingComissions_RowCommand">
+                         <asp:GridView ID="PendingComissions" runat="server" ShowHeaderWhenEmpty="true" Width="1000px" CssClass="list-group-item table-condensed table-hover table-responsive" AllowPaging="True"  AutoGenerateColumns="false" OnRowCommand="Comissions_RowCommand">
                              <Columns>
-                                 <asp:TemplateField ShowHeader="False">
+                                <asp:TemplateField ShowHeader="false">
                                     <ItemTemplate>
                                         <asp:Button ID="BtnAcceptComission" runat="server" CssClass="btn btn-success" CausesValidation="false" CommandName="AcceptComission"
-                                            Text="Aceitar Comissão" CommandArgument="<%# ((GridViewRow) Container).RowIndex%>" OnClientClick="return confirm('De certeza que quer aceitar a comissão?'); " />
+                                            Text="Aceitar" CommandArgument="<%# ((GridViewRow) Container).RowIndex%>" Width="100px" Visible="true"  OnClientClick="return confirm('De certeza que quer aceitar a comissão?')"/>
+                                        <asp:Button ID="BtnRejectComission" runat="server" CssClass="btn btn-danger" CausesValidation="false" CommandName="RejectComission"
+                                            Text="Rejeitar" CommandArgument="<%# ((GridViewRow) Container).RowIndex%>" Width="100px" OnClientClick="return confirm('De certeza que quer rejeitar a comissão?')" Visible="true" />  
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:BoundField DataField="ComissionNo" HeaderText="Identificador da Comissão" SortExpression="ComissionNo"></asp:BoundField>

@@ -104,7 +104,7 @@ namespace PW_TP.Workshop
 
         }
 
-        protected void PendingComissions_RowCommand(object sender, GridViewCommandEventArgs e)
+        protected void Comissions_RowCommand(object sender, GridViewCommandEventArgs e)
         {
 
             if (e.CommandName == "AcceptComission")
@@ -115,6 +115,26 @@ namespace PW_TP.Workshop
                 
                 ComissionFuncs.ActivateComission(id);
                 
+            }
+            if (e.CommandName == "RejectComission")
+            {
+                int index = Convert.ToInt32(e.CommandArgument), id;
+                GridViewRow row = PendingComissions.Rows[index];
+                int.TryParse(row.Cells[1].Text, out id);
+
+                ComissionFuncs.RejectComission(id);
+
+            }
+            if (e.CommandName == "ConcludeComission")
+            {
+                int index = Convert.ToInt32(e.CommandArgument), id;
+                GridViewRow row = ActiveComissions.Rows[index];
+                int.TryParse(row.Cells[1].Text, out id);
+
+                LabelComissoesAtivas.Text = id.ToString();
+
+                ComissionFuncs.ConcludeComission(id);
+
             }
 
             UpdateBadges();
