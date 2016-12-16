@@ -27,7 +27,7 @@ namespace PW_TP.App_Classes
                 context.SaveChanges();
                 
             }
-            catch
+            catch(Exception)
             {
                 throw;
             }

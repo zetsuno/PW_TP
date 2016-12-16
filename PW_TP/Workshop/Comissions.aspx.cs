@@ -16,6 +16,12 @@ namespace PW_TP.Workshop
 {
     public partial class Comissions : System.Web.UI.Page
     {
+        protected void Page_Init(object sender, EventArgs e)
+        {
+            PopulateGridViews();
+            UpdateBadges();
+
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!User.Identity.IsAuthenticated)
@@ -24,10 +30,10 @@ namespace PW_TP.Workshop
             }
             if (!Page.IsPostBack)
             {
-                UpdateBadges();
-                PopulateGridViews();
+              
 
             }
+         
         }
 
         protected void PopulateGridViews()
@@ -112,7 +118,7 @@ namespace PW_TP.Workshop
                 int index = Convert.ToInt32(e.CommandArgument), id;
                 GridViewRow row = PendingComissions.Rows[index];
                 int.TryParse(row.Cells[1].Text, out id);
-                
+                LabelComissoesPendentes.Text = id.ToString();
                 ComissionFuncs.ActivateComission(id);
                 
             }
@@ -121,7 +127,7 @@ namespace PW_TP.Workshop
                 int index = Convert.ToInt32(e.CommandArgument), id;
                 GridViewRow row = PendingComissions.Rows[index];
                 int.TryParse(row.Cells[1].Text, out id);
-
+               
                 ComissionFuncs.RejectComission(id);
 
             }

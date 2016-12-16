@@ -24,16 +24,25 @@ namespace PW_TP.Account
 
         protected void Page_Load(object sender, EventArgs e)
         {
+
             if (!User.Identity.IsAuthenticated)
             {
                 Response.Redirect("~/UnauthorizedAccess.aspx");     
             }
+
             if (!Page.IsPostBack)
             {
+
+                GridViewActiveComissions.DataBind();
+                GridViewComissionsPending.DataBind();
+                HistoryOfComissions.DataBind();
+                UpdateBadges();
                 
-                PopulateGridViews();
                 
             }
+
+            PopulateGridViews();
+            UpdateBadges();
         }
 
         protected void BtnCreateComission_Click(object sender, EventArgs e)
@@ -44,9 +53,9 @@ namespace PW_TP.Account
             
             ApplicationDbContext context = new ApplicationDbContext();
             var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
-            var user = UserManager.FindById(User.Identity.GetUserId());
-
-            ComissionFuncs.CreateComission(TbModelo.Text, DdlTipo.SelectedValue, DdlOficinas.SelectedValue, Ano, TbDetails.Text, user.Id);
+            string user = User.Identity.GetUserId();
+            
+            ComissionFuncs.CreateComission(TbModelo.Text, DdlTipo.SelectedValue, DdlOficinas.SelectedValue, Ano, TbDetails.Text, user);
             Response.Redirect("ComissionCreated.aspx");
         }
 
