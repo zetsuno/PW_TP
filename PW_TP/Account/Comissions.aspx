@@ -1,8 +1,11 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Comissions.aspx.cs" Inherits="PW_TP.Account.Comissions" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+    <link href="../Content/star-rating.css" media="all" rel="stylesheet" type="text/css" />
+    <script src="../Scripts/star-rating.js" type="text/javascript"></script>
     <script src="../Scripts/jquery-3.1.1.min.js"></script>
     <script src="../Scripts/bootstrap.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="../Scripts/locales/pt-BR.js"></script>
     <script>
         $(document).ready(function () {
             $('.dropdown-toggle').dropdown();
@@ -14,6 +17,14 @@
                 //alert("test");
                 e.preventDefault();
                 $('#mytabs a[href="#tab2"]').tab('show');
+            })
+        }) 
+    </script>
+    <script>
+        $(function () {
+            $('#star-input').click(function (e) {
+                //alert("test");
+                document.getElementById('ratings').value = document.getElementById('star-input').value;
             })
         }) 
     </script>
@@ -116,6 +127,7 @@
                         
                         <asp:GridView ID="GridViewActiveComissions" runat="server" ShowHeaderWhenEmpty="true" Width="1000px" CssClass="list-group-item table-condensed table-hover table-responsive" AllowPaging="True"  AutoGenerateColumns="false" >
                             <Columns>
+                                <asp:BoundField DataField="ComissionNo" HeaderText="Identificador da Comissão" SortExpression="ComissionNo"></asp:BoundField>
                                 <asp:BoundField DataField="CreationDate" HeaderText="Data de Criação" SortExpression="CreationDate"></asp:BoundField>
                                 <asp:CheckBoxField DataField="Accepted" HeaderText="Aceite" SortExpression="Accepted"></asp:CheckBoxField>
                                 <asp:BoundField DataField="BicycleModel" HeaderText="Modelo da Bicicleta" SortExpression="BicycleModel"></asp:BoundField>
@@ -132,6 +144,7 @@
                            
                         <asp:GridView ID="GridViewComissionsPending" runat="server"  ShowHeaderWhenEmpty="true" Width="1000px" CssClass="list-group-item table-condensed table-hover table-responsive" AllowPaging="True"  AutoGenerateColumns="false">
                             <Columns>
+                                <asp:BoundField DataField="ComissionNo" HeaderText="Identificador da Comissão" SortExpression="ComissionNo"></asp:BoundField>
                                 <asp:BoundField DataField="CreationDate" HeaderText="Data de criação" SortExpression="CreationDate"></asp:BoundField>
                                 <asp:CheckBoxField DataField="Accepted" HeaderText="Aceite" SortExpression="Accepted"></asp:CheckBoxField>
                                 <asp:BoundField DataField="BicycleModel" HeaderText="Modelo da Bicicleta" SortExpression="BicycleModel"></asp:BoundField>
@@ -146,8 +159,9 @@
                     </div> 
                     <div class="tab-pane fade" id="tab4">
                         <h3>Comissões Concluídas</h3>
-                         <asp:GridView ID="HistoryOfComissions" runat="server" ShowHeaderWhenEmpty="true" Width="1000px" CssClass="list-group-item table-condensed table-hover table-responsive" AllowPaging="True"  AutoGenerateColumns="false">
+                         <asp:GridView ID="HistoryOfComissions" runat="server" ShowHeaderWhenEmpty="true" Width="1200px" CssClass="list-group-item table-condensed table-hover table-responsive" AllowPaging="True"  AutoGenerateColumns="false" OnRowCommand="Comissions_RowCommand">
                         <Columns>
+                                <asp:BoundField DataField="ComissionNo" HeaderText="Identificador da Comissão" SortExpression="ComissionNo"></asp:BoundField>
                                 <asp:BoundField DataField="CreationDate" HeaderText="Data de criação" SortExpression="CreationDate"></asp:BoundField>
                                 <asp:CheckBoxField DataField="Accepted" HeaderText="Aceite" SortExpression="Accepted"></asp:CheckBoxField>
                                 <asp:BoundField DataField="BicycleModel" HeaderText="Modelo da Bicicleta" SortExpression="BicycleModel"></asp:BoundField>
@@ -155,6 +169,17 @@
                                 <asp:BoundField DataField="YearOfAquisition" HeaderText="Ano de Aquisição" SortExpression="YearOfAquisition"></asp:BoundField>
                                 <asp:BoundField DataField="WorkshopName" HeaderText="Oficina Encarregue" SortExpression="WorkshopName"></asp:BoundField>
                                 <asp:BoundField DataField="Details" HeaderText="Detalhes" SortExpression="Details"></asp:BoundField>
+                             <asp:TemplateField ShowHeader="true" HeaderText="Avalie o Serviço" ItemSTyle-Width="100px">
+                                    <ItemTemplate>
+                                        <input id="starating" runat="server" name="input-4" type="number" class="rating rating-loading" data-show-clear="false" data-show-caption="false" data-min="0" data-max="5" data-step="1">
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                            <asp:TemplateField ShowHeader="false" ItemSTyle-Width="100px">
+                                    <ItemTemplate>  
+                                        <asp:Button ID="BtnSubmitRating" runat="server" CssClass="btn btn-success" CausesValidation="false" CommandName="SubmitRating"
+                                            Text="Submeter" CommandArgument="<%# ((GridViewRow) Container).RowIndex%>" Width="100px"/>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
                             </Columns>
                         </asp:GridView>
                     </div>
@@ -163,6 +188,7 @@
                 <asp:Label ID="BadgeCountActiveComissions" runat="server" Visible="false"></asp:Label>
                 <asp:Label ID="BadgeCountPendingComissions" runat="server" Visible="false"></asp:Label>
                 <asp:Label ID="BadgeComissions" runat="server" Visible="false"></asp:Label>
+                
             </ContentTemplate>
         </asp:UpdatePanel>
     </div>

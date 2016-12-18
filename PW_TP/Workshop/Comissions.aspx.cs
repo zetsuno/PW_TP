@@ -18,16 +18,18 @@ namespace PW_TP.Workshop
     {
         protected void Page_Init(object sender, EventArgs e)
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                Response.Redirect("~/UnauthorizedAccess.aspx");
+            }
+
             PopulateGridViews();
             UpdateBadges();
 
         }
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!User.Identity.IsAuthenticated)
-            {
-                Response.Redirect("~/UnauthorizedAccess.aspx");
-            }
+           
             if (!Page.IsPostBack)
             {
               
@@ -127,7 +129,6 @@ namespace PW_TP.Workshop
                 int index = Convert.ToInt32(e.CommandArgument), id;
                 GridViewRow row = PendingComissions.Rows[index];
                 int.TryParse(row.Cells[1].Text, out id);
-               
                 ComissionFuncs.RejectComission(id);
 
             }

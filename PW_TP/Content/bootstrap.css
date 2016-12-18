@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Roboto:400,500,700");
+﻿@import url("https://fonts.googleapis.com/css?family=Roboto:400,500,700");
 /*!
  * bootswatch v3.3.7
  * Homepage: http://bootswatch.com
@@ -7008,4 +7008,82 @@ input:focus,
   background-color: transparent;
 }
 .ddl-control[disabled],
-.ddl-control[readonly],
+.ddl-control[readonly]
+
+.rating {
+
+margin: 0;
+
+padding: 0;
+
+list-style: none;
+
+clear: both;
+
+width: 75px;
+
+height: 15px;
+
+background-image: url(stars.gif);
+
+background-repeat: no-repeat;
+
+position: relative;
+
+}
+
+.rating li {
+
+text-indent: −9999em;
+
+float: left; /* for IE6 */
+
+}
+
+.rating li a {
+
+position: absolute;
+
+top: 0;
+
+left: 0;
+
+z-index: 20;
+
+height: 15px;
+
+width: 15px;
+
+display: block;
+
+}
+
+.rating .one a {
+
+left: 0;
+
+}
+
+.rating .two a {
+
+left: 15px;
+
+}
+
+.rating .three a {
+
+left: 30px;
+
+}
+
+.rating .four a {
+
+left: 45px;
+
+}
+
+.rating .five a {
+
+left: 60px;
+
+}

@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Data.SqlClient;
 using System.Data;
+using System.Web.UI.HtmlControls;
 
 namespace PW_TP.Account
 {
@@ -17,18 +18,21 @@ namespace PW_TP.Account
     {
         protected void Page_Init(object sender, EventArgs e)
         {
+
+            if (!User.Identity.IsAuthenticated)
+            {
+                Response.Redirect("~/UnauthorizedAccess.aspx");
+            }
+
+            PopulateGridViews();
+            GetRatings();
             UpdateBadges();
-            
-            
+
+
         }
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            if (!User.Identity.IsAuthenticated)
-            {
-                Response.Redirect("~/UnauthorizedAccess.aspx");     
-            }
 
             if (!Page.IsPostBack)
             {
@@ -36,13 +40,35 @@ namespace PW_TP.Account
                 GridViewActiveComissions.DataBind();
                 GridViewComissionsPending.DataBind();
                 HistoryOfComissions.DataBind();
+                GetRatings();
                 UpdateBadges();
-                
-                
-            }
 
-            PopulateGridViews();
-            UpdateBadges();
+
+            }       
+        }
+
+        protected void GetRatings()
+        {
+            int value;
+
+            foreach (GridViewRow row in HistoryOfComissions.Rows)
+            {
+               
+                value = ComissionFuncs.FillRatings(row.Cells[0].Text);
+                if (value != -1)
+                {
+                    ((HtmlInputGenericControl)row.FindControl("starating")).Value = value.ToString();
+                    ((HtmlInputGenericControl)row.FindControl("starating")).Attributes.Add("readonly", "true");
+                    Button btnSubmitRating = row.FindControl("BtnSubmitRating") as Button;
+                    btnSubmitRating.Visible = false;
+                }
+                else
+                {
+                    
+                }
+                
+
+            }
         }
 
         protected void BtnCreateComission_Click(object sender, EventArgs e)
@@ -90,6 +116,7 @@ namespace PW_TP.Account
             da.Fill(dt);
             GridViewActiveComissions.DataSource = dt;
             GridViewActiveComissions.DataBind();
+            cn.Close();
 
             //Pending
             string storedprocedure2 = "GetPendingComissions";
@@ -103,6 +130,7 @@ namespace PW_TP.Account
             da2.Fill(dt2);
             GridViewComissionsPending.DataSource = dt2;
             GridViewComissionsPending.DataBind();
+            cn2.Close();
 
             //History
             string storedprocedure3 = "HistoryOfcomissions";
@@ -116,6 +144,21 @@ namespace PW_TP.Account
             da3.Fill(dt3);
             HistoryOfComissions.DataSource = dt3;
             HistoryOfComissions.DataBind();
+            cn3.Close();
+        }
+
+        protected void Comissions_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "SubmitRating")
+            {
+
+                int index = Convert.ToInt32(e.CommandArgument), id, rating;
+                GridViewRow row = HistoryOfComissions.Rows[index];
+                int.TryParse(row.Cells[0].Text, out id);
+                int.TryParse(((HtmlInputGenericControl)row.FindControl("starating")).Value, out rating);
+                ComissionFuncs.SetRating(id, rating);
+                Response.Redirect("~/Account/Comissions.aspx");
+            }
         }
     }
 }

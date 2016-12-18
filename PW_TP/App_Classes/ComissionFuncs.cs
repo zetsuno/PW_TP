@@ -226,6 +226,51 @@ namespace PW_TP.App_Classes
                 throw;
             }
         }
+        public static int FillRatings(string id)
+        {
+            SqlConnection SqlCon = GetSqlCon.GetCon();
+            int value;
+            SqlCommand cmd = new SqlCommand("GetRatings", SqlCon);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@param1", id);
+
+            try
+            {
+                SqlCon.Open();
+                value = (int)cmd.ExecuteScalar();
+                SqlCon.Close();
+            }
+            catch
+            {
+                throw;
+            }
+
+            return value;
+        }
+
+        public static void SetRating(int id, int rating) 
+        {
+
+            SqlConnection SqlCon = GetSqlCon.GetCon();
+
+            SqlCommand cmd = new SqlCommand("SetRating", SqlCon);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@param1", id);
+            cmd.Parameters.AddWithValue("@param2", rating);
+
+            try
+            {
+                SqlCon.Open();
+                cmd.ExecuteNonQuery();
+                SqlCon.Close();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
     }
         
 }
