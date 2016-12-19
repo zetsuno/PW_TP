@@ -8,11 +8,14 @@
             <ContentTemplate>
                 <ul class="nav nav-tabs">
                     <li class="active"><a aria-expanded="true" href="#total" data-toggle="tab">Total   <span class="badge"><%= BadgeCountAll.Text%></span></a></li>
-                    <li><a aria-expanded="true" href="#toverify" data-toggle="tab">To Verify   <span class="badge"><%= BadgeCountToVerify.Text%></span></a></li>
+                    <li><a aria-expanded="true" href="#toverify" data-toggle="tab">To Verify   <span class="badge"><%= BadgeCountToVerify.Text%></span></a></li>    
                 </ul>
                 <br />
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade active in" id="total">
+                        <br />
+                        <h3>Users - <%=BadgeCountAll.Text %></h3>
+                        <br />
                         <asp:SqlDataSource ID="SqlDSAdminTable" runat="server" ConnectionString="<%$ ConnectionStrings:DefaultConnection %>" SelectCommand="SELECT * FROM [AspNetUsers]"></asp:SqlDataSource>
                         <asp:GridView ID="GridViewTotal" runat="server" CssClass="list-group-item table-condensed table-hover table-responsive" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="false" DataKeyNames="Id" DataSourceID="SqlDSAdminTable" OnRowCommand="GridViewTotal_RowCommand" OnRowDataBound="GridViewTotal_RowDataBound" OnRowUpdating="GridViewTotal_RowUpdating" >
                             <Columns>
@@ -148,8 +151,100 @@
                                 </asp:TemplateField>                        
                             </Columns>
                         </asp:GridView>
+                        <br /> <br /> <br />
+                        <h3>Comissions - <%= BadgeCountComissions.Text %> </h3>
                         <br />
-                    </div>
+                        <asp:SqlDataSource ID="SqlDSCommissions" runat="server" ConnectionString='<%$ ConnectionStrings:DefaultConnection %>' SelectCommand="SELECT * FROM [Comissions]"></asp:SqlDataSource>
+                        <asp:GridView ID="GridViewComissions" runat="server" CssClass="list-group-item table-condensed table-hover table-responsive" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="false" OnRowCommand="GridViewComissions_RowCommand" OnRowDataBound="GridViewComissions_RowDataBound" OnRowUpdating="GridViewComissions_RowUpdating" DataSourceID="SqlDSCommissions" OnRowUpdated="GridViewComissions_RowUpdated">
+                             <Columns>
+                            <asp:TemplateField ShowHeader="false">
+                                    <ItemTemplate>
+                                        <asp:Button ID="ButtonEdit" runat="server" CssClass="btn btn-success" CausesValidation="false" CommandName="EditData"
+                                            Text="Edit" CommandArgument="<%# ((GridViewRow) Container).RowIndex%>" Width="100px" Visible="true" />
+                                        <asp:Button ID="ButtonDelete" runat="server" CssClass="btn btn-danger" CausesValidation="false" CommandName="DeleteData"
+                                            Text="Delete" CommandArgument="<%# ((GridViewRow) Container).RowIndex%>" Width="100px" OnClientClick="return confirm('Are you sure you want to delete the commission?')" Visible="true" />
+                                         <asp:Button ID="ButtonConfirmEdit" runat="server" CssClass="btn btn-primary" CausesValidation="false" CommandName="UpdateData"
+                                            Text="Confirm" CommandArgument="<%# ((GridViewRow) Container).RowIndex%>" Width="100px" Visible="false" OnClientClick="return confirm('Are you sure you want to update the commission data?')" />
+                                         <asp:Button ID="ButtonCancelEdit" runat="server" CssClass="btn btn-danger" CausesValidation="false" CommandName="CancelEdit"
+                                            Text="Cancel" CommandArgument="<%# ((GridViewRow) Container).RowIndex%>" Width="100px"  Visible="false" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                    <asp:BoundField DataField="Id" HeaderText="Id" ReadOnly="True" SortExpression="Id"></asp:BoundField>
+                                    <asp:BoundField DataField="ClientId" HeaderText="ClientId" ReadOnly="True" SortExpression="ClientId"></asp:BoundField>
+                                        <asp:TemplateField>
+                                            <EditItemTemplate>
+                                              <asp:TextBox ID="txtClientId" CssClass="advancedSearchTextBox"  runat="server" Text='<%# Bind("ClientId") %>'></asp:TextBox>
+                                            </EditItemTemplate>
+                                        </asp:TemplateField>
+                                    <asp:BoundField DataField="WorkshopId" HeaderText="WorkshopId" ReadOnly="True" SortExpression="WorkshopId"></asp:BoundField>
+                                        <asp:TemplateField>
+                                            <EditItemTemplate>
+                                              <asp:TextBox ID="txtWorkshopId" CssClass="advancedSearchTextBox"  runat="server" Text='<%# Bind("WorkshopId") %>'></asp:TextBox>
+                                            </EditItemTemplate>
+                                        </asp:TemplateField>
+                                    <asp:BoundField DataField="Concluded" HeaderText="Concluded" ReadOnly="True" SortExpression="Concluded"></asp:BoundField>
+                                         <asp:TemplateField>
+                                    <EditItemTemplate>
+                                        <asp:DropDownList ID="ddlConcluded" runat="server">
+                                            <asp:ListItem Selected="True" Value="0">False</asp:ListItem>
+                                            <asp:ListItem Value="1">True</asp:ListItem>
+                                        </asp:DropDownList>
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
+                                    <asp:BoundField DataField="CreationDate" HeaderText="CreationDate" ReadOnly="True" SortExpression="CreationDate"></asp:BoundField>
+                                        <asp:TemplateField>
+                                            <EditItemTemplate>
+                                              <asp:TextBox ID="txtCreationDate" CssClass="advancedSearchTextBox"  runat="server" Text='<%# Bind("CreationDate") %>'></asp:TextBox>
+                                            </EditItemTemplate>
+                                        </asp:TemplateField>
+                                    <asp:BoundField DataField="BicycleModel" HeaderText="BicycleModel" ReadOnly="True" SortExpression="BicycleModel"></asp:BoundField>
+                                        <asp:TemplateField>
+                                            <EditItemTemplate>
+                                              <asp:TextBox ID="txtBicycleModel" CssClass="advancedSearchTextBox"  runat="server" Text='<%# Bind("BicycleModel") %>'></asp:TextBox>
+                                            </EditItemTemplate>
+                                        </asp:TemplateField>
+                                    <asp:BoundField DataField="BicycleType" HeaderText="BicycleType" ReadOnly="True" SortExpression="BicycleType"></asp:BoundField>
+                                         <asp:TemplateField>
+                                            <EditItemTemplate>
+                                              <asp:TextBox ID="txtBicycleType" CssClass="advancedSearchTextBox"  runat="server" Text='<%# Bind("BicycleType") %>'></asp:TextBox>
+                                            </EditItemTemplate>
+                                        </asp:TemplateField>
+                                    <asp:BoundField DataField="YearOfAquisition" HeaderText="YearOfAquisition" ReadOnly="True" SortExpression="YearOfAquisition"></asp:BoundField>
+                                         <asp:TemplateField>
+                                            <EditItemTemplate>
+                                              <asp:TextBox ID="txtYearOfAquisition" CssClass="advancedSearchTextBox"  runat="server" Text='<%# Bind("YearOfAquisition") %>'></asp:TextBox>
+                                            </EditItemTemplate>
+                                        </asp:TemplateField>
+                                    <asp:BoundField DataField="Details" HeaderText="Details" ReadOnly="True" SortExpression="Details"></asp:BoundField>
+                                  <asp:TemplateField>
+                                            <EditItemTemplate>
+                                              <asp:TextBox ID="txtDetails" CssClass="advancedSearchTextBox"  runat="server" Text='<%# Bind("Details") %>'></asp:TextBox>
+                                            </EditItemTemplate>
+                                        </asp:TemplateField>
+                                    <asp:BoundField DataField="Accepted" HeaderText="Accepted" ReadOnly="True" SortExpression="Accepted"></asp:BoundField>
+                                  <asp:TemplateField>
+                                    <EditItemTemplate>
+                                        <asp:DropDownList ID="ddlAccepted" runat="server">
+                                            <asp:ListItem Selected="True" Value="0">False</asp:ListItem>
+                                            <asp:ListItem Value="1">True</asp:ListItem>
+                                        </asp:DropDownList>
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
+                                    <asp:BoundField DataField="ComissionNo" HeaderText="ComissionNo" ReadOnly="True" SortExpression="ComissionNo"></asp:BoundField>
+                                  <asp:TemplateField>
+                                            <EditItemTemplate>
+                                              <asp:TextBox ID="txtComissionNo" CssClass="advancedSearchTextBox"  runat="server" Text='<%# Bind("ComissionNo") %>'></asp:TextBox>
+                                            </EditItemTemplate>
+                                        </asp:TemplateField>
+                                    <asp:BoundField DataField="Rating" HeaderText="Rating" ReadOnly="True" SortExpression="Rating"></asp:BoundField>
+                                  <asp:TemplateField>
+                                            <EditItemTemplate>
+                                              <asp:TextBox ID="txtRating" CssClass="advancedSearchTextBox"  runat="server" Text='<%# Bind("Rating") %>'></asp:TextBox>
+                                            </EditItemTemplate>
+                                        </asp:TemplateField>
+                                  </Columns>
+                             </asp:GridView>
+                         </div>
                     <div class="tab-pane fade" id="toverify">
                         <asp:SqlDataSource ID="SqlDSToBeVerified" runat="server" ConnectionString="<%$ ConnectionStrings:DefaultConnection %>" SelectCommand="SELECT * FROM [AspNetUsers] WHERE ([IsEnabled] = @IsEnabled)">
                             <SelectParameters>
@@ -184,10 +279,11 @@
                                 <asp:BoundField DataField="DisplayName" HeaderText="DisplayName" SortExpression="DisplayName"></asp:BoundField>
                             </Columns>
                         </asp:GridView>
-                    </div>
+                    </div>        
                 </div>
                 <asp:Label ID="BadgeCountAll" runat="server" Visible="false"></asp:Label>
                 <asp:Label ID="BadgeCountToVerify" runat="server" Visible="false"></asp:Label>
+                <asp:Label ID="BadgeCountComissions" runat="server" Visible="false"></asp:Label>
             </ContentTemplate>
         </asp:UpdatePanel>
     </div>

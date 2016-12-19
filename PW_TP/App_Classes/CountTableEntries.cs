@@ -48,5 +48,26 @@ namespace PW_TP.App_Classes
             return value;
 
         }
+
+        public static int CountComissions()
+        {
+            SqlConnection SqlCon = GetSqlCon.GetCon();
+            int value;
+            SqlCommand cmd = new SqlCommand("Count Comissions", SqlCon);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            try
+            {
+                SqlCon.Open();
+                value = (int)cmd.ExecuteScalar();
+                SqlCon.Close();
+            }
+            catch
+            {
+                throw;
+            }
+
+            return value;
+        }
     }
 }

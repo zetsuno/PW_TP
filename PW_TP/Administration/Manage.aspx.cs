@@ -13,7 +13,7 @@ namespace PW_TP.Administration
 {
     public partial class Manage : System.Web.UI.Page
     {
-        int _counter = -1;
+        int _counter = -1, _counter2 = -1;
       
 
         protected void Page_Init(object sender, EventArgs e)
@@ -136,6 +136,8 @@ namespace PW_TP.Administration
             BadgeCountToVerify.Text = value.ToString();
             int value2 = CountTableEntries.AllAccsCount();
             BadgeCountAll.Text = value2.ToString();
+            int value3 = CountTableEntries.CountComissions();
+            BadgeCountComissions.Text = value3.ToString();
         }
 
         protected void GridViewTotal_RowUpdating(object sender, GridViewUpdateEventArgs e)
@@ -150,5 +152,87 @@ namespace PW_TP.Administration
             GridViewTotal.DataBind();
         }
 
+        protected void GridViewComissions_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                if (_counter2 == e.Row.RowIndex)
+                {
+                    Button btnEdit = e.Row.FindControl("ButtonEdit") as Button;
+                    Button btnDelete = e.Row.FindControl("ButtonDelete") as Button;
+                    Button btnConfirm = e.Row.FindControl("ButtonConfirmEdit") as Button;
+                    Button btnCancel = e.Row.FindControl("ButtonCancelEdit") as Button;
+
+                    btnCancel.Visible = true;
+                    btnConfirm.Visible = true;
+                    btnDelete.Visible = false;
+                    btnEdit.Visible = false;
+                }
+            }
+        }
+
+        protected void GridViewComissions_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        {
+
+        }
+
+        protected void GridViewComissions_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "EditData")
+            {
+                int index = Convert.ToInt32(e.CommandArgument);
+                GridViewComissions.EditIndex = index;
+                _counter2 = index;
+            }
+
+            if (e.CommandName == "DeleteData")
+            {
+                int index = Convert.ToInt32(e.CommandArgument);
+                GridViewRow row = GridViewComissions.Rows[index];
+                string id = row.Cells[1].Text;
+                ComissionFuncs.DeleteComission(id);
+            }
+
+            if (e.CommandName == "CancelEdit")
+            {
+                _counter2 = -1;
+                GridViewComissions.EditIndex = _counter;
+            }
+
+            if (e.CommandName == "UpdateData")
+            {
+                int index = Convert.ToInt32(e.CommandArgument);
+                GridViewRow row = GridViewComissions.Rows[index];
+
+                string id = row.Cells[1].Text;
+                TextBox ClientId = row.FindControl("txtClientId") as TextBox;        
+                TextBox WorkshopId = row.FindControl("txtWorkshopId") as TextBox;
+                DropDownList Concluded = row.FindControl("ddlConcluded") as DropDownList;
+                TextBox txtCreationDate = row.FindControl("txtCreationDate") as TextBox;
+                DateTime CreationDate = DateTime.Parse(txtCreationDate.Text);
+                TextBox BicycleModel = row.FindControl("txtBicycleModel") as TextBox;
+                TextBox BicycleType = row.FindControl("txtBicycleType") as TextBox;
+                TextBox YearOfAquisition = row.FindControl("txtYearOfAquisition") as TextBox;
+                TextBox Details = row.FindControl("txtDetails") as TextBox;
+                DropDownList Accepted = row.FindControl("ddlAccepted") as DropDownList;
+                TextBox ComissionNo = row.FindControl("txtComissionNo") as TextBox;
+                TextBox Rating = row.FindControl("txtDetails") as TextBox;
+
+                ComissionFuncs.UpdateComission(id, ClientId.Text, WorkshopId.Text, Concluded.SelectedValue, CreationDate, BicycleModel.Text, BicycleType.Text,
+                 YearOfAquisition.Text, Details.Text, Accepted.SelectedValue, ComissionNo.Text, Rating.Text);
+
+                GridViewComissions.EditIndex = -1;
+            }
+
+            UpdateBadges();
+            GridViewComissions.DataBind();
+            EditTablesUpdatePanel.Update();
+        }
+
+        protected void GridViewComissions_RowUpdated(object sender, GridViewUpdatedEventArgs e)
+        {
+            GridViewComissions.EditIndex = -1;
+            GridViewComissions.DataBind();
+        }
     }
 }

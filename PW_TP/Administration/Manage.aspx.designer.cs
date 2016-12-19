@@ -40,6 +40,24 @@ namespace PW_TP.Administration {
         protected global::System.Web.UI.WebControls.GridView GridViewTotal;
         
         /// <summary>
+        /// SqlDSCommissions control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource SqlDSCommissions;
+        
+        /// <summary>
+        /// GridViewComissions control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GridViewComissions;
+        
+        /// <summary>
         /// SqlDSToBeVerified control.
         /// </summary>
         /// <remarks>
@@ -74,5 +92,14 @@ namespace PW_TP.Administration {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label BadgeCountToVerify;
+        
+        /// <summary>
+        /// BadgeCountComissions control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label BadgeCountComissions;
     }
 }

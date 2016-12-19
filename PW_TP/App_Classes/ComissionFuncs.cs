@@ -271,6 +271,64 @@ namespace PW_TP.App_Classes
             }
         }
 
+        public static void DeleteComission(string id)
+        {
+            SqlConnection SqlCon = GetSqlCon.GetCon();
+
+            SqlCommand cmd = new SqlCommand("DeleteComission", SqlCon);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@param1", id);
+
+            try
+            {
+                SqlCon.Open();
+                cmd.ExecuteNonQuery();
+                SqlCon.Close();
+            }
+            catch
+            {
+                throw;
+            }
+
+        }
+
+        public static void UpdateComission(string id, string ClientId, string WorkshopId, string Concluded, DateTime CreationDate, string BicycleModel, string BicycleType,
+                 string YearOfAquisition, string Details, string Accepted, string ComissionNo, string Rating)
+        {
+            int id_num, year_num, comission_num, rating_num;
+            int.TryParse(id, out id_num); int.TryParse(YearOfAquisition, out year_num); int.TryParse(ComissionNo, out comission_num); int.TryParse(Rating, out rating_num);
+
+            SqlConnection SqlCon = GetSqlCon.GetCon();
+            SqlCommand cmd = new SqlCommand("UpdateComission", SqlCon);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@param1", id_num);
+            cmd.Parameters.AddWithValue("@param2", ClientId);
+            cmd.Parameters.AddWithValue("@param3", WorkshopId);
+            cmd.Parameters.AddWithValue("@param4", Concluded);
+            cmd.Parameters.AddWithValue("@param5", CreationDate);
+            cmd.Parameters.AddWithValue("@param6", BicycleModel);
+            cmd.Parameters.AddWithValue("@param7", BicycleType);
+            cmd.Parameters.AddWithValue("@param8", year_num);
+            cmd.Parameters.AddWithValue("@param9", Details);
+            cmd.Parameters.AddWithValue("@param10", Accepted);
+            cmd.Parameters.AddWithValue("@param11", comission_num);
+            cmd.Parameters.AddWithValue("@param12", rating_num);
+            
+
+            try
+            {
+                SqlCon.Open();
+                cmd.ExecuteNonQuery();
+                SqlCon.Close();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
     }
         
 }
