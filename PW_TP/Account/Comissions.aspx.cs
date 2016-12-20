@@ -54,7 +54,7 @@ namespace PW_TP.Account
             foreach (GridViewRow row in HistoryOfComissions.Rows)
             {
                
-                value = ComissionFuncs.FillRatings(row.Cells[0].Text);
+                value = Commissions.FillRatings(row.Cells[0].Text);
                 if (value != -1)
                 {
                     ((HtmlInputGenericControl)row.FindControl("starating")).Value = value.ToString();
@@ -81,8 +81,11 @@ namespace PW_TP.Account
             var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
             string user = User.Identity.GetUserId();
             
-            ComissionFuncs.CreateComission(TbModelo.Text, DdlTipo.SelectedValue, DdlOficinas.SelectedValue, Ano, TbDetails.Text, user);
+            if(Commissions.CreateComission(TbModelo.Text, DdlTipo.SelectedValue, DdlOficinas.SelectedValue, Ano, TbDetails.Text, user) == false){
+                Response.Redirect("Error.aspx");
+            }
             Response.Redirect("ComissionCreated.aspx");
+            
         }
 
         protected void UpdateBadges()
@@ -91,9 +94,11 @@ namespace PW_TP.Account
             var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
             string user = User.Identity.GetUserId();
 
-            int value = ComissionFuncs.CountActiveComissions(user);
+            int value = Commissions.CountActiveComissions(user);
+            if(value == -1) { Response.Redirect("Error.aspx"); }    
             BadgeCountActiveComissions.Text  = value.ToString();
-            int value2 = ComissionFuncs.CountPendingComissions(user);
+            int value2 = Commissions.CountPendingComissions(user);
+            if(value == -1) { Response.Redirect("Error.aspx"); }
             BadgeCountPendingComissions.Text = value2.ToString();
             BadgeComissions.Text = (value2 + value).ToString();
         }
@@ -107,6 +112,7 @@ namespace PW_TP.Account
             //Active
             string storedprocedure = "GetActiveComissions";
             SqlConnection cn = GetSqlCon.GetCon();
+            if(cn == null) { Response.Redirect("Error.aspx"); }
 
             DataTable dt = new DataTable();
             SqlCommand cmd = new SqlCommand(storedprocedure, cn);
@@ -121,6 +127,7 @@ namespace PW_TP.Account
             //Pending
             string storedprocedure2 = "GetPendingComissions";
             SqlConnection cn2 = GetSqlCon.GetCon();
+            if(cn2 == null) { Response.Redirect("Error.aspx"); }
 
             DataTable dt2 = new DataTable();
             SqlCommand cmd2 = new SqlCommand(storedprocedure2, cn2);
@@ -135,6 +142,7 @@ namespace PW_TP.Account
             //History
             string storedprocedure3 = "HistoryOfcomissions";
             SqlConnection cn3 = GetSqlCon.GetCon();
+            if (cn3 == null) { Response.Redirect("Error.aspx"); }
 
             DataTable dt3 = new DataTable();
             SqlCommand cmd3 = new SqlCommand(storedprocedure3, cn3);
@@ -156,7 +164,8 @@ namespace PW_TP.Account
                 GridViewRow row = HistoryOfComissions.Rows[index];
                 int.TryParse(row.Cells[0].Text, out id);
                 int.TryParse(((HtmlInputGenericControl)row.FindControl("starating")).Value, out rating);
-                ComissionFuncs.SetRating(id, rating);
+                if (Commissions.SetRating(id, rating) == false) { Response.Redirect("Error.aspx"); }
+
                 Response.Redirect("~/Account/Comissions.aspx");
             }
         }

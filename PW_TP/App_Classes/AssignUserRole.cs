@@ -16,7 +16,7 @@ namespace PW_TP.App_Classes
     {
         ApplicationDbContext context = new ApplicationDbContext();
 
-        public void AddUserToRole(string email, string roleName)
+        public bool AddUserToRole(string email, string roleName)
         {
             var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
 
@@ -29,8 +29,11 @@ namespace PW_TP.App_Classes
             }
             catch(Exception)
             {
-                throw;
+                Console.WriteLine("An error occurred when trying to add a user to a role.");
+                return false;
             }
+
+            return true;
         }
 
     }

@@ -21,9 +21,11 @@ namespace PW_TP.App_Classes
                 SqlCon.Open();
                 value = (int)cmd.ExecuteScalar();
                 SqlCon.Close();
-            }catch
+            }
+            catch (Exception)
             {
-                throw;
+                Console.WriteLine("An error occurred when trying to count the users not yet verified.");
+                return -1;
             }
 
             return value;
@@ -40,9 +42,11 @@ namespace PW_TP.App_Classes
                 SqlCon.Open();
                 value = (int)cmd.ExecuteScalar();
                 SqlCon.Close();
-            }catch
+            }
+            catch (Exception)
             {
-                throw;
+                Console.WriteLine("An error occurred when trying to count all the accounts.");
+                return -1;
             }
 
             return value;
@@ -62,9 +66,10 @@ namespace PW_TP.App_Classes
                 value = (int)cmd.ExecuteScalar();
                 SqlCon.Close();
             }
-            catch
+            catch (Exception)
             {
-                throw;
+                Console.WriteLine("An error occurred when trying to count how many commissions existed.");
+                return -1;
             }
 
             return value;

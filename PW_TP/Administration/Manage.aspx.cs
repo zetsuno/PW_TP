@@ -37,7 +37,7 @@ namespace PW_TP.Administration
                 GridViewRow row = GridViewToValidate.Rows[index];
                 string id = row.Cells[1].Text;
 
-                CheckVerified.EnableAccount(id);
+                if(CheckVerified.EnableAccount(id) == false) { Response.Redirect("Error.aspx"); }
             }
  
            UpdateBadges();
@@ -60,7 +60,7 @@ namespace PW_TP.Administration
                 int index = Convert.ToInt32(e.CommandArgument);
                 GridViewRow row = GridViewTotal.Rows[index];
                 string id = row.Cells[1].Text;
-                DeleteUser.RemoverUserFromDB(id);   
+                if(App_Classes.Users.RemoverUserFromDB(id) == false) { Response.Redirect("Error.aspx"); }   
             }
 
             if(e.CommandName == "CancelEdit")
@@ -94,9 +94,9 @@ namespace PW_TP.Administration
                 DropDownList isenabled = row.FindControl("ddlIsEnabled") as DropDownList;
                 TextBox displayname = row.FindControl("txtDisplayName") as TextBox;
 
-                RegisterUser.UpdateUserInfo(id, email.Text, emailconfirmed.SelectedValue, passwordhash.Text, securitystamp.Text, phonenumber.Text, phonenumberconfirmed.SelectedValue,
+                if(App_Classes.Users.UpdateUserInfo(id, email.Text, emailconfirmed.SelectedValue, passwordhash.Text, securitystamp.Text, phonenumber.Text, phonenumberconfirmed.SelectedValue,
                 twofactorenabled.SelectedValue, LockoutDateEnd, lockoutenabled.SelectedValue, accessfailedcount.Text, username.Text, workshopname.Text, workshopnif.Text,
-                workshopowner.Text, workshopownernif.Text, isenabled.SelectedValue, displayname.Text);   
+                workshopowner.Text, workshopownernif.Text, isenabled.SelectedValue, displayname.Text) == false) { Response.Redirect("Error.aspx"); }   
  
                 GridViewTotal.EditIndex = -1;
             }
@@ -133,10 +133,13 @@ namespace PW_TP.Administration
         protected void UpdateBadges()
         {
             int value = CountTableEntries.GetToVerifyCount();
+            if(value == -1) { Response.Redirect("Error.aspx"); }
             BadgeCountToVerify.Text = value.ToString();
             int value2 = CountTableEntries.AllAccsCount();
+            if (value2 == -1) { Response.Redirect("Error.aspx"); }
             BadgeCountAll.Text = value2.ToString();
             int value3 = CountTableEntries.CountComissions();
+            if(value3 == -1) { Response.Redirect("Error.aspx"); }
             BadgeCountComissions.Text = value3.ToString();
         }
 
@@ -190,7 +193,7 @@ namespace PW_TP.Administration
                 int index = Convert.ToInt32(e.CommandArgument);
                 GridViewRow row = GridViewComissions.Rows[index];
                 string id = row.Cells[1].Text;
-                ComissionFuncs.DeleteComission(id);
+                if(Commissions.DeleteComission(id) == false) { Response.Redirect("Error.aspx"); }
             }
 
             if (e.CommandName == "CancelEdit")
@@ -218,8 +221,8 @@ namespace PW_TP.Administration
                 TextBox ComissionNo = row.FindControl("txtComissionNo") as TextBox;
                 TextBox Rating = row.FindControl("txtDetails") as TextBox;
 
-                ComissionFuncs.UpdateComission(id, ClientId.Text, WorkshopId.Text, Concluded.SelectedValue, CreationDate, BicycleModel.Text, BicycleType.Text,
-                 YearOfAquisition.Text, Details.Text, Accepted.SelectedValue, ComissionNo.Text, Rating.Text);
+                if(Commissions.UpdateComission(id, ClientId.Text, WorkshopId.Text, Concluded.SelectedValue, CreationDate, BicycleModel.Text, BicycleType.Text,
+                 YearOfAquisition.Text, Details.Text, Accepted.SelectedValue, ComissionNo.Text, Rating.Text) == false) { Response.Redirect("Error.aspx"); }
 
                 GridViewComissions.EditIndex = -1;
             }

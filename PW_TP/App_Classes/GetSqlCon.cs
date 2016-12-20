@@ -10,9 +10,17 @@ namespace PW_TP.App_Classes
     {
         public static SqlConnection GetCon()
         {
-            string StrCon = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-            SqlConnection SqlCon = new SqlConnection(StrCon);
-            return SqlCon;
+            try
+            {
+                string StrCon = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+                SqlConnection SqlCon = new SqlConnection(StrCon);
+                return SqlCon;
+            }
+            catch(Exception)
+            {
+                return null;
+            }
+           
         }
     }
 }

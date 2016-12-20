@@ -189,6 +189,7 @@
     <Content Include="Administration\Web.config" />
     <Content Include="Content\star-rating.css" />
     <Content Include="Content\star-rating.min.css" />
+    <Content Include="Error.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Logo_site.gif" />
     <Content Include="Logo_site.png" />
@@ -214,6 +215,7 @@
     <Content Include="Scripts\locales\zh.js" />
     <Content Include="Scripts\star-rating.js" />
     <Content Include="Scripts\star-rating.min.js" />
+    <Content Include="Workshops.aspx" />
     <Content Include="Workshop\Comissions.aspx" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -413,11 +415,10 @@
     </Compile>
     <Compile Include="App_Classes\AssignUserRole.cs" />
     <Compile Include="App_Classes\CheckVerified.cs" />
-    <Compile Include="App_Classes\ComissionFuncs.cs" />
+    <Compile Include="App_Classes\Commissions.cs" />
     <Compile Include="App_Classes\CountTableEntries.cs" />
-    <Compile Include="App_Classes\DeleteUser.cs" />
     <Compile Include="App_Classes\GetSqlCon.cs" />
-    <Compile Include="App_Classes\RegisterUser.cs" />
+    <Compile Include="App_Classes\Users.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="About.aspx.cs">
       <DependentUpon>About.aspx</DependentUpon>
@@ -442,6 +443,13 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Error.aspx.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Error.aspx.designer.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -476,6 +484,13 @@
     </Compile>
     <Compile Include="ViewSwitcher.ascx.designer.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Workshops.aspx.cs">
+      <DependentUpon>Workshops.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Workshops.aspx.designer.cs">
+      <DependentUpon>Workshops.aspx</DependentUpon>
     </Compile>
     <Compile Include="Workshop\Comissions.aspx.cs">
       <DependentUpon>Comissions.aspx</DependentUpon>

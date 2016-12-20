@@ -11,9 +11,9 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace PW_TP.App_Classes
 {
-    public class ComissionFuncs
+    public class Commissions
     {
-        public static void CreateComission(string model, string type, string workshop, int year, string details, string userid)
+        public static bool CreateComission(string model, string type, string workshop, int year, string details, string userid)
         {
 
             string workshopid = GetWorkshopID(workshop);
@@ -38,10 +38,13 @@ namespace PW_TP.App_Classes
                 cmd.ExecuteNonQuery();
                 SqlCon.Close();
             }
-            catch
+            catch (Exception)
             {
-                throw;
+                Console.WriteLine("An error occurred when trying to create a commission.");
+                return false;
             }
+
+            return true;
 
         }
 
@@ -60,10 +63,12 @@ namespace PW_TP.App_Classes
                 workshopid = (string)cmd.ExecuteScalar();
                 SqlCon.Close();
             }
-            catch
+            catch (Exception)
             {
-                throw;
+                Console.WriteLine("An error occurred when trying to get a workshop's ID.");
+                return "-1";
             }
+
 
             return workshopid;
         }
@@ -82,9 +87,10 @@ namespace PW_TP.App_Classes
                 value = (int)cmd.ExecuteScalar();
                 SqlCon.Close();
             }
-            catch
+            catch (Exception)
             {
-                throw;
+                Console.WriteLine("An error occurred when trying to count a user's active commissions.");
+                return -1;
             }
 
             return value;
@@ -104,11 +110,13 @@ namespace PW_TP.App_Classes
                 value = (int)cmd.ExecuteScalar();
                 SqlCon.Close();
             }
-            catch
+            catch (Exception)
             {
-                throw;
+                Console.WriteLine("An error occurred when trying to count a user's pedning commissions.");
+                return -1;
             }
 
+            
             return value;
         }
 
@@ -126,10 +134,13 @@ namespace PW_TP.App_Classes
                 value = (int)cmd.ExecuteScalar();
                 SqlCon.Close();
             }
-            catch
+            catch (Exception)
             {
-                throw;
+                Console.WriteLine("An error occurred when trying to count a workshop's active commissions.");
+                return -1;
             }
+
+          
 
             return value;
 
@@ -150,16 +161,19 @@ namespace PW_TP.App_Classes
                 value = (int)cmd.ExecuteScalar();
                 SqlCon.Close();
             }
-            catch
+            catch (Exception)
             {
-                throw;
+                Console.WriteLine("An error occurred when trying to count a workshop's pending commissions.");
+                return -1;
             }
+
+           
 
             return value;
 
         }
 
-        public static void ActivateComission(int id)
+        public static bool ActivateComission(int id)
         {
 
             SqlConnection SqlCon = GetSqlCon.GetCon();
@@ -176,14 +190,17 @@ namespace PW_TP.App_Classes
                 cmd.ExecuteNonQuery();
                 SqlCon.Close();
             }
-            catch
+            catch (Exception)
             {
-                throw;
+                Console.WriteLine("An error occurred when trying to activate a commission.");
+                return false;
             }
+
+            return true;
 
         }
 
-        public static void RejectComission(int id)
+        public static bool RejectComission(int id)
         {
 
             SqlConnection SqlCon = GetSqlCon.GetCon();
@@ -199,14 +216,17 @@ namespace PW_TP.App_Classes
                 cmd.ExecuteNonQuery();
                 SqlCon.Close();
             }
-            catch
+            catch (Exception)
             {
-                throw;
+                Console.WriteLine("An error occurred when trying to mark a commission as rejected.");
+                return false;
             }
+
+            return true;
 
         }
 
-        public static void ConcludeComission(int id)
+        public static bool ConcludeComission(int id)
         {
             SqlConnection SqlCon = GetSqlCon.GetCon();
 
@@ -221,10 +241,13 @@ namespace PW_TP.App_Classes
                 cmd.ExecuteNonQuery();
                 SqlCon.Close();
             }
-            catch
+            catch (Exception)
             {
-                throw;
+                Console.WriteLine("An error occurred when trying to mark a commission as concluded.");
+                return false;
             }
+
+            return true;
         }
         public static int FillRatings(string id)
         {
@@ -240,15 +263,17 @@ namespace PW_TP.App_Classes
                 value = (int)cmd.ExecuteScalar();
                 SqlCon.Close();
             }
-            catch
+            catch (Exception)
             {
-                throw;
+                Console.WriteLine("An error occurred when trying to get the workshop's ratings.");
+                return -1;
             }
 
+            
             return value;
         }
 
-        public static void SetRating(int id, int rating) 
+        public static bool SetRating(int id, int rating) 
         {
 
             SqlConnection SqlCon = GetSqlCon.GetCon();
@@ -265,13 +290,16 @@ namespace PW_TP.App_Classes
                 cmd.ExecuteNonQuery();
                 SqlCon.Close();
             }
-            catch
+            catch (Exception)
             {
-                throw;
+                Console.WriteLine("An error occurred when trying to set a commission rating.");
+                return false;
             }
+
+            return true;
         }
 
-        public static void DeleteComission(string id)
+        public static bool DeleteComission(string id)
         {
             SqlConnection SqlCon = GetSqlCon.GetCon();
 
@@ -286,14 +314,16 @@ namespace PW_TP.App_Classes
                 cmd.ExecuteNonQuery();
                 SqlCon.Close();
             }
-            catch
+            catch (Exception)
             {
-                throw;
+                Console.WriteLine("An error occurred when trying to delete a commission.");
+                return false;
             }
 
+            return true;
         }
 
-        public static void UpdateComission(string id, string ClientId, string WorkshopId, string Concluded, DateTime CreationDate, string BicycleModel, string BicycleType,
+        public static bool UpdateComission(string id, string ClientId, string WorkshopId, string Concluded, DateTime CreationDate, string BicycleModel, string BicycleType,
                  string YearOfAquisition, string Details, string Accepted, string ComissionNo, string Rating)
         {
             int id_num, year_num, comission_num, rating_num;
@@ -323,12 +353,42 @@ namespace PW_TP.App_Classes
                 cmd.ExecuteNonQuery();
                 SqlCon.Close();
             }
-            catch
+            catch (Exception)
             {
-                throw;
+                Console.WriteLine("An error occurred when trying to update a commission.");
+                return false;
             }
+
+            return true;
+        }
+
+        public static double GetAvgRating(string id)
+        {
+            double rating;
+
+            SqlConnection SqlCon = GetSqlCon.GetCon();
+            SqlCommand cmd = new SqlCommand("CalcAvgRating", SqlCon);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@param1", id);
+            
+
+            try
+            {
+                SqlCon.Open();
+                rating = (double)cmd.ExecuteScalar();
+                SqlCon.Close();
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("An error occurred when trying to get a workshop's rating.");
+                return -1;
+            }
+
+            return rating;
         }
 
     }
+
+    }
         
-}

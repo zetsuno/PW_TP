@@ -24,7 +24,8 @@ namespace PW_TP.App_Classes
             }
             catch
             {
-                throw;
+                Console.WriteLine("An error occurred when trying verify the status of a user account.");
+                return false;
             }
 
             if (value == true) return true;
@@ -32,7 +33,7 @@ namespace PW_TP.App_Classes
             return false;
         }
 
-        public static void EnableAccount(string id)
+        public static bool EnableAccount(string id)
         {
             SqlConnection SqlCon = GetSqlCon.GetCon();
            
@@ -46,12 +47,14 @@ namespace PW_TP.App_Classes
                 cmd.ExecuteNonQuery();
                 SqlCon.Close();
             }
-            catch
+            catch (Exception)
             {
-                throw;
+                Console.WriteLine("An error occurred when trying to enable a user account.");
+                return false;
             }
 
-           
+            return true;
+
         }
 
     }

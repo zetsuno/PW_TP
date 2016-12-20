@@ -6,10 +6,10 @@ using System.Data.SqlClient;
 
 namespace PW_TP.App_Classes
 {
-    public static class RegisterUser
+    public static class Users
     {
         
-        public static void RegisterUserTypeClient(string username, string email, string telephone) {
+        public static bool RegisterUserTypeClient(string username, string email, string telephone) {
 
             
             SqlConnection SqlCon = GetSqlCon.GetCon();
@@ -27,13 +27,16 @@ namespace PW_TP.App_Classes
                 cmd.ExecuteNonQuery();
                 SqlCon.Close();
             }
-            catch
+            catch (Exception)
             {
-                throw;
+                Console.WriteLine("An error occurred when trying to add a user to the database.");
+                return false;
             }
+
+            return true;
         }
 
-        public static void RegisterUserTypeWorkshop(string email, string workshopname, string workshopnif, string workshopowner, string workshopownernif)
+        public static bool RegisterUserTypeWorkshop(string email, string workshopname, string workshopnif, string workshopowner, string workshopownernif)
         {
             
             SqlConnection SqlCon = GetSqlCon.GetCon();
@@ -54,13 +57,16 @@ namespace PW_TP.App_Classes
                 cmd.ExecuteNonQuery();
                 SqlCon.Close();
             }
-            catch
+            catch (Exception)
             {
-                throw;
+                Console.WriteLine("An error occurred when trying to add a user to the database.");
+                return false;
             }
+
+            return true;
         }
 
-        public static void UpdateUserInfo(string id, string email, string emailconfirmed, string passwordhash, string securitystamp, string phonenumber,
+        public static bool UpdateUserInfo(string id, string email, string emailconfirmed, string passwordhash, string securitystamp, string phonenumber,
                  string phonenumberconfirmed, string twofactorenabled, DateTime lockoutenddateutc, string lockoutenabled, string accessfailedcount, string username, string workshopname, string workshopnif,
                  string workshopowner, string workshopownernif, string isenabled, string displayname)
         {
@@ -94,10 +100,63 @@ namespace PW_TP.App_Classes
                 cmd.ExecuteNonQuery();
                 SqlCon.Close();
             }
-            catch
+            catch (Exception)
             {
-                throw;
+                Console.WriteLine("An error occurred when trying to update a user's info.");
+                return false;
             }
+
+            return true;
+        }
+
+        public static bool RemoverUserFromDB(string id)
+        {
+
+            SqlConnection SqlCon = GetSqlCon.GetCon();
+
+            SqlCommand cmd = new SqlCommand("DeleteUser", SqlCon);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@id", id);
+
+            try
+            {
+                SqlCon.Open();
+                cmd.ExecuteNonQuery();
+                SqlCon.Close();
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("An error occurred when trying to remove a user from the database.");
+                return false;
+            }
+
+            return true;
+
+        }
+        public static string GetWorkshopId(string nome)
+        {
+            string id;
+
+            SqlConnection SqlCon = GetSqlCon.GetCon();
+            SqlCommand cmd = new SqlCommand("GetWorkshopID", SqlCon);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@param1", nome);
+
+
+            try
+            {
+                SqlCon.Open();
+                id = (string)cmd.ExecuteScalar();
+                SqlCon.Close();
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("An error occurred when trying to get a workshop's id.");
+                return "";
+            }
+
+            return id;   
         }
     }
 }

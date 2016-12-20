@@ -44,15 +44,15 @@ namespace PW_TP.Account
 
             if (RBtnCliente.Checked == true)
             {
-                RegisterUser.RegisterUserTypeClient(NomeCliente.Text, Email.Text, TelefoneClient.Text);
+                App_Classes.Users.RegisterUserTypeClient(NomeCliente.Text, Email.Text, TelefoneClient.Text);
                 Security c = new Security();
-                c.AddUserToRole(Email.Text, "client");
+                if (c.AddUserToRole(Email.Text, "client") == false) { Response.Redirect("Error.aspx"); }
             }
             if (RBtnOficina.Checked == true)
             {
-                RegisterUser.RegisterUserTypeWorkshop(Email.Text, NomeOficina.Text, nifOficina.Text, TitularOficina.Text, NIFTitularOficina.Text);
+                App_Classes.Users.RegisterUserTypeWorkshop(Email.Text, NomeOficina.Text, nifOficina.Text, TitularOficina.Text, NIFTitularOficina.Text);
                 Security w = new Security();
-                w.AddUserToRole(Email.Text, "workshop");
+                if(w.AddUserToRole(Email.Text, "workshop") == false) { Response.Redirect("Error.aspx"); }
                 Response.Redirect("ValidationRequired.aspx");
 
             }

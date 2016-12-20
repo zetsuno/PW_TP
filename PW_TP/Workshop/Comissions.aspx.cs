@@ -47,6 +47,7 @@ namespace PW_TP.Workshop
             //Active
             string storedprocedure = "GetActiveComissionsWorkshop";
             SqlConnection cn = GetSqlCon.GetCon();
+            if(cn == null) { Response.Redirect("Error.aspx"); }
 
             DataTable dt = new DataTable();
             SqlCommand cmd = new SqlCommand(storedprocedure, cn);
@@ -60,6 +61,7 @@ namespace PW_TP.Workshop
             //Pending
             string storedprocedure2 = "GetPendingComissionsWorkshop";
             SqlConnection cn2 = GetSqlCon.GetCon();
+            if (cn2 == null) { Response.Redirect("Error.aspx"); }
 
             DataTable dt2 = new DataTable();
             SqlCommand cmd2 = new SqlCommand(storedprocedure2, cn2);
@@ -73,6 +75,7 @@ namespace PW_TP.Workshop
             //History
             string storedprocedure3 = "GetHistoryOfComissionsWorkshop";
             SqlConnection cn3 = GetSqlCon.GetCon();
+            if (cn3 == null) { Response.Redirect("Error.aspx"); }
 
             DataTable dt3 = new DataTable();
             SqlCommand cmd3 = new SqlCommand(storedprocedure3, cn3);
@@ -86,6 +89,7 @@ namespace PW_TP.Workshop
             //Clients
             string storedprocedure4 = "GetWorkshopClients";
             SqlConnection cn4 = GetSqlCon.GetCon();
+            if (cn4 == null) { Response.Redirect("Error.aspx"); }
 
             DataTable dt4 = new DataTable();
             SqlCommand cmd4 = new SqlCommand(storedprocedure4, cn4);
@@ -105,9 +109,11 @@ namespace PW_TP.Workshop
             var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
             string user = User.Identity.GetUserId();
 
-            int value = ComissionFuncs.CountActiveComissionsWorkshop(user);
+            int value = Commissions.CountActiveComissionsWorkshop(user);
+            if(value == -1) { Response.Redirect("Error.aspx"); }
             LabelComissoesAtivas.Text = value.ToString();
-            int value2 = ComissionFuncs.CountPendingComissionsWorkshop(user);
+            int value2 = Commissions.CountPendingComissionsWorkshop(user);
+            if(value2 == -1) { Response.Redirect("Error.aspx"); }
             LabelComissoesPendentes.Text = value2.ToString();
 
         }
@@ -121,7 +127,7 @@ namespace PW_TP.Workshop
                 GridViewRow row = PendingComissions.Rows[index];
                 int.TryParse(row.Cells[1].Text, out id);
                 LabelComissoesPendentes.Text = id.ToString();
-                ComissionFuncs.ActivateComission(id);
+                if(Commissions.ActivateComission(id) == false) { Response.Redirect("Error.aspx"); }
                 
             }
             if (e.CommandName == "RejectComission")
@@ -129,7 +135,7 @@ namespace PW_TP.Workshop
                 int index = Convert.ToInt32(e.CommandArgument), id;
                 GridViewRow row = PendingComissions.Rows[index];
                 int.TryParse(row.Cells[1].Text, out id);
-                ComissionFuncs.RejectComission(id);
+                if(Commissions.RejectComission(id) == false) { Response.Redirect("Error.aspx"); }
 
             }
             if (e.CommandName == "ConcludeComission")
@@ -137,10 +143,8 @@ namespace PW_TP.Workshop
                 int index = Convert.ToInt32(e.CommandArgument), id;
                 GridViewRow row = ActiveComissions.Rows[index];
                 int.TryParse(row.Cells[1].Text, out id);
-
                 LabelComissoesAtivas.Text = id.ToString();
-
-                ComissionFuncs.ConcludeComission(id);
+                if(Commissions.ConcludeComission(id) == false) { Response.Redirect("Error.aspx"); }
 
             }
 
