@@ -55,7 +55,7 @@ namespace PW_TP.Account
             {
                
                 value = Commissions.FillRatings(row.Cells[0].Text);
-                if (value != -1)
+                if (value != -2)
                 {
                     ((HtmlInputGenericControl)row.FindControl("starating")).Value = value.ToString();
                     ((HtmlInputGenericControl)row.FindControl("starating")).Attributes.Add("readonly", "true");

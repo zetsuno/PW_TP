@@ -36,7 +36,7 @@
                     CssClass="text-danger" Display="Dynamic" ErrorMessage="As passwords não coincidem uma com a outra." />
             </div>
            </div>
-      <asp:UpdatePanel ID="UpdatePanel1" runat="server" ChildrenAsTriggers="true" UpdateMode="Always"  >
+      <asp:UpdatePanel ID="UpdatePanel1" runat="server" ChildrenAsTriggers="true" UpdateMode="Conditional"  >
         <ContentTemplate>
        <label class="col-md-2 control-label">Tipo de Conta</label>
       <div class="col-md-10">
@@ -54,7 +54,7 @@
     </div>
       
     <br /><br /><br />
-        <asp:Panel runat="server"  ID="PainelOficina" Visible="false">
+        <asp:Panel runat="server" ID="PainelOficina" Visible="false">
             <br/>
             <div class="panel panel-primary">
                 <div class="panel-heading">
@@ -68,10 +68,16 @@
                     <asp:RegularExpressionValidator ID="RegExNomeOficina" runat="server" Font-Bold="true" CssClass="text-danger" Display="Dynamic"  EnableClientScript="true" SetFocusOnError="true"  ErrorMessage="Nome inválido." ControlToValidate="NomeOficina"  ValidationExpression="^[a-zA-Z''-'.àáâäãåacceèéêëeiìíîïlnòóôöõøùúûüuuÿýzzñçcšžÀÁÂÄÃÅACCEEÈÉÊËÌÍÎÏILNÒÓÔÖÕØÙÚÛÜUUŸÝZZÑßÇŒÆCŠŽ?ð\s]{1,40}$"></asp:RegularExpressionValidator><br/>
                 </div>
                 <div class="col-ld-10">
-                    <asp:Label runat="server" Font-Bold="true" CssClass="col-md-2 control-label">NIF da Oficina</asp:Label>                    
-                    <asp:TextBox runat="server" ID="nifOficina" CssClass="form-control"/>
-                    <asp:RequiredFieldValidator runat="server" ControlToValidate="nifOficina" CssClass="text-danger" Display="Dynamic" ErrorMessage="O NIF da oficina é necessário." />
-                    <asp:RegularExpressionValidator ID="RegExNIFOficina" runat="server" CssClass="text-danger" Font-Bold="true" Display="Dynamic"  EnableClientScript="true" SetFocusOnError="true"  ErrorMessage="Formato de NIF de oficina inválido." ControlToValidate="nifOficina"  ValidationExpression="^[0-9]{9}$"></asp:RegularExpressionValidator><br/>
+                    <asp:Label runat="server" Font-Bold="true" CssClass="col-md-2 control-label">Morada da Oficina</asp:Label>
+                    <asp:TextBox runat="server" ID="MoradaOficina" CssClass="form-control" />
+                    <asp:RequiredFieldValidator runat="server" ControlToValidate="MoradaOficina" CssClass="text-danger" Display="Dynamic" ErrorMessage="A morada da oficina é necessário." />
+                    <asp:RegularExpressionValidator ID="RegExMoradaOficina" runat="server" Font-Bold="true" CssClass="text-danger" Display="Dynamic"  EnableClientScript="true" SetFocusOnError="true"  ErrorMessage="Morada inválida." ControlToValidate="MoradaOficina"  ValidationExpression="^[a-zA-Z1-9''-'.,ºàáâäãåacceèéêëeiìíîïlnòóôöõøùúûüuuÿýzzñçcšžÀÁÂÄÃÅACCEEÈÉÊËÌÍÎÏILNÒÓÔÖÕØÙÚÛÜUUŸÝZZÑßÇŒÆCŠŽ?ð\s]{1,50}$"></asp:RegularExpressionValidator><br/>
+                </div> 
+                <div class="col-ld-10">
+                    <asp:Label runat="server" Font-Bold="true" CssClass="col-md-2 control-label">Nº telefone da oficina</asp:Label>                    
+                    <asp:TextBox runat="server" ID="TelefoneOficina" CssClass="form-control"/>
+                    <asp:RequiredFieldValidator runat="server" ControlToValidate="TelefoneOficina" CssClass="text-danger" Display="Dynamic" ErrorMessage="O contacto da oficina é necessário." />
+                    <asp:RegularExpressionValidator ID="RegExTelefoneOficina" runat="server" CssClass="text-danger" Font-Bold="true" Display="Dynamic"  EnableClientScript="true" SetFocusOnError="true"  ErrorMessage="Formato de contacto  inválido." ControlToValidate="TelefoneOficina"  ValidationExpression="^[0-9]{9}$"></asp:RegularExpressionValidator><br/>
                 </div>
                 <div class="col-ld-10">
                      <asp:Label runat="server" Font-Bold="true" CssClass="col-md-2 control-label">Titular</asp:Label>                    
@@ -82,8 +88,8 @@
                 <div class="col-ld-10">
                     <asp:Label runat="server" Font-Bold="true" CssClass="col-md-2 control-label">NIF do Titular da Oficina</asp:Label>                    
                     <asp:TextBox runat="server" ID="NIFTitularOficina" CssClass="form-control"/>
-                    <asp:RequiredFieldValidator runat="server" ControlToValidate="nifOficina" CssClass="text-danger" Display="Dynamic" ErrorMessage="O NIF da oficina é necessário." />
-                    <asp:RegularExpressionValidator ID="RegExNIFTitularOficina" runat="server" CssClass="text-danger"  Font-Bold="true" Display="Dynamic"  EnableClientScript="true" SetFocusOnError="true"  ErrorMessage="Formato de NIF de oficina inválido." ControlToValidate="NIFTitularOficina"  ValidationExpression="^[0-9]{9}$"></asp:RegularExpressionValidator><br/>
+                    <asp:RequiredFieldValidator runat="server" ControlToValidate="NIFTitularOficina" CssClass="text-danger" Display="Dynamic" ErrorMessage="O NIF da oficina é necessário." />
+                    <asp:RegularExpressionValidator ID="RegExNIFTitularOficina" runat="server" CssClass="text-danger"  Font-Bold="true" Display="Dynamic"  EnableClientScript="true" SetFocusOnError="true"  ErrorMessage="Formato de NIF inválido." ControlToValidate="NIFTitularOficina"  ValidationExpression="^[0-9]{9}$"></asp:RegularExpressionValidator><br/>
                 </div>
               </div>
          </div>

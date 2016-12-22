@@ -116,10 +116,10 @@
                                         <asp:TextBox ID="txtWorkshopName" CssClass="advancedSearchTextBox"  runat="server" Text='<%# Bind("WorkshopName") %>'></asp:TextBox>
                                     </EditItemTemplate>
                                 </asp:TemplateField>
-                                <asp:BoundField DataField="WorkshopNIF" HeaderText="WorkshopNIF" SortExpression="WorkshopNIF" ReadOnly="true"></asp:BoundField>
+                                <asp:BoundField DataField="WorkshopPhone" HeaderText="WorkshopPhone" SortExpression="WorkshopPhone" ReadOnly="true"></asp:BoundField>
                                  <asp:TemplateField>
                                     <EditItemTemplate>
-                                        <asp:TextBox ID="txtWorkshopNIF" CssClass="advancedSearchTextBox"  runat="server" Text='<%# Bind("WorkshopNIF") %>'></asp:TextBox>
+                                        <asp:TextBox ID="txtWorkshopPhone" CssClass="advancedSearchTextBox"  runat="server" Text='<%# Bind("WorkshopPhone") %>'></asp:TextBox>
                                     </EditItemTemplate>
                                 </asp:TemplateField>
                                 <asp:BoundField DataField="WorkshopOwner" HeaderText="WorkshopOwner" SortExpression="WorkshopOwner" ReadOnly="true"></asp:BoundField>
@@ -132,6 +132,12 @@
                                 <asp:TemplateField>
                                     <EditItemTemplate>
                                         <asp:TextBox ID="txtWorkshopOwnerNIF" CssClass="advancedSearchTextBox"  runat="server" Text='<%# Bind("WorkshopOwnerNIF") %>'></asp:TextBox>
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
+                               <asp:BoundField DataField="WorkshopAddress" HeaderText="WorkshopAddress" SortExpression="WorkshopAddress" ReadOnly="true"></asp:BoundField>
+                                <asp:TemplateField>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="txtWorkshopAddress" CssClass="advancedSearchTextBox"  runat="server" Text='<%# Bind("WorkshopAddress") %>'></asp:TextBox>
                                     </EditItemTemplate>
                                 </asp:TemplateField>
                                 <asp:BoundField DataField="IsEnabled" HeaderText="IsEnabled" SortExpression="IsEnabled" ReadOnly="true"></asp:BoundField>
@@ -272,9 +278,10 @@
                                 <asp:BoundField DataField="AccessFailedCount" HeaderText="AccessFailedCount" SortExpression="AccessFailedCount"></asp:BoundField>
                                 <asp:BoundField DataField="UserName" HeaderText="UserName" SortExpression="UserName"></asp:BoundField>
                                 <asp:BoundField DataField="WorkshopName" HeaderText="WorkshopName" SortExpression="WorkshopName"></asp:BoundField>
-                                <asp:BoundField DataField="WorkshopNIF" HeaderText="WorkshopNIF" SortExpression="WorkshopNIF"></asp:BoundField>
+                                <asp:BoundField DataField="WorkshopPhone" HeaderText="WorkshopPhone" SortExpression="WorkshopPhone"></asp:BoundField>
                                 <asp:BoundField DataField="WorkshopOwner" HeaderText="WorkshopOwner" SortExpression="WorkshopOwner"></asp:BoundField>
                                 <asp:BoundField DataField="WorkshopOwnerNIF" HeaderText="WorkshopOwnerNIF" SortExpression="WorkshopOwnerNIF"></asp:BoundField>
+                                <asp:BoundField DataField="WorkshopAddress" HeaderText="WorkshopAddress" SortExpression="WorkshopAddress" ReadOnly="true"></asp:BoundField>
                                 <asp:CheckBoxField DataField="IsEnabled" HeaderText="IsEnabled" SortExpression="IsEnabled"></asp:CheckBoxField>
                                 <asp:BoundField DataField="DisplayName" HeaderText="DisplayName" SortExpression="DisplayName"></asp:BoundField>
                             </Columns>

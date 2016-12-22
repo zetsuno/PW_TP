@@ -38,12 +38,7 @@ namespace PW_TP
                 rating = Commissions.GetAvgRating(workshopid);
                 if(rating == -1) { Response.Redirect("Error.aspx"); }
 
-                rating_string = rating.ToString();
-                StringBuilder strB = new StringBuilder(rating_string);
-                strB[1] = '.';
-                starrating.Value = strB.ToString();
-                starrating.Visible = true;
-                labelstar.Text = strB.ToString();
+                
                 
             }
 

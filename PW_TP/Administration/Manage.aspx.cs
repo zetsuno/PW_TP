@@ -88,15 +88,16 @@ namespace PW_TP.Administration
                 TextBox accessfailedcount = row.FindControl("txtAccessFailedCount") as TextBox;
                 TextBox username = row.FindControl("txtUserName") as TextBox;
                 TextBox workshopname = row.FindControl("txtWorkshopName") as TextBox;
-                TextBox workshopnif = row.FindControl("txtWorkshopNIF") as TextBox;
+                TextBox workshopphone = row.FindControl("txtWorkshopPhone") as TextBox;
                 TextBox workshopowner = row.FindControl("txtWorkshopOwner") as TextBox;
                 TextBox workshopownernif = row.FindControl("txtWorkshopOwnerNIF") as TextBox;
+                TextBox workshopaddress = row.FindControl("txtWorkshopAddress") as TextBox;
                 DropDownList isenabled = row.FindControl("ddlIsEnabled") as DropDownList;
                 TextBox displayname = row.FindControl("txtDisplayName") as TextBox;
 
                 if(App_Classes.Users.UpdateUserInfo(id, email.Text, emailconfirmed.SelectedValue, passwordhash.Text, securitystamp.Text, phonenumber.Text, phonenumberconfirmed.SelectedValue,
-                twofactorenabled.SelectedValue, LockoutDateEnd, lockoutenabled.SelectedValue, accessfailedcount.Text, username.Text, workshopname.Text, workshopnif.Text,
-                workshopowner.Text, workshopownernif.Text, isenabled.SelectedValue, displayname.Text) == false) { Response.Redirect("Error.aspx"); }   
+                twofactorenabled.SelectedValue, LockoutDateEnd, lockoutenabled.SelectedValue, accessfailedcount.Text, username.Text, workshopname.Text, workshopphone.Text,
+                workshopowner.Text, workshopownernif.Text, workshopaddress.Text, isenabled.SelectedValue, displayname.Text) == false) { Response.Redirect("Error.aspx"); }   
  
                 GridViewTotal.EditIndex = -1;
             }

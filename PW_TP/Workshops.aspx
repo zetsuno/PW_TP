@@ -12,8 +12,24 @@
             <asp:DropDownList ID="ddlOficinas" runat="server" DataSourceID="SqlDSWorkshops" DataTextField="WorkshopName" DataValueField="WorkshopName" OnSelectedIndexChanged="ddlOficinas_SelectedIndexChanged" AutoPostBack="true" AppendDataBoundItems="true">
              <asp:ListItem Value="0" Selected="True">-- Selecione --</asp:ListItem>
             </asp:DropDownList><br />       
-            <asp:Label runat="server" ID="labelstar" Text=""></asp:Label>
-            <input runat="server" id="starrating" name="input-2" class="rating rating-loading" data-min="0" data-max="5" data-step="0.1" readonly="readonly">
+            <div class="modal" id="modalbox" runat="server" visible="false">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button class="close" aria-hidden="true" type="button" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Modal title</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>One fine body…</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+                            <button class="btn btn-primary" type="button">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>

@@ -40,21 +40,12 @@ namespace PW_TP {
         protected global::System.Web.UI.WebControls.DropDownList ddlOficinas;
         
         /// <summary>
-        /// labelstar control.
+        /// modalbox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label labelstar;
-        
-        /// <summary>
-        /// starrating control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText starrating;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl modalbox;
     }
 }

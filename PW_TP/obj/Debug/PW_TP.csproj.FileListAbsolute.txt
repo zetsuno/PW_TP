@@ -143,4 +143,3 @@ C:\Users\Zetsuno\Documents\Visual Studio 2015\Projects\PW_TP\PW_TP\PW_TP\bin\ros
 C:\Users\Zetsuno\Documents\Visual Studio 2015\Projects\PW_TP\PW_TP\PW_TP\bin\roslyn\System.IO.FileSystem.Primitives.dll
 C:\Users\Zetsuno\Documents\Visual Studio 2015\Projects\PW_TP\PW_TP\PW_TP\bin\roslyn\vbc.exe.config
 C:\Users\Zetsuno\Documents\Visual Studio 2015\Projects\PW_TP\PW_TP\PW_TP\bin\roslyn\vbc.rsp
-C:\Users\Zetsuno\Documents\Visual Studio 2015\Projects\PW_TP\PW_TP\PW_TP\obj\Debug\PW_TP.csprojResolveAssemblyReference.cache

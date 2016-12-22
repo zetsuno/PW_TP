@@ -134,6 +134,7 @@
                                 <asp:BoundField DataField="BicycleType" HeaderText="Tipo da Bicicleta" SortExpression="BicycleType"></asp:BoundField>
                                 <asp:BoundField DataField="YearOfAquisition" HeaderText="Ano de Aquisição" SortExpression="YearOfAquisition"></asp:BoundField>
                                 <asp:BoundField DataField="WorkshopName" HeaderText="Oficina Encarregue" SortExpression="WorkshopName"></asp:BoundField>
+                                <asp:BoundField DataField="WorkshopPhone" HeaderText="Contacto da Oficina" SortExpression="WorkshopPhone"></asp:BoundField>
                                 <asp:BoundField DataField="Details" HeaderText="Detalhes" SortExpression="Details"></asp:BoundField>
                             </Columns>
                         </asp:GridView>
@@ -151,6 +152,7 @@
                                 <asp:BoundField DataField="BicycleType" HeaderText="Tipo da Bicicleta" SortExpression="BicycleType"></asp:BoundField>
                                 <asp:BoundField DataField="YearOfAquisition" HeaderText="Ano de Aquisição" SortExpression="YearOfAquisition"></asp:BoundField>
                                 <asp:BoundField DataField="WorkshopName" HeaderText="Oficina Encarregue" SortExpression="WorkshopName"></asp:BoundField>
+                                <asp:BoundField DataField="WorkshopPhone" HeaderText="Contacto da Oficina" SortExpression="WorkshopPhone"></asp:BoundField>
                                 <asp:BoundField DataField="Details" HeaderText="Detalhes" SortExpression="Details"></asp:BoundField>
                             </Columns>
                         </asp:GridView>
@@ -168,6 +170,7 @@
                                 <asp:BoundField DataField="BicycleType" HeaderText="Tipo da Bicicleta" SortExpression="BicycleType"></asp:BoundField>
                                 <asp:BoundField DataField="YearOfAquisition" HeaderText="Ano de Aquisição" SortExpression="YearOfAquisition"></asp:BoundField>
                                 <asp:BoundField DataField="WorkshopName" HeaderText="Oficina Encarregue" SortExpression="WorkshopName"></asp:BoundField>
+                                <asp:BoundField DataField="WorkshopPhone" HeaderText="Contacto da Oficina" SortExpression="WorkshopPhone"></asp:BoundField>    
                                 <asp:BoundField DataField="Details" HeaderText="Detalhes" SortExpression="Details"></asp:BoundField>
                              <asp:TemplateField ShowHeader="true" HeaderText="Avalie o Serviço" ItemSTyle-Width="100px">
                                     <ItemTemplate>

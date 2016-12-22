@@ -112,22 +112,40 @@ namespace PW_TP.Account {
         protected global::System.Web.UI.WebControls.RegularExpressionValidator RegExNomeOficina;
         
         /// <summary>
-        /// nifOficina control.
+        /// MoradaOficina control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox nifOficina;
+        protected global::System.Web.UI.WebControls.TextBox MoradaOficina;
         
         /// <summary>
-        /// RegExNIFOficina control.
+        /// RegExMoradaOficina control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator RegExNIFOficina;
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator RegExMoradaOficina;
+        
+        /// <summary>
+        /// TelefoneOficina control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TelefoneOficina;
+        
+        /// <summary>
+        /// RegExTelefoneOficina control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator RegExTelefoneOficina;
         
         /// <summary>
         /// TitularOficina control.

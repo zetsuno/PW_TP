@@ -50,7 +50,7 @@ namespace PW_TP.Account
             }
             if (RBtnOficina.Checked == true)
             {
-                App_Classes.Users.RegisterUserTypeWorkshop(Email.Text, NomeOficina.Text, nifOficina.Text, TitularOficina.Text, NIFTitularOficina.Text);
+                App_Classes.Users.RegisterUserTypeWorkshop(Email.Text, NomeOficina.Text, TelefoneOficina.Text, TitularOficina.Text, NIFTitularOficina.Text, MoradaOficina.Text);
                 Security w = new Security();
                 if(w.AddUserToRole(Email.Text, "workshop") == false) { Response.Redirect("Error.aspx"); }
                 Response.Redirect("ValidationRequired.aspx");
