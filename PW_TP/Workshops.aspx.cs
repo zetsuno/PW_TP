@@ -31,7 +31,7 @@ namespace PW_TP
             if (ddlOficinas.SelectedValue != "0")
             {
                 double rating;
-                string workshopid, rating_string;
+                string workshopid;
 
                 workshopid = Users.GetWorkshopId(ddlOficinas.SelectedValue);
                 if(workshopid == "") { Response.Redirect("Error.aspx"); }

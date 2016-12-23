@@ -11,10 +11,10 @@ namespace PW_TP.Account
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!User.Identity.IsAuthenticated)
+            if (!User.Identity.IsAuthenticated || User.IsInRole("workshop"))
             {
                 Response.Redirect("~/UnauthorizedAccess.aspx");
-            }
+            }        
         }
     }
 }

@@ -16,7 +16,7 @@ namespace PW_TP.App_Classes
         public static bool CreateComission(string model, string type, string workshop, int year, string details, string userid)
         {
 
-            string workshopid = GetWorkshopID(workshop);
+            string workshopid = Users.GetWorkshopId(workshop);
             SqlConnection SqlCon = GetSqlCon.GetCon();
             DateTime now = DateTime.Now;
             SqlCommand cmd = new SqlCommand("NewComission", SqlCon);
@@ -48,130 +48,7 @@ namespace PW_TP.App_Classes
 
         }
 
-        protected static string GetWorkshopID(string workshopname)
-        {
-            SqlConnection SqlCon = GetSqlCon.GetCon();
-            string workshopid;
-            SqlCommand cmd = new SqlCommand("GetWorkshopID", SqlCon);
-            cmd.CommandType = System.Data.CommandType.StoredProcedure;
-
-            cmd.Parameters.AddWithValue("@param1", workshopname);
-
-            try
-            {
-                SqlCon.Open();
-                workshopid = (string)cmd.ExecuteScalar();
-                SqlCon.Close();
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("An error occurred when trying to get a workshop's ID.");
-                return "-1";
-            }
-
-
-            return workshopid;
-        }
-
-        public static int CountActiveComissions(string id)
-        {
-            SqlConnection SqlCon = GetSqlCon.GetCon();
-            int value;
-            SqlCommand cmd = new SqlCommand("CountActiveComissions", SqlCon);
-            cmd.CommandType = System.Data.CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@param1", id);
-
-            try
-            {
-                SqlCon.Open();
-                value = (int)cmd.ExecuteScalar();
-                SqlCon.Close();
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("An error occurred when trying to count a user's active commissions.");
-                return -1;
-            }
-
-            return value;
-        }
-
-        public static int CountPendingComissions(string id)
-        {
-            SqlConnection SqlCon = GetSqlCon.GetCon();
-            int value;
-            SqlCommand cmd = new SqlCommand("CountPendingComissions", SqlCon);
-            cmd.CommandType = System.Data.CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@param1", id);
-
-            try
-            {
-                SqlCon.Open();
-                value = (int)cmd.ExecuteScalar();
-                SqlCon.Close();
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("An error occurred when trying to count a user's pedning commissions.");
-                return -1;
-            }
-
-            
-            return value;
-        }
-
-        public static int CountActiveComissionsWorkshop(string id)
-        {
-            SqlConnection SqlCon = GetSqlCon.GetCon();
-            int value;
-            SqlCommand cmd = new SqlCommand("CountActiveComissionsWorkshop", SqlCon);
-            cmd.CommandType = System.Data.CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@param1", id);
-
-            try
-            {
-                SqlCon.Open();
-                value = (int)cmd.ExecuteScalar();
-                SqlCon.Close();
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("An error occurred when trying to count a workshop's active commissions.");
-                return -1;
-            }
-
-          
-
-            return value;
-
-        }
-
-        public static int CountPendingComissionsWorkshop(string id)
-        {
-
-            SqlConnection SqlCon = GetSqlCon.GetCon();
-            int value;
-            SqlCommand cmd = new SqlCommand("CountPendingComissionsWorkshop", SqlCon);
-            cmd.CommandType = System.Data.CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@param1", id);
-
-            try
-            {
-                SqlCon.Open();
-                value = (int)cmd.ExecuteScalar();
-                SqlCon.Close();
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("An error occurred when trying to count a workshop's pending commissions.");
-                return -1;
-            }
-
-           
-
-            return value;
-
-        }
+      
 
         public static bool ActivateComission(int id)
         {
@@ -386,6 +263,33 @@ namespace PW_TP.App_Classes
             }
 
             return rating;
+        }
+
+        public static int IsRejected(string id)
+        {
+            bool rejected;
+            int value;   
+
+            SqlConnection SqlCon = GetSqlCon.GetCon();
+            SqlCommand cmd = new SqlCommand("CheckIfComissionRejected", SqlCon);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@param1", id);
+
+            try
+            {
+                SqlCon.Open();
+                rejected = (bool)cmd.ExecuteScalar();
+                SqlCon.Close();
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("An error occurred when trying to check if the commission was rejected.");
+                return -1;
+            }
+
+            value = Convert.ToInt32(rejected);
+            return value;
         }
 
     }

@@ -11,6 +11,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using PW_TP.App_Classes;
 using System.Globalization;
+using System.Web.UI.HtmlControls;
 
 namespace PW_TP.Workshop
 {
@@ -24,7 +25,9 @@ namespace PW_TP.Workshop
             }
 
             PopulateGridViews();
+            GetRatings();
             UpdateBadges();
+            
 
         }
         protected void Page_Load(object sender, EventArgs e)
@@ -109,10 +112,10 @@ namespace PW_TP.Workshop
             var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
             string user = User.Identity.GetUserId();
 
-            int value = Commissions.CountActiveComissionsWorkshop(user);
+            int value = CountTableEntries.CountActiveComissionsWorkshop(user);
             if(value == -1) { Response.Redirect("Error.aspx"); }
             LabelComissoesAtivas.Text = value.ToString();
-            int value2 = Commissions.CountPendingComissionsWorkshop(user);
+            int value2 = CountTableEntries.CountPendingComissionsWorkshop(user);
             if(value2 == -1) { Response.Redirect("Error.aspx"); }
             LabelComissoesPendentes.Text = value2.ToString();
 
@@ -147,10 +150,36 @@ namespace PW_TP.Workshop
                 if(Commissions.ConcludeComission(id) == false) { Response.Redirect("Error.aspx"); }
 
             }
-
+            
             UpdateBadges();
             PopulateGridViews();
+            GetRatings();
             WorkshopUpdatePanel.Update();
+        }
+
+        protected void GetRatings()
+        {
+            int value;
+
+            foreach (GridViewRow row in HistoryOfComissions.Rows)
+            {
+
+                value = Commissions.FillRatings(row.Cells[0].Text);
+                if (value != -2)
+                {   
+                    ((HtmlInputGenericControl)row.FindControl("starating")).Value = value.ToString();
+                    LabelComissoesAtivas.Text = value.ToString();
+                   
+                }
+                else
+                {
+                    ((HtmlInputGenericControl)row.FindControl("starating")).Visible = false;
+                    ((Label)row.FindControl("ratinglabel")).Visible = true;
+                   
+                }
+
+
+            }
         }
     }
 }

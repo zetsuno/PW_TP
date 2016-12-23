@@ -18,17 +18,14 @@ namespace PW_TP.Account
     {
         protected void Page_Init(object sender, EventArgs e)
         {
-
-            if (!User.Identity.IsAuthenticated)
+            if (!User.Identity.IsAuthenticated || User.IsInRole("workshop"))
             {
                 Response.Redirect("~/UnauthorizedAccess.aspx");
             }
 
-            PopulateGridViews();
-            GetRatings();
-            UpdateBadges();
-
-
+                PopulateGridViews();
+                GetRatings();
+                //UpdateBadges();
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -36,44 +33,45 @@ namespace PW_TP.Account
 
             if (!Page.IsPostBack)
             {
-
                 GridViewActiveComissions.DataBind();
                 GridViewComissionsPending.DataBind();
                 HistoryOfComissions.DataBind();
                 GetRatings();
-                UpdateBadges();
-
-
-            }       
+                //UpdateBadges();
+          }       
         }
 
         protected void GetRatings()
         {
-            int value;
+            int value, rejected;
 
             foreach (GridViewRow row in HistoryOfComissions.Rows)
             {
-               
                 value = Commissions.FillRatings(row.Cells[0].Text);
+                if (value == -1) { Response.Redirect("~/Error.aspx"); }
+                rejected = Commissions.IsRejected(row.Cells[0].Text);
+                if (rejected == -1) { Response.Redirect("~/Error.aspx"); }
+
                 if (value != -2)
                 {
                     ((HtmlInputGenericControl)row.FindControl("starating")).Value = value.ToString();
                     ((HtmlInputGenericControl)row.FindControl("starating")).Attributes.Add("readonly", "true");
-                    Button btnSubmitRating = row.FindControl("BtnSubmitRating") as Button;
-                    btnSubmitRating.Visible = false;
+                    ((Button)row.FindControl("BtnSubmitRating")).Visible = false;
+                    BadgeCountActiveComissions.Text = rejected.ToString();
+                   
                 }
-                else
+                if (rejected == 0)
                 {
-                    
+                    ((HtmlInputGenericControl)row.FindControl("starating")).Visible = false;
+                    ((Label)row.FindControl("labelrejected")).Visible = true;
+                    ((Button)row.FindControl("BtnSubmitRating")).Visible = false;
                 }
-                
 
             }
         }
 
         protected void BtnCreateComission_Click(object sender, EventArgs e)
-        {
-            
+        {     
             int Ano;
             int.TryParse(TbAno.Text, out Ano);
             
@@ -82,10 +80,9 @@ namespace PW_TP.Account
             string user = User.Identity.GetUserId();
             
             if(Commissions.CreateComission(TbModelo.Text, DdlTipo.SelectedValue, DdlOficinas.SelectedValue, Ano, TbDetails.Text, user) == false){
-                Response.Redirect("Error.aspx");
+                Response.Redirect("~/Error.aspx");
             }
-            Response.Redirect("ComissionCreated.aspx");
-            
+            Response.Redirect("ComissionCreated.aspx");     
         }
 
         protected void UpdateBadges()
@@ -94,11 +91,11 @@ namespace PW_TP.Account
             var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
             string user = User.Identity.GetUserId();
 
-            int value = Commissions.CountActiveComissions(user);
-            if(value == -1) { Response.Redirect("Error.aspx"); }    
+            int value = CountTableEntries.CountActiveComissions(user);
+            if(value == -1) { Response.Redirect("~/Error.aspx"); }    
             BadgeCountActiveComissions.Text  = value.ToString();
-            int value2 = Commissions.CountPendingComissions(user);
-            if(value == -1) { Response.Redirect("Error.aspx"); }
+            int value2 = CountTableEntries.CountPendingComissions(user);
+            if(value == -1) { Response.Redirect("~/Error.aspx"); }
             BadgeCountPendingComissions.Text = value2.ToString();
             BadgeComissions.Text = (value2 + value).ToString();
         }
@@ -112,7 +109,7 @@ namespace PW_TP.Account
             //Active
             string storedprocedure = "GetActiveComissions";
             SqlConnection cn = GetSqlCon.GetCon();
-            if(cn == null) { Response.Redirect("Error.aspx"); }
+            if(cn == null) { Response.Redirect("~/Error.aspx"); }
 
             DataTable dt = new DataTable();
             SqlCommand cmd = new SqlCommand(storedprocedure, cn);
@@ -127,7 +124,7 @@ namespace PW_TP.Account
             //Pending
             string storedprocedure2 = "GetPendingComissions";
             SqlConnection cn2 = GetSqlCon.GetCon();
-            if(cn2 == null) { Response.Redirect("Error.aspx"); }
+            if(cn2 == null) { Response.Redirect("~/Error.aspx"); }
 
             DataTable dt2 = new DataTable();
             SqlCommand cmd2 = new SqlCommand(storedprocedure2, cn2);
@@ -142,7 +139,7 @@ namespace PW_TP.Account
             //History
             string storedprocedure3 = "HistoryOfcomissions";
             SqlConnection cn3 = GetSqlCon.GetCon();
-            if (cn3 == null) { Response.Redirect("Error.aspx"); }
+            if (cn3 == null) { Response.Redirect("~/Error.aspx"); }
 
             DataTable dt3 = new DataTable();
             SqlCommand cmd3 = new SqlCommand(storedprocedure3, cn3);
@@ -164,7 +161,7 @@ namespace PW_TP.Account
                 GridViewRow row = HistoryOfComissions.Rows[index];
                 int.TryParse(row.Cells[0].Text, out id);
                 int.TryParse(((HtmlInputGenericControl)row.FindControl("starating")).Value, out rating);
-                if (Commissions.SetRating(id, rating) == false) { Response.Redirect("Error.aspx"); }
+                if (Commissions.SetRating(id, rating) == false) { Response.Redirect("~/Error.aspx"); }
 
                 Response.Redirect("~/Account/Comissions.aspx");
             }
