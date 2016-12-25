@@ -174,5 +174,29 @@ namespace PW_TP.App_Classes
             return value;
 
         }
+
+        public static int CountWorkshopsInRegion(string region)
+        {
+            SqlConnection SqlCon = GetSqlCon.GetCon();
+            int value;
+            SqlCommand cmd = new SqlCommand("CountWorkshopsInRegion", SqlCon);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@param1", region);
+
+            try
+            {
+                SqlCon.Open();
+                value = (int)cmd.ExecuteScalar();
+                SqlCon.Close();
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("An error occurred when trying to count how many workshops there were in the region");
+                return -1;
+            }
+
+            return value;
+
+        }
     }
 }

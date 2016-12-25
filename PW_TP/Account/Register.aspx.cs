@@ -46,13 +46,13 @@ namespace PW_TP.Account
             {
                 App_Classes.Users.RegisterUserTypeClient(NomeCliente.Text, Email.Text, TelefoneClient.Text);
                 Security c = new Security();
-                if (c.AddUserToRole(Email.Text, "client") == false) { Response.Redirect("Error.aspx"); }
+                if (c.AddUserToRole(Email.Text, "client") == false) { Response.Redirect("~/Error.aspx"); }
             }
             if (RBtnOficina.Checked == true)
             {
-                App_Classes.Users.RegisterUserTypeWorkshop(Email.Text, NomeOficina.Text, TelefoneOficina.Text, TitularOficina.Text, NIFTitularOficina.Text, MoradaOficina.Text);
+                App_Classes.Users.RegisterUserTypeWorkshop(Email.Text, NomeOficina.Text, TelefoneOficina.Text, TitularOficina.Text, NIFTitularOficina.Text, MoradaOficina.Text, DdlRegiao.SelectedValue);
                 Security w = new Security();
-                if(w.AddUserToRole(Email.Text, "workshop") == false) { Response.Redirect("Error.aspx"); }
+                if(w.AddUserToRole(Email.Text, "workshop") == false) { Response.Redirect("~/Error.aspx"); }
                 Response.Redirect("ValidationRequired.aspx");
 
             }

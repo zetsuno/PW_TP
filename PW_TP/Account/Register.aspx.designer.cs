@@ -130,6 +130,24 @@ namespace PW_TP.Account {
         protected global::System.Web.UI.WebControls.RegularExpressionValidator RegExMoradaOficina;
         
         /// <summary>
+        /// DdlRegiao control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DdlRegiao;
+        
+        /// <summary>
+        /// RFVDdlRegiao control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFVDdlRegiao;
+        
+        /// <summary>
         /// TelefoneOficina control.
         /// </summary>
         /// <remarks>

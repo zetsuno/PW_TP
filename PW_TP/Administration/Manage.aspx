@@ -86,7 +86,7 @@
                                 <asp:BoundField DataField="LockoutEndDateUtc" HeaderText="LockoutEndDateUtc" SortExpression="LockoutEndDateUtc" ReadOnly="true"></asp:BoundField>
                                  <asp:TemplateField>
                                     <EditItemTemplate>
-                                        <asp:TextBox ID="txtLockoutEndDateUtc" CssClass="advancedSearchTextBox"  runat="server" Text='<%# Bind("LockoutEndDateUtc") %>'></asp:TextBox>
+                                        <asp:TextBox ID="txtLockoutEndDateUtc" CssClass="advancedSearchTextBox"  runat="server" Text='01/01/1990 00:00:00'></asp:TextBox>
                                     </EditItemTemplate>
                                 </asp:TemplateField>
                                 <asp:BoundField DataField="LockoutEnabled" HeaderText="LockoutEnabled" SortExpression="LockoutEnabled" ReadOnly="true"></asp:BoundField>
@@ -138,6 +138,12 @@
                                 <asp:TemplateField>
                                     <EditItemTemplate>
                                         <asp:TextBox ID="txtWorkshopAddress" CssClass="advancedSearchTextBox"  runat="server" Text='<%# Bind("WorkshopAddress") %>'></asp:TextBox>
+                                    </EditItemTemplate>
+                                </asp:TemplateField>
+                               <asp:BoundField DataField="WorkshopRegion" HeaderText="WorkshopRegion" SortExpression="WorkshopRegion" ReadOnly="true"></asp:BoundField>
+                                 <asp:TemplateField>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="txtWorkshopRegion" CssClass="advancedSearchTextBox"  runat="server" Text='<%# Bind("WorkshopRegion") %>'></asp:TextBox>
                                     </EditItemTemplate>
                                 </asp:TemplateField>
                                 <asp:BoundField DataField="IsEnabled" HeaderText="IsEnabled" SortExpression="IsEnabled" ReadOnly="true"></asp:BoundField>

@@ -22,30 +22,21 @@ namespace PW_TP {
         protected global::System.Web.UI.UpdatePanel UPWorkshopView;
         
         /// <summary>
-        /// SqlDSWorkshops control.
+        /// DdlRegiao control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource SqlDSWorkshops;
+        protected global::System.Web.UI.WebControls.DropDownList DdlRegiao;
         
         /// <summary>
-        /// ddlOficinas control.
+        /// DdlOficinas control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlOficinas;
-        
-        /// <summary>
-        /// modalbox control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl modalbox;
+        protected global::System.Web.UI.WebControls.DropDownList DdlOficinas;
     }
 }

@@ -37,7 +37,7 @@ namespace PW_TP.Administration
                 GridViewRow row = GridViewToValidate.Rows[index];
                 string id = row.Cells[1].Text;
 
-                if(CheckVerified.EnableAccount(id) == false) { Response.Redirect("Error.aspx"); }
+                if(CheckVerified.EnableAccount(id) == false) { Response.Redirect("~/Error.aspx"); }
             }
  
            UpdateBadges();
@@ -60,7 +60,7 @@ namespace PW_TP.Administration
                 int index = Convert.ToInt32(e.CommandArgument);
                 GridViewRow row = GridViewTotal.Rows[index];
                 string id = row.Cells[1].Text;
-                if(App_Classes.Users.RemoverUserFromDB(id) == false) { Response.Redirect("Error.aspx"); }   
+                if(App_Classes.Users.RemoverUserFromDB(id) == false) { Response.Redirect("~/Error.aspx"); }   
             }
 
             if(e.CommandName == "CancelEdit")
@@ -92,12 +92,14 @@ namespace PW_TP.Administration
                 TextBox workshopowner = row.FindControl("txtWorkshopOwner") as TextBox;
                 TextBox workshopownernif = row.FindControl("txtWorkshopOwnerNIF") as TextBox;
                 TextBox workshopaddress = row.FindControl("txtWorkshopAddress") as TextBox;
+                TextBox workshopregion = row.FindControl("txtWorkshopRegion") as TextBox;
                 DropDownList isenabled = row.FindControl("ddlIsEnabled") as DropDownList;
                 TextBox displayname = row.FindControl("txtDisplayName") as TextBox;
+                
 
-                if(App_Classes.Users.UpdateUserInfo(id, email.Text, emailconfirmed.SelectedValue, passwordhash.Text, securitystamp.Text, phonenumber.Text, phonenumberconfirmed.SelectedValue,
+                if (App_Classes.Users.UpdateUserInfo(id, email.Text, emailconfirmed.SelectedValue, passwordhash.Text, securitystamp.Text, phonenumber.Text, phonenumberconfirmed.SelectedValue,
                 twofactorenabled.SelectedValue, LockoutDateEnd, lockoutenabled.SelectedValue, accessfailedcount.Text, username.Text, workshopname.Text, workshopphone.Text,
-                workshopowner.Text, workshopownernif.Text, workshopaddress.Text, isenabled.SelectedValue, displayname.Text) == false) { Response.Redirect("Error.aspx"); }   
+                workshopowner.Text, workshopownernif.Text, workshopaddress.Text, workshopregion.Text, isenabled.SelectedValue, displayname.Text) == false) { Response.Redirect("~/Error.aspx"); }   
  
                 GridViewTotal.EditIndex = -1;
             }
@@ -134,13 +136,13 @@ namespace PW_TP.Administration
         protected void UpdateBadges()
         {
             int value = CountTableEntries.GetToVerifyCount();
-            if(value == -1) { Response.Redirect("Error.aspx"); }
+            if(value == -1) { Response.Redirect("~/Error.aspx"); }
             BadgeCountToVerify.Text = value.ToString();
             int value2 = CountTableEntries.AllAccsCount();
-            if (value2 == -1) { Response.Redirect("Error.aspx"); }
+            if (value2 == -1) { Response.Redirect("~/Error.aspx"); }
             BadgeCountAll.Text = value2.ToString();
             int value3 = CountTableEntries.CountComissions();
-            if(value3 == -1) { Response.Redirect("Error.aspx"); }
+            if(value3 == -1) { Response.Redirect("~/Error.aspx"); }
             BadgeCountComissions.Text = value3.ToString();
         }
 
@@ -194,7 +196,7 @@ namespace PW_TP.Administration
                 int index = Convert.ToInt32(e.CommandArgument);
                 GridViewRow row = GridViewComissions.Rows[index];
                 string id = row.Cells[1].Text;
-                if(Commissions.DeleteComission(id) == false) { Response.Redirect("Error.aspx"); }
+                if(Commissions.DeleteComission(id) == false) { Response.Redirect("~/Error.aspx"); }
             }
 
             if (e.CommandName == "CancelEdit")
@@ -223,7 +225,7 @@ namespace PW_TP.Administration
                 TextBox Rating = row.FindControl("txtDetails") as TextBox;
 
                 if(Commissions.UpdateComission(id, ClientId.Text, WorkshopId.Text, Concluded.SelectedValue, CreationDate, BicycleModel.Text, BicycleType.Text,
-                 YearOfAquisition.Text, Details.Text, Accepted.SelectedValue, ComissionNo.Text, Rating.Text) == false) { Response.Redirect("Error.aspx"); }
+                 YearOfAquisition.Text, Details.Text, Accepted.SelectedValue, ComissionNo.Text, Rating.Text) == false) { Response.Redirect("~/Error.aspx"); }
 
                 GridViewComissions.EditIndex = -1;
             }

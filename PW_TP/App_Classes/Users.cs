@@ -36,7 +36,7 @@ namespace PW_TP.App_Classes
             return true;
         }
 
-        public static bool RegisterUserTypeWorkshop(string email, string workshopname, string workshopphone, string workshopowner, string workshopownernif, string workshopaddress)
+        public static bool RegisterUserTypeWorkshop(string email, string workshopname, string workshopphone, string workshopowner, string workshopownernif, string workshopaddress, string regiao)
         {
             
             SqlConnection SqlCon = GetSqlCon.GetCon();
@@ -51,6 +51,7 @@ namespace PW_TP.App_Classes
             cmd.Parameters.AddWithValue("@param5", 0);
             cmd.Parameters.AddWithValue("@email", email);
             cmd.Parameters.AddWithValue("@param6", workshopaddress);
+            cmd.Parameters.AddWithValue("@param7", regiao);
 
             try
             {
@@ -69,7 +70,7 @@ namespace PW_TP.App_Classes
 
         public static bool UpdateUserInfo(string id, string email, string emailconfirmed, string passwordhash, string securitystamp, string phonenumber,
                  string phonenumberconfirmed, string twofactorenabled, DateTime lockoutenddateutc, string lockoutenabled, string accessfailedcount, string username, string workshopname, string workshopphone,
-                 string workshopowner, string workshopownernif, string workshopaddress, string isenabled, string displayname)
+                 string workshopowner, string workshopownernif, string workshopaddress, string workshopregion, string isenabled, string displayname)
         {
 
             SqlConnection SqlCon = GetSqlCon.GetCon();
@@ -95,6 +96,7 @@ namespace PW_TP.App_Classes
             cmd.Parameters.AddWithValue("@param17", isenabled);
             cmd.Parameters.AddWithValue("@param18", displayname);
             cmd.Parameters.AddWithValue("@param19", workshopaddress);
+            cmd.Parameters.AddWithValue("@param20", workshopregion);
 
             try
             {

@@ -17,32 +17,66 @@ namespace PW_TP
 {
     public partial class Workshops : System.Web.UI.Page
     {
+        protected void Page_Init(object sender, EventArgs e)
+        {
+
+            
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-
-               
+                
             }
         }
 
-        protected void ddlOficinas_SelectedIndexChanged(object sender, EventArgs e)
+        protected int populate_DDL()
         {
-            if (ddlOficinas.SelectedValue != "0")
+            int val;
+            SqlConnection con = GetSqlCon.GetCon();
+            SqlDataAdapter com = new SqlDataAdapter("GetWorkshopNamesByRegion", con);
+            com.SelectCommand.CommandType = CommandType.StoredProcedure;
+            com.SelectCommand.Parameters.AddWithValue("@param1", DdlRegiao.SelectedValue);
+            DataSet ds1 = new DataSet();
+            if (com != null)
+            { com.Fill(ds1); }
+            con.Open();
+            DdlOficinas.DataSource = ds1;
+            DdlOficinas.DataTextField = "WorkshopName";
+            DdlOficinas.DataValueField = "WorkshopName";
+            DdlOficinas.DataBind();
+            con.Close();
+
+            val = CountTableEntries.CountWorkshopsInRegion(DdlRegiao.SelectedValue);
+            if(val == -1) { Response.Redirect("~/Error.aspx"); }
+            return val;
+        }
+
+        protected void DdlRegiao_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int result;
+
+            if(DdlRegiao.SelectedValue != "0")
             {
-                double rating;
-                string workshopid;
-
-                workshopid = Users.GetWorkshopId(ddlOficinas.SelectedValue);
-                if(workshopid == "") { Response.Redirect("Error.aspx"); }
-                rating = Commissions.GetAvgRating(workshopid);
-                if(rating == -1) { Response.Redirect("Error.aspx"); }
-
+                
+               
+                result = populate_DDL();
+                if(result == 0)
+                {
+                    DdlOficinas.Items.Insert(0, new ListItem("Não existem Oficinas na Região", "0"));
+                    if(DdlOficinas.Enabled == true) { DdlOficinas.Enabled = false; }
+                   
+                }
+                else
+                {
+                    DdlOficinas.Items.Insert(0, new ListItem("-- Selecione --", "0"));
+                    DdlOficinas.Enabled = true;
+                }
+               
                 
                 
+                    
             }
-
-
         }
     }
 }

@@ -73,6 +73,23 @@
                     <asp:RequiredFieldValidator runat="server" ControlToValidate="MoradaOficina" CssClass="text-danger" Display="Dynamic" ErrorMessage="A morada da oficina é necessário." />
                     <asp:RegularExpressionValidator ID="RegExMoradaOficina" runat="server" Font-Bold="true" CssClass="text-danger" Display="Dynamic"  EnableClientScript="true" SetFocusOnError="true"  ErrorMessage="Morada inválida." ControlToValidate="MoradaOficina"  ValidationExpression="^[a-zA-Z1-9''-'.,ºàáâäãåacceèéêëeiìíîïlnòóôöõøùúûüuuÿýzzñçcšžÀÁÂÄÃÅACCEEÈÉÊËÌÍÎÏILNÒÓÔÖÕØÙÚÛÜUUŸÝZZÑßÇŒÆCŠŽ?ð\s]{1,50}$"></asp:RegularExpressionValidator><br/>
                 </div> 
+                    <div class="col-ld-10">
+                        <asp:Label runat="server" Font-Bold="true" CssClass="col-md-2 control-label">Região da Oficina</asp:Label>
+                        <asp:DropDownList ID="DdlRegiao" runat="server" CssClass="form-control" AppendDataBoundItems="true" Width="280px">
+                            <asp:ListItem Value="0">-- Selecione --</asp:ListItem>
+                            <asp:ListItem Value="Porto e Norte">Porto e Norte</asp:ListItem>
+                            <asp:ListItem Value="Coimbra e Centro">Coimbra e Centro</asp:ListItem>
+                            <asp:ListItem Value="Lisboa">Lisboa</asp:ListItem>
+                            <asp:ListItem Value="Alentejo">Alentejo</asp:ListItem>
+                            <asp:ListItem Value="Algarve">Algarve</asp:ListItem>
+                            <asp:ListItem Value="Açores">Açores</asp:ListItem>
+                            <asp:ListItem Value="Madeira">Madeira</asp:ListItem>
+                        </asp:DropDownList>
+                        <asp:RequiredFieldValidator ID="RFVDdlRegiao" runat="server" CssClass="text-danger" Display="dynamic" SetFocusOnError="true"
+                            ErrorMessage="Selecione uma Região" ControlToValidate="DdlRegiao" EnableClientScript="true"
+                            InitialValue="0"></asp:RequiredFieldValidator>
+                        <br />
+                    </div> 
                 <div class="col-ld-10">
                     <asp:Label runat="server" Font-Bold="true" CssClass="col-md-2 control-label">Nº telefone da oficina</asp:Label>                    
                     <asp:TextBox runat="server" ID="TelefoneOficina" CssClass="form-control"/>

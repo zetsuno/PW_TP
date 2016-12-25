@@ -4,32 +4,32 @@
     <script src="../Scripts/star-rating.js" type="text/javascript"></script>
     <asp:UpdatePanel runat="server" ID="UPWorkshopView" UpdateMode="Conditional">
         <ContentTemplate>
-    <h1>INFO</h1>
-    <br /><br /><br /><br /><br />
-    <h3>Oficinas</h3>
-    <asp:SqlDataSource ID="SqlDSWorkshops" runat="server" ConnectionString='<%$ ConnectionStrings:DefaultConnection %>' SelectCommand="GetWorkshopNames" SelectCommandType="StoredProcedure"></asp:SqlDataSource>
-    <br /><br />
-            <asp:DropDownList ID="ddlOficinas" runat="server" DataSourceID="SqlDSWorkshops" DataTextField="WorkshopName" DataValueField="WorkshopName" OnSelectedIndexChanged="ddlOficinas_SelectedIndexChanged" AutoPostBack="true" AppendDataBoundItems="true">
-             <asp:ListItem Value="0" Selected="True">-- Selecione --</asp:ListItem>
-            </asp:DropDownList><br />       
-            <div class="modal" id="modalbox" runat="server" visible="false">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button class="close" aria-hidden="true" type="button" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Modal title</h4>
-                        </div>
-                        <div class="modal-body">
-                            <p>One fine body…</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
-                            <button class="btn btn-primary" type="button">Save changes</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
+            <br /><br /><br />
+            <div class="jumbotron">
+                
+                <h1>Conheça as nossas oficinas</h1>
+                <br /><br /><br /><br />
+                <p>Selecione a sua região:</p>
+                
+                <p>
+                    <asp:DropDownList ID="DdlRegiao" runat="server" CssClass="form-control" Width="280px" AutoPostBack="True" OnSelectedIndexChanged="DdlRegiao_SelectedIndexChanged">
+                        <asp:ListItem Value="0">-- Selecione --</asp:ListItem>
+                        <asp:ListItem Value="Porto e Norte">Porto e Norte</asp:ListItem>
+                        <asp:ListItem Value="Coimbra e Centro">Coimbra e Centro</asp:ListItem>
+                        <asp:ListItem Value="Lisboa">Lisboa</asp:ListItem>
+                        <asp:ListItem Value="Alentejo">Alentejo</asp:ListItem>
+                        <asp:ListItem Value="Algarve">Algarve</asp:ListItem>
+                        <asp:ListItem Value="Açores">Açores</asp:ListItem>
+                        <asp:ListItem Value="Madeira">Madeira</asp:ListItem>
+                    </asp:DropDownList>
+                </p>
+                <p>         
+                    <asp:DropDownList ID="DdlOficinas" runat="server" CssClass="form-control" AppendDataBoundItems="false" Width="280px" AutoPostBack="True" Enabled="false">
+                     
+                    </asp:DropDownList>
+                </p>   
+
+            </div>  
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>

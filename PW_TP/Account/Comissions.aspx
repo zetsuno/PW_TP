@@ -34,7 +34,7 @@
         <asp:UpdatePanel runat="server" ID="EditTablesUpdatePanel" UpdateMode="Conditional">
             <ContentTemplate>
                 <ul class="nav nav-tabs" id="mytabs" role="tablist">
-                    <li><a aria-expanded="true" role="tab"  href="#tab1" data-toggle="tab">Informação   </a></li>
+                    <li class="active"><a aria-expanded="true" role="tab"  href="#tab1" data-toggle="tab">Informação   </a></li>
                     <li><a aria-expanded="true" role="tab"  href="#tab2" data-toggle="tab">Criar Comissão</a></li>
                     <li><a aria-expanded="true" role="tab"  href="#tab3" data-toggle="tab">Comissões Ativas   <span class="badge"><%= BadgeComissions.Text%></span></a></li>
                     <li><a aria-expanded="true" role="tab"  href="#tab4" data-toggle="tab">Comissões Concluídas </a></li>
@@ -174,7 +174,7 @@
                                 <asp:TemplateField HeaderText="Aceite?" SortExpression="Accepted">
                                     <ItemTemplate><%# (Boolean.Parse(Eval("Accepted").ToString())) ? "Sim" : "Não" %></ItemTemplate>
                                 </asp:TemplateField>
-                             <asp:TemplateField ShowHeader="true" HeaderText="Avalie o Serviço" ItemSTyle-Width="100px">
+                             <asp:TemplateField ShowHeader="true" HeaderText="Avalie o Serviço" ItemSTyle-Width="100px" ItemStyle-HorizontalAlign="Center">
                                     <ItemTemplate>
                                         <input id="starating" runat="server" name="input-4" type="number" class="rating rating-loading" data-show-clear="false" data-show-caption="false" data-min="0" data-max="5" data-step="1">
                                         <asp:Label runat="server" ID="labelrejected" Text="Comissão Rejeitada" Visible="false"></asp:Label>
