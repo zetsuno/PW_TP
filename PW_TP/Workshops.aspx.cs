@@ -58,25 +58,41 @@ namespace PW_TP
 
             if(DdlRegiao.SelectedValue != "0")
             {
-                
-               
+
+                if (DescOficina.Visible == true) { DescOficina.Visible = false; }
                 result = populate_DDL();
                 if(result == 0)
                 {
                     DdlOficinas.Items.Insert(0, new ListItem("Não existem Oficinas na Região", "0"));
-                    if(DdlOficinas.Enabled == true) { DdlOficinas.Enabled = false; }
-                   
+                    if(DdlOficinas.Enabled == true) { DdlOficinas.Enabled = false; }    
                 }
                 else
                 {
                     DdlOficinas.Items.Insert(0, new ListItem("-- Selecione --", "0"));
                     DdlOficinas.Enabled = true;
-                }
-               
-                
-                
-                    
+                }                    
             }
+            else if(DdlOficinas.Enabled == true && DescOficina.Visible == true) { DdlOficinas.Enabled = false; DescOficina.Visible = false; }
+        }
+
+        protected void GetWorkshopDetails(string workshopname)
+        {
+            SqlConnection con = GetSqlCon.GetCon();
+            SqlDataAdapter com = new SqlDataAdapter("GetWorkshopDetails", con);
+            com.SelectCommand.CommandType = CommandType.StoredProcedure;
+            com.SelectCommand.Parameters.AddWithValue("@param1", workshopname);
+            DataTable dtWorkshops = new DataTable();
+            com.Fill(dtWorkshops);
+            DescOficina.DataSource = dtWorkshops;
+            DescOficina.DataBind();
+            
+        }
+
+        protected void DdlOficinas_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            GetWorkshopDetails(DdlOficinas.SelectedValue);
+            DescOficina.Visible = true;
+
         }
     }
 }

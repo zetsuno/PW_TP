@@ -4984,7 +4984,10 @@ a.badge:focus {
   padding-right: 15px;
 }
 .jumbotron .container {
-  max-width: 100%;
+  position:relative;
+  margin-top:30%;
+  margin-right:50%;
+
 }
 @media screen and (min-width: 768px) {
   .jumbotron {
@@ -7086,4 +7089,18 @@ left: 45px;
 
 left: 60px;
 
+}
+
+.vertical-right {
+  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+  min-height: 100vh; /* These two lines are counted as one :-)       */
+  display: flex;
+  align-items:baseline;
+}
+
+.jumbotron h5{
+ margin-top:50%; 
+  left:80%;
+  font-size:15px;
+  color:#fff;
 }
