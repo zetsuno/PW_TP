@@ -7099,8 +7099,19 @@ left: 60px;
 }
 
 .jumbotron h5{
- margin-top:50%; 
+  margin-top:50%; 
   left:80%;
   font-size:15px;
   color:#fff;
+}
+
+div#one {
+    width: 50%;
+    height: 100%;
+    float: left;
+}
+div#two {
+    width:50%;
+    height: 100%;
+    float:left
 }

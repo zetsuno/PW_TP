@@ -161,6 +161,29 @@ namespace PW_TP.App_Classes
             }
 
             return id;   
-        }  
+        }
+
+        public static int CheckIfWorkshopExist(string workshopname)
+        {
+            SqlConnection SqlCon = GetSqlCon.GetCon();
+            int value;
+            SqlCommand cmd = new SqlCommand("CheckIfWorkshopExists", SqlCon);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@param1", workshopname);
+
+            try
+            {
+                SqlCon.Open();
+                value = (int)cmd.ExecuteScalar();
+                SqlCon.Close();
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("An error occurred when trying to check if the workshop existed!");
+                return -1;
+            }
+
+            return value;
+        }
     }
 }
