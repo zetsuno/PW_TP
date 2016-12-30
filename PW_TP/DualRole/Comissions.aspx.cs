@@ -12,20 +12,26 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Web.UI.HtmlControls;
 
-namespace PW_TP.Account
+namespace PW_TP.DualRole
 {
     public partial class Comissions : System.Web.UI.Page
     {
         protected void Page_Init(object sender, EventArgs e)
         {
-            if (!User.Identity.IsAuthenticated || User.IsInRole("workshop"))
+            if (!User.IsInRole("cliente") && !User.IsInRole("workshop"))
             {
                 Response.Redirect("~/UnauthorizedAccess.aspx");
             }
+            else if (!User.Identity.IsAuthenticated)
+            {
+                Response.Redirect("~/UnauthorizedAccess.aspx");
+            }
+            else {
 
                 PopulateGridViews();
                 GetRatings();
                 UpdateBadges();
+            }          
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -38,7 +44,7 @@ namespace PW_TP.Account
                 HistoryOfComissions.DataBind();
                 GetRatings();
                 UpdateBadges();
-          }       
+            }
         }
 
         protected void GetRatings()
@@ -58,7 +64,7 @@ namespace PW_TP.Account
                     ((HtmlInputGenericControl)row.FindControl("starating")).Attributes.Add("readonly", "true");
                     ((Button)row.FindControl("BtnSubmitRating")).Visible = false;
                     BadgeCountActiveComissions.Text = rejected.ToString();
-                   
+
                 }
                 if (rejected == 0)
                 {
@@ -71,18 +77,19 @@ namespace PW_TP.Account
         }
 
         protected void BtnCreateComission_Click(object sender, EventArgs e)
-        {     
+        {
             int Ano;
             int.TryParse(TbAno.Text, out Ano);
-            
+
             ApplicationDbContext context = new ApplicationDbContext();
             var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
             string user = User.Identity.GetUserId();
-            
-            if(Commissions.CreateComission(TbModelo.Text, DdlTipo.SelectedValue, DdlOficinas.SelectedValue, Ano, TbDetails.Text, user) == false){
+
+            if (Commissions.CreateComission(TbModelo.Text, DdlTipo.SelectedValue, DdlOficinas.SelectedValue, Ano, TbDetails.Text, user) == false)
+            {
                 Response.Redirect("~/Error.aspx");
             }
-            Response.Redirect("ComissionCreated.aspx");     
+            Response.Redirect("~/Account/ComissionCreated.aspx");
         }
 
         protected void UpdateBadges()
@@ -92,10 +99,10 @@ namespace PW_TP.Account
             string user = User.Identity.GetUserId();
 
             int value = CountTableEntries.CountActiveComissions(user);
-            if(value == -1) { Response.Redirect("~/Error.aspx"); }    
-            BadgeCountActiveComissions.Text  = value.ToString();
+            if (value == -1) { Response.Redirect("~/Error.aspx"); }
+            BadgeCountActiveComissions.Text = value.ToString();
             int value2 = CountTableEntries.CountPendingComissions(user);
-            if(value == -1) { Response.Redirect("~/Error.aspx"); }
+            if (value == -1) { Response.Redirect("~/Error.aspx"); }
             BadgeCountPendingComissions.Text = value2.ToString();
             BadgeComissions.Text = (value2 + value).ToString();
         }
@@ -109,7 +116,7 @@ namespace PW_TP.Account
             //Active
             string storedprocedure = "GetActiveComissions";
             SqlConnection cn = GetSqlCon.GetCon();
-            if(cn == null) { Response.Redirect("~/Error.aspx"); }
+            if (cn == null) { Response.Redirect("~/Error.aspx"); }
 
             DataTable dt = new DataTable();
             SqlCommand cmd = new SqlCommand(storedprocedure, cn);
@@ -124,7 +131,7 @@ namespace PW_TP.Account
             //Pending
             string storedprocedure2 = "GetPendingComissions";
             SqlConnection cn2 = GetSqlCon.GetCon();
-            if(cn2 == null) { Response.Redirect("~/Error.aspx"); }
+            if (cn2 == null) { Response.Redirect("~/Error.aspx"); }
 
             DataTable dt2 = new DataTable();
             SqlCommand cmd2 = new SqlCommand(storedprocedure2, cn2);

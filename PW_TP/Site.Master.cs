@@ -76,6 +76,22 @@ namespace PW_TP
         {
             Context.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
         }
+
+        protected void DualRole_ServerClick(object sender, EventArgs e)
+        {
+            if(Context.User.IsInRole("workshop") && Context.User.IsInRole("client"))
+            {
+                Response.Redirect("~/DualRole/Comissions.aspx");
+            }
+            else if (Context.User.IsInRole("client"))
+            {
+                Response.Redirect("~/Account/Comissions.aspx");
+            }
+            else if (Context.User.IsInRole("workshop"))
+            {
+                Response.Redirect("~/Account/Comissions.aspx");
+            }
+        }
     }
 
 }

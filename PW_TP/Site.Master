@@ -72,7 +72,7 @@
                             <asp:RoleGroup Roles="workshop">
                                 <ContentTemplate>
                                  <ul class="nav navbar-nav navbar-right">
-                                    <li><a runat="server" href="~/Workshop/Comissions" title="Comissions">Comissões</a></li>
+                                    <li><a runat="server" onserverclick="DualRole_ServerClick" title="Comissions">Comissões</a></li>
                                     <li><a runat="server" href="~/Account/Manage" title="Gerir Conta">Olá, <%: Context.User.Identity.GetUserName()  %> !</a></li>
                                      <li class="dropdown">
                                          <a class="dropdown-toggle" role="button" aria-expanded="false" href="#" data-toggle="dropdown">Opções<span class="caret"></span></a>
@@ -88,7 +88,7 @@
                             <asp:RoleGroup Roles="client">
                                 <ContentTemplate>
                                  <ul class="nav navbar-nav navbar-right">
-                                    <li><a runat="server" href="~/Account/Comissions" title="Comissions">Comissões</a></li>
+                                    <li><a runat="server" onserverclick="DualRole_ServerClick" title="Comissions">Comissões</a></li>
                                     <li><a runat="server" href="~/Account/Manage" title="Gerir Conta">Olá, <%: Context.User.Identity.GetUserName()  %> !</a></li>
                                      <li class="dropdown">
                                          <a class="dropdown-toggle" role="button" aria-expanded="false" href="#" data-toggle="dropdown">Opções<span class="caret"></span></a>

@@ -4099,8 +4099,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav-pills > li.active > a,
 .nav-pills > li.active > a:hover,
 .nav-pills > li.active > a:focus {
-  color: #98978b;
-  background-color: #f8f5f0;
+  color: #fff;
+  background-color: #93c54b;
 }
 .nav-stacked > li {
   float: none;
@@ -4947,7 +4947,7 @@ a.badge:focus {
 .list-group-item.active > .badge,
 .nav-pills > .active > a > .badge {
   color: #ffffff;
-  background-color: #93c54b;
+  background-color: #cccccc;
 }
 .list-group-item > .badge {
   float: right;
@@ -6815,17 +6815,19 @@ input:focus,
   color: #98978b;
 }
 .nav-tabs > li.disabled > a:hover {
-  background-color: #f8f5f0;
+  background-color: #cccccc;
+
 }
 .nav-pills a {
   color: #98978b;
+  font-weight:bold;
 }
 .nav-pills li > a {
   border: 1px solid transparent;
 }
 .nav-pills li.active > a,
 .nav-pills li > a:hover {
-  border-color: #dfd7ca;
+  border-color: #98978b;
 }
 .nav-pills li.disabled > a {
   border-color: transparent;

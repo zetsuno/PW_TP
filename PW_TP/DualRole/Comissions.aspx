@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Comissions.aspx.cs" Inherits="PW_TP.Account.Comissions" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Comissions.aspx.cs" Inherits="PW_TP.DualRole.Comissions" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <link href="../Content/star-rating.css" media="all" rel="stylesheet" type="text/css" />
     <script src="../Scripts/star-rating.js" type="text/javascript"></script>
@@ -33,6 +33,14 @@
         <br />
         <asp:UpdatePanel runat="server" ID="EditTablesUpdatePanel" UpdateMode="Conditional">
             <ContentTemplate>
+                <ul class="nav nav-pills" id="mytabsgeneral" role="tablist">
+                    <li class="active"><a aria-expanded="true" role="tab" href="#tabclient" data-toggle="tab">Funções  Cliente</a></li>
+                    <li><a aria-expanded="true" role="tab" href="#tabworkshop" data-toggle="tab">Funções Oficina</a></li>
+                </ul>
+                <br /><br /><br />  
+                <div class="tab-content"  id="myTabContentGeneral">
+                    <div class="tab-pane fade active in" id="tabclient">
+
                 <ul class="nav nav-tabs" id="mytabs" role="tablist">
                     <li class="active"><a aria-expanded="true" role="tab"  href="#tab1" data-toggle="tab">Informação   </a></li>
                     <li><a aria-expanded="true" role="tab"  href="#tab2" data-toggle="tab">Criar Comissão</a></li>
@@ -199,11 +207,11 @@
                 <asp:Label ID="BadgeCountPendingComissions" runat="server" Visible="false"></asp:Label>
                 <asp:Label ID="BadgeComissions" runat="server" Visible="false"></asp:Label>
                 
+                </div>
+                <div class="tab-pane fade" id="tabworkshop">
+
+                </div>
             </ContentTemplate>
         </asp:UpdatePanel>
     </div>
-
 </asp:Content>
-
-
-
