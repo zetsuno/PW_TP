@@ -189,6 +189,7 @@
     <Content Include="Administration\Web.config" />
     <Content Include="Content\star-rating.css" />
     <Content Include="Content\star-rating.min.css" />
+    <Content Include="DualRole\ComissionCreated.aspx" />
     <Content Include="DualRole\Comissions.aspx" />
     <Content Include="Error.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -444,6 +445,13 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DualRole\ComissionCreated.aspx.cs">
+      <DependentUpon>ComissionCreated.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DualRole\ComissionCreated.aspx.designer.cs">
+      <DependentUpon>ComissionCreated.aspx</DependentUpon>
     </Compile>
     <Compile Include="DualRole\Comissions.aspx.cs">
       <DependentUpon>Comissions.aspx</DependentUpon>

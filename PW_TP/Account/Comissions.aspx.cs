@@ -78,7 +78,9 @@ namespace PW_TP.Account
             ApplicationDbContext context = new ApplicationDbContext();
             var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
             string user = User.Identity.GetUserId();
-            
+
+            BtnCreateComission.Enabled = false; //Prevenir Flood
+
             if(Commissions.CreateComission(TbModelo.Text, DdlTipo.SelectedValue, DdlOficinas.SelectedValue, Ano, TbDetails.Text, user) == false){
                 Response.Redirect("~/Error.aspx");
             }

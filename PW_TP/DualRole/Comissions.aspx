@@ -209,7 +209,96 @@
                 
                 </div>
                 <div class="tab-pane fade" id="tabworkshop">
-
+                    <ul class="nav nav-tabs" id="mytabsworkshop" role="tablist">
+                    <li class="active"><a aria-expanded="true" role="tab"  href="#tab5" data-toggle="tab">Comissões Ativas   <span class="badge"><%= LabelComissoesAtivas.Text %></span></a></li>
+                    <li><a aria-expanded="true" role="tab"  href="#tab6" data-toggle="tab">Comissões Pendentes     <span class="badge"><%= LabelComissoesPendentes.Text %></span></a></li>
+                    <li><a aria-expanded="true" role="tab"  href="#tab7" data-toggle="tab">Histórico de Comissões</a></li>
+                    <li><a aria-expanded="true" role="tab"  href="#tab8" data-toggle="tab">Clientes</a></li>
+                    
+                </ul>
+                <br />
+                <div class="tab-content"  id="myTabContentWorkshop">
+                    <div class="tab-pane fade active in" id="tab5">
+                        <h3>Comissões Ativas - <%= LabelComissoesAtivas.Text%></h3><br />
+                         <asp:GridView ID="ActiveComissions" runat="server" ShowHeaderWhenEmpty="true" Width="1100px" CssClass="list-group-item table-condensed table-hover table-responsive" AllowPaging="True"  AutoGenerateColumns="false" OnRowCommand="Comissions_RowCommand">
+                              <Columns>
+                                  <asp:TemplateField ShowHeader="false">
+                                    <ItemTemplate>
+                                        <asp:Button ID="BtnConcludeComission" runat="server" CssClass="btn btn-success" CausesValidation="false" CommandName="ConcludeComission"
+                                            Text="Concluir" CommandArgument="<%# ((GridViewRow) Container).RowIndex%>" Width="100px" Visible="true"  OnClientClick="return confirm('De certeza que quer concluir a comissão?')"/>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:BoundField DataField="ComissionNo" HeaderText="Identificador da Comissão" SortExpression="ComissionNo"></asp:BoundField>
+                                <asp:BoundField DataField="CreationDate" HeaderText="Data de Criação" SortExpression="CreationDate"></asp:BoundField>
+                                <asp:CheckBoxField DataField="Accepted" HeaderText="Aceite" SortExpression="Accepted"></asp:CheckBoxField>
+                                <asp:BoundField DataField="BicycleModel" HeaderText="Modelo da Bicicleta" SortExpression="BicycleModel"></asp:BoundField>
+                                <asp:BoundField DataField="BicycleType" HeaderText="Tipo da Bicicleta" SortExpression="BicycleType"></asp:BoundField>
+                                <asp:BoundField DataField="YearOfAquisition" HeaderText="Ano de Aquisição" SortExpression="YearOfAquisition"></asp:BoundField>
+                                <asp:BoundField DataField="Details" HeaderText="Detalhes" SortExpression="Details"></asp:BoundField>
+                                <asp:BoundField DataField="DisplayName" HeaderText="Nome de Utilizador" SortExpression="DisplayName"></asp:BoundField>
+                                <asp:BoundField DataField="Email" HeaderText="Email" SortExpression="Email"></asp:BoundField>
+                            </Columns>
+                         </asp:GridView>
+                    </div>
+                    <div class="tab-pane fade" id="tab6">
+                        <h3>Comissões Pendentes - <%= LabelComissoesPendentes.Text%></h3><br />
+                         <asp:GridView ID="PendingComissions" runat="server" ShowHeaderWhenEmpty="true" Width="1100px" CssClass="list-group-item table-condensed table-hover table-responsive" AllowPaging="True"  AutoGenerateColumns="false" OnRowCommand="Comissions_RowCommand">
+                             <Columns>
+                                <asp:TemplateField ShowHeader="false">
+                                    <ItemTemplate>
+                                        <asp:Button ID="BtnAcceptComission" runat="server" CssClass="btn btn-success" CausesValidation="false" CommandName="AcceptComission"
+                                            Text="Aceitar" CommandArgument="<%# ((GridViewRow) Container).RowIndex%>" Width="100px" Visible="true"  OnClientClick="return confirm('De certeza que quer aceitar a comissão?')"/>
+                                        <asp:Button ID="BtnRejectComission" runat="server" CssClass="btn btn-danger" CausesValidation="false" CommandName="RejectComission"
+                                            Text="Rejeitar" CommandArgument="<%# ((GridViewRow) Container).RowIndex%>" Width="100px" OnClientClick="return confirm('De certeza que quer rejeitar a comissão?')" Visible="true" />  
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:BoundField DataField="ComissionNo" HeaderText="Identificador da Comissão" SortExpression="ComissionNo"></asp:BoundField>
+                                <asp:BoundField DataField="CreationDate" HeaderText="Data de Criação" SortExpression="CreationDate"></asp:BoundField>
+                                <asp:CheckBoxField DataField="Accepted" HeaderText="Aceite" SortExpression="Accepted"></asp:CheckBoxField>
+                                <asp:BoundField DataField="BicycleModel" HeaderText="Modelo da Bicicleta" SortExpression="BicycleModel"></asp:BoundField>
+                                <asp:BoundField DataField="BicycleType" HeaderText="Tipo da Bicicleta" SortExpression="BicycleType"></asp:BoundField>
+                                <asp:BoundField DataField="YearOfAquisition" HeaderText="Ano de Aquisição" SortExpression="YearOfAquisition"></asp:BoundField>
+                                <asp:BoundField DataField="Details" HeaderText="Detalhes" SortExpression="Details"></asp:BoundField>
+                                <asp:BoundField DataField="DisplayName" HeaderText="Nome de Utilizador" SortExpression="DisplayName"></asp:BoundField>
+                                <asp:BoundField DataField="Email" HeaderText="Email" SortExpression="Email"></asp:BoundField>
+                            </Columns>
+                         </asp:GridView>
+                    </div>
+                    <div class="tab-pane fade" id="tab7">
+                     <h3>Histórico de Comissões</h3><br />
+                         <asp:GridView ID="HistoryOfComissionsWorkshop" runat="server" ShowHeaderWhenEmpty="true" Width="1100px" CssClass="list-group-item table-condensed table-hover table-responsive" AllowPaging="True"  AutoGenerateColumns="false">
+                             <Columns>
+                                <asp:BoundField DataField="ComissionNo" HeaderText="Identificador da Comissão" SortExpression="ComissionNo"></asp:BoundField>
+                                <asp:BoundField DataField="CreationDate" HeaderText="Data de Criação" SortExpression="CreationDate"></asp:BoundField>
+                                <asp:CheckBoxField DataField="Accepted" HeaderText="Aceite" SortExpression="Accepted"></asp:CheckBoxField>
+                                <asp:BoundField DataField="BicycleModel" HeaderText="Modelo da Bicicleta" SortExpression="BicycleModel"></asp:BoundField>
+                                <asp:BoundField DataField="BicycleType" HeaderText="Tipo da Bicicleta" SortExpression="BicycleType"></asp:BoundField>
+                                <asp:BoundField DataField="YearOfAquisition" HeaderText="Ano de Aquisição" SortExpression="YearOfAquisition"></asp:BoundField>
+                                <asp:BoundField DataField="Details" HeaderText="Detalhes" SortExpression="Details"></asp:BoundField>
+                                <asp:BoundField DataField="DisplayName" HeaderText="Nome de Utilizador" SortExpression="DisplayName"></asp:BoundField>
+                                <asp:BoundField DataField="Email" HeaderText="Email" SortExpression="Email"></asp:BoundField>
+                                 <asp:TemplateField ShowHeader="true" HeaderText="Avaliação" ItemSTyle-Width="100px"  ItemStyle-HorizontalAlign="Center">
+                                    <ItemTemplate>
+                                        <asp:label runat="server" ID="ratinglabel" Text="Sem Avaliação" Visible="false"></asp:label>
+                                        <input id="starating" runat="server" name="input-4" type="number" class="rating rating-loading" data-show-clear="false" data-show-caption="false" data-min="0" data-max="5" data-step="1" readonly="readonly">
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                            </Columns>
+                         </asp:GridView>
+                    </div>
+                    <div class="tab-pane fade" id="tab8">
+                     <h3>Clientes</h3><br />
+                         <asp:GridView ID="Clientes" runat="server" ShowHeaderWhenEmpty="true" Width="550px" CssClass="list-group-item table-condensed table-hover table-responsive" AllowPaging="True"  AutoGenerateColumns="false">
+                             <Columns>
+                                <asp:BoundField DataField="Email" HeaderText="Email" SortExpression="Email"></asp:BoundField>
+                                <asp:BoundField DataField="DisplayName" HeaderText="Nome de Utilizador" SortExpression="DisplayName"></asp:BoundField>
+                                <asp:BoundField DataField="PhoneNumber" HeaderText="Número de Telemóvel" SortExpression="PhoneNumber"></asp:BoundField>
+                            </Columns>
+                         </asp:GridView>
+                    </div>
+                </div>
+                <asp:Label ID="LabelComissoesAtivas" runat="server" Visible="false"></asp:Label>
+                <asp:Label ID="LabelComissoesPendentes" runat="server" Visible="false"></asp:Label>
                 </div>
             </ContentTemplate>
         </asp:UpdatePanel>

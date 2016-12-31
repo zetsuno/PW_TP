@@ -29,8 +29,8 @@ namespace PW_TP.DualRole
             else {
 
                 PopulateGridViews();
-                GetRatings();
                 UpdateBadges();
+                GetRatings();
             }          
         }
 
@@ -42,6 +42,10 @@ namespace PW_TP.DualRole
                 GridViewActiveComissions.DataBind();
                 GridViewComissionsPending.DataBind();
                 HistoryOfComissions.DataBind();
+                ActiveComissions.DataBind();
+                PendingComissions.DataBind();
+                HistoryOfComissions.DataBind();
+                Clientes.DataBind();
                 GetRatings();
                 UpdateBadges();
             }
@@ -74,6 +78,28 @@ namespace PW_TP.DualRole
                 }
 
             }
+
+            foreach (GridViewRow row in HistoryOfComissionsWorkshop.Rows)
+            {
+
+                value = Commissions.FillRatings(row.Cells[0].Text);
+                if (value != -2)
+                {
+                    ((HtmlInputGenericControl)row.FindControl("starating")).Value = value.ToString();
+                    LabelComissoesAtivas.Text = value.ToString();
+
+                }
+                else
+                {
+                    ((HtmlInputGenericControl)row.FindControl("starating")).Visible = false;
+                    ((Label)row.FindControl("ratinglabel")).Visible = true;
+
+                }
+
+
+            }
+
+
         }
 
         protected void BtnCreateComission_Click(object sender, EventArgs e)
@@ -85,11 +111,13 @@ namespace PW_TP.DualRole
             var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
             string user = User.Identity.GetUserId();
 
+            BtnCreateComission.Enabled = false; //Prevenir Flood
+
             if (Commissions.CreateComission(TbModelo.Text, DdlTipo.SelectedValue, DdlOficinas.SelectedValue, Ano, TbDetails.Text, user) == false)
             {
                 Response.Redirect("~/Error.aspx");
             }
-            Response.Redirect("~/Account/ComissionCreated.aspx");
+            Response.Redirect("ComissionCreated.aspx");
         }
 
         protected void UpdateBadges()
@@ -105,10 +133,19 @@ namespace PW_TP.DualRole
             if (value == -1) { Response.Redirect("~/Error.aspx"); }
             BadgeCountPendingComissions.Text = value2.ToString();
             BadgeComissions.Text = (value2 + value).ToString();
+
+            int value3 = CountTableEntries.CountActiveComissionsWorkshop(user);
+            if (value3 == -1) { Response.Redirect("~/Error.aspx"); }
+            LabelComissoesAtivas.Text = value3.ToString();
+            int value4 = CountTableEntries.CountPendingComissionsWorkshop(user);
+            if (value4 == -1) { Response.Redirect("~/Error.aspx"); }
+            LabelComissoesPendentes.Text = value4.ToString();
         }
 
         protected void PopulateGridViews()
         {
+            //-----Client------//
+
             ApplicationDbContext context = new ApplicationDbContext();
             var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
             var user = UserManager.FindById(User.Identity.GetUserId());
@@ -157,6 +194,65 @@ namespace PW_TP.DualRole
             HistoryOfComissions.DataSource = dt3;
             HistoryOfComissions.DataBind();
             cn3.Close();
+
+
+            //-----Workshop-----//
+
+            //Active
+            string storedprocedure4 = "GetActiveComissionsWorkshop";
+            SqlConnection cn4 = GetSqlCon.GetCon();
+            if (cn4 == null) { Response.Redirect("~/Error.aspx"); }
+
+            DataTable dt4 = new DataTable();
+            SqlCommand cmd4 = new SqlCommand(storedprocedure4, cn4);
+            cmd4.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd4.Parameters.AddWithValue("@param1", user.Id);
+            SqlDataAdapter da4 = new SqlDataAdapter(cmd4);
+            da4.Fill(dt4);
+            ActiveComissions.DataSource = dt4;
+            ActiveComissions.DataBind();
+
+            //Pending
+            string storedprocedure5 = "GetPendingComissionsWorkshop";
+            SqlConnection cn5 = GetSqlCon.GetCon();
+            if (cn5 == null) { Response.Redirect("~/Error.aspx"); }
+
+            DataTable dt5 = new DataTable();
+            SqlCommand cmd5 = new SqlCommand(storedprocedure5, cn5);
+            cmd5.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd5.Parameters.AddWithValue("@param1", user.Id);
+            SqlDataAdapter da5 = new SqlDataAdapter(cmd5);
+            da5.Fill(dt5);
+            PendingComissions.DataSource = dt5;
+            PendingComissions.DataBind();
+
+            //History
+            string storedprocedure6 = "GetHistoryOfComissionsWorkshop";
+            SqlConnection cn6 = GetSqlCon.GetCon();
+            if (cn6 == null) { Response.Redirect("~/Error.aspx"); }
+
+            DataTable dt6 = new DataTable();
+            SqlCommand cmd6 = new SqlCommand(storedprocedure6, cn6);
+            cmd6.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd6.Parameters.AddWithValue("@param1", user.Id);
+            SqlDataAdapter da6 = new SqlDataAdapter(cmd6);
+            da6.Fill(dt6);
+            HistoryOfComissionsWorkshop.DataSource = dt6;
+            HistoryOfComissionsWorkshop.DataBind();
+
+            //Clients
+            string storedprocedure7 = "GetWorkshopClients";
+            SqlConnection cn7 = GetSqlCon.GetCon();
+            if (cn7 == null) { Response.Redirect("~/Error.aspx"); }
+
+            DataTable dt7 = new DataTable();
+            SqlCommand cmd7 = new SqlCommand(storedprocedure7, cn7);
+            cmd7.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd7.Parameters.AddWithValue("@param1", user.Id);
+            SqlDataAdapter da7 = new SqlDataAdapter(cmd7);
+            da7.Fill(dt7);
+            Clientes.DataSource = dt7;
+            Clientes.DataBind();
         }
 
         protected void Comissions_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -170,8 +266,42 @@ namespace PW_TP.DualRole
                 int.TryParse(((HtmlInputGenericControl)row.FindControl("starating")).Value, out rating);
                 if (Commissions.SetRating(id, rating) == false) { Response.Redirect("~/Error.aspx"); }
 
-                Response.Redirect("~/Account/Comissions.aspx");
+                Response.Redirect("Comissions.aspx");
             }
+
+            if (e.CommandName == "AcceptComission")
+            {
+                int index = Convert.ToInt32(e.CommandArgument), id;
+                GridViewRow row = PendingComissions.Rows[index];
+                int.TryParse(row.Cells[1].Text, out id);
+                LabelComissoesPendentes.Text = id.ToString();
+                if (Commissions.ActivateComission(id) == false) { Response.Redirect("~/Error.aspx"); }
+
+            }
+            if (e.CommandName == "RejectComission")
+            {
+                int index = Convert.ToInt32(e.CommandArgument), id;
+                GridViewRow row = PendingComissions.Rows[index];
+                int.TryParse(row.Cells[1].Text, out id);
+                if (Commissions.RejectComission(id) == false) { Response.Redirect("~/Error.aspx"); }
+
+            }
+            if (e.CommandName == "ConcludeComission")
+            {
+                int index = Convert.ToInt32(e.CommandArgument), id;
+                GridViewRow row = ActiveComissions.Rows[index];
+                int.TryParse(row.Cells[1].Text, out id);
+                LabelComissoesAtivas.Text = id.ToString();
+                if (Commissions.ConcludeComission(id) == false) { Response.Redirect("~/Error.aspx"); }
+
+            }
+
+            UpdateBadges();
+            PopulateGridViews();
+            GetRatings();
+            EditTablesUpdatePanel.Update();
         }
+
+
     }
 }
