@@ -7117,3 +7117,9 @@ div#two {
     height: 100%;
     float:left
 }
+
+.align-right {
+    align-items:flex-end;
+    display:flex;
+    float:right;
+}

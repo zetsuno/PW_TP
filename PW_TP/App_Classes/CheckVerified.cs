@@ -57,5 +57,29 @@ namespace PW_TP.App_Classes
 
         }
 
+        public static bool LockAccount(string id)
+        {
+            SqlConnection SqlCon = GetSqlCon.GetCon();
+
+            SqlCommand cmd = new SqlCommand("LockAccount", SqlCon);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@param1", id);
+
+            try
+            {
+                SqlCon.Open();
+                cmd.ExecuteNonQuery();
+                SqlCon.Close();
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("An error occurred when trying to lock a user account.");
+                return false;
+            }
+
+            return true;
+
+        }
+
     }
 }

@@ -10,7 +10,9 @@
             <p class="text-success"><%: SuccessMessage %></p>
         </asp:PlaceHolder>
     </div>
-
+    <asp:UpdatePanel runat="server" ID="ManageUP">
+        <ContentTemplate>
+    
     <div class="row">
         <div class="col-md-12">
             <div class="form-horizontal">
@@ -72,9 +74,82 @@
                         --%>
                         <% } %>
                     </dd>
+                    <dt>Tipo de Conta:</dt>
+                    <dd>
+                        <asp:Label runat="server" ID="accTypeLabel"></asp:Label>
+                    </dd>
+                    <p></p>
+                    <dd>
+                        <asp:Button runat="server" ID="ShowWorkshopForm" CssClass="btn btn-primary" Visible="false" OnClick="ShowWorkshopForm_Click"  CausesValidation="false" />
+                        
+                        
+                    </dd>
+                    
                 </dl>
+               <asp:Panel runat="server" ID="PainelOficina" Visible="false">
+            <br/>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Informação da Oficina</h3>
+                </div>
+                <div class="panel-body">
+                    <asp:Label runat="server" Font-Bold="true" CssClass="col-md-2 control-label">Nome da Oficina</asp:Label>
+                <div class="col-ld-10">
+                    <asp:TextBox runat="server" ID="NomeOficina" CssClass="form-control" />
+                    <asp:RequiredFieldValidator runat="server" ControlToValidate="NomeOficina" CssClass="text-danger" Display="Dynamic" ErrorMessage="O nome da oficina é necessário." />
+                    <asp:RegularExpressionValidator ID="RegExNomeOficina" runat="server" Font-Bold="true" CssClass="text-danger" Display="Dynamic"  EnableClientScript="true" SetFocusOnError="true"  ErrorMessage="Nome inválido." ControlToValidate="NomeOficina"  ValidationExpression="^[a-zA-Z''-'.àáâäãåacceèéêëeiìíîïlnòóôöõøùúûüuuÿýzzñçcšžÀÁÂÄÃÅACCEEÈÉÊËÌÍÎÏILNÒÓÔÖÕØÙÚÛÜUUŸÝZZÑßÇŒÆCŠŽ?ð\s]{1,40}$"></asp:RegularExpressionValidator><br/>
+                </div>
+                <div class="col-ld-10">
+                    <asp:Label runat="server" Font-Bold="true" CssClass="col-md-2 control-label">Morada da Oficina</asp:Label>
+                    <asp:TextBox runat="server" ID="MoradaOficina" CssClass="form-control" />
+                    <asp:RequiredFieldValidator runat="server" ControlToValidate="MoradaOficina" CssClass="text-danger" Display="Dynamic" ErrorMessage="A morada da oficina é necessário." />
+                    <asp:RegularExpressionValidator ID="RegExMoradaOficina" runat="server" Font-Bold="true" CssClass="text-danger" Display="Dynamic"  EnableClientScript="true" SetFocusOnError="true"  ErrorMessage="Morada inválida." ControlToValidate="MoradaOficina"  ValidationExpression="^[a-zA-Z1-9''-'.,ºàáâäãåacceèéêëeiìíîïlnòóôöõøùúûüuuÿýzzñçcšžÀÁÂÄÃÅACCEEÈÉÊËÌÍÎÏILNÒÓÔÖÕØÙÚÛÜUUŸÝZZÑßÇŒÆCŠŽ?ð\s]{1,50}$"></asp:RegularExpressionValidator><br/>
+                </div> 
+                    <div class="col-ld-10">
+                        <asp:Label runat="server" Font-Bold="true" CssClass="col-md-2 control-label">Região da Oficina</asp:Label>
+                        <asp:DropDownList ID="DdlRegiao" runat="server" CssClass="form-control" AppendDataBoundItems="true" Width="280px">
+                            <asp:ListItem Value="0">-- Selecione --</asp:ListItem>
+                            <asp:ListItem Value="Porto e Norte">Porto e Norte</asp:ListItem>
+                            <asp:ListItem Value="Coimbra e Centro">Coimbra e Centro</asp:ListItem>
+                            <asp:ListItem Value="Lisboa">Lisboa</asp:ListItem>
+                            <asp:ListItem Value="Alentejo">Alentejo</asp:ListItem>
+                            <asp:ListItem Value="Algarve">Algarve</asp:ListItem>
+                            <asp:ListItem Value="Açores">Açores</asp:ListItem>
+                            <asp:ListItem Value="Madeira">Madeira</asp:ListItem>
+                        </asp:DropDownList>
+                        <asp:RequiredFieldValidator ID="RFVDdlRegiao" runat="server" CssClass="text-danger" Display="dynamic" SetFocusOnError="true"
+                            ErrorMessage="Selecione uma Região" ControlToValidate="DdlRegiao" EnableClientScript="true"
+                            InitialValue="0"></asp:RequiredFieldValidator>
+                        <br />
+                    </div> 
+                <div class="col-ld-10">
+                    <asp:Label runat="server" Font-Bold="true" CssClass="col-md-2 control-label">Nº telefone da oficina</asp:Label>                    
+                    <asp:TextBox runat="server" ID="TelefoneOficina" CssClass="form-control"/>
+                    <asp:RequiredFieldValidator runat="server" ControlToValidate="TelefoneOficina" CssClass="text-danger" Display="Dynamic" ErrorMessage="O contacto da oficina é necessário." />
+                    <asp:RegularExpressionValidator ID="RegExTelefoneOficina" runat="server" CssClass="text-danger" Font-Bold="true" Display="Dynamic"  EnableClientScript="true" SetFocusOnError="true"  ErrorMessage="Formato de contacto  inválido." ControlToValidate="TelefoneOficina"  ValidationExpression="^[0-9]{9}$"></asp:RegularExpressionValidator><br/>
+                </div>
+                <div class="col-ld-10">
+                     <asp:Label runat="server" Font-Bold="true" CssClass="col-md-2 control-label">Titular</asp:Label>                    
+                    <asp:TextBox runat="server" ID="TitularOficina" CssClass="form-control" />
+                    <asp:RequiredFieldValidator runat="server" ControlToValidate="TitularOficina" CssClass="text-danger" Display="Dynamic" ErrorMessage="O nome do titular da oficina é necessário." />
+                    <asp:RegularExpressionValidator ID="RegExNomeTitular" runat="server" Font-Bold="true" CssClass="text-danger" Display="Dynamic"  EnableClientScript="true" SetFocusOnError="true"  ErrorMessage="Nome inválido." ControlToValidate="TitularOficina"  ValidationExpression="^[a-zA-Z''-'.àáâäãåacceèéêëeiìíîïlnòóôöõøùúûüuuÿýzzñçcšžÀÁÂÄÃÅACCEEÈÉÊËÌÍÎÏILNÒÓÔÖÕØÙÚÛÜUUŸÝZZÑßÇŒÆCŠŽ?ð\s]{1,40}$"></asp:RegularExpressionValidator><br/>
+                </div>
+                <div class="col-ld-10">
+                    <asp:Label runat="server" Font-Bold="true" CssClass="col-md-2 control-label">NIF do Titular da Oficina</asp:Label>                    
+                    <asp:TextBox runat="server" ID="NIFTitularOficina" CssClass="form-control"/>
+                    <asp:RequiredFieldValidator runat="server" ControlToValidate="NIFTitularOficina" CssClass="text-danger" Display="Dynamic" ErrorMessage="O NIF da oficina é necessário." />
+                    <asp:RegularExpressionValidator ID="RegExNIFTitularOficina" runat="server" CssClass="text-danger"  Font-Bold="true" Display="Dynamic"  EnableClientScript="true" SetFocusOnError="true"  ErrorMessage="Formato de NIF inválido." ControlToValidate="NIFTitularOficina"  ValidationExpression="^[0-9]{9}$"></asp:RegularExpressionValidator><br/>
+                </div>
+                    <asp:Button runat="server" ID="btnRequestDualRole" CssClass="btn btn-primary" Text="Submeter" OnClick="btnRequestDualRole_Click" />
+              </div>
+         </div>
+        </asp:Panel>
+                        
+                
             </div>
         </div>
     </div>
+    </ContentTemplate>
+</asp:UpdatePanel>
 
 </asp:Content>

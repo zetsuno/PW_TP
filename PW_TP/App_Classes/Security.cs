@@ -36,5 +36,24 @@ namespace PW_TP.App_Classes
             return true;
         }
 
+        public bool AddUserToRoleByID(string id, string roleName)
+        {
+            var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+
+            try
+            {
+                var user = UserManager.FindById(id);
+                UserManager.AddToRole(user.Id, roleName);
+                context.SaveChanges();
+
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("An error occurred when trying to add a user to a role.");
+                return false;
+            }
+
+            return true;
+        }
     }
 }

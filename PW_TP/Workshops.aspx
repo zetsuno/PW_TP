@@ -49,6 +49,11 @@
                         <asp:BoundField DataField="Email" HeaderText="E-mail" ReadOnly="True" />
                         <asp:BoundField DataField="WorkshopPhone" HeaderText="Contacto" ReadOnly="True" />
                         <asp:BoundField DataField="WorkshopOwner" HeaderText="Titular" ReadOnly="True" />
+                         <asp:TemplateField HeaderText="Avaliação">
+                             <ItemTemplate>
+                                 <asp:Label runat="server" ID="ratinglabel"></asp:Label>
+                             </ItemTemplate>
+                         </asp:TemplateField>
                       </Fields>
                   </asp:DetailsView>
                 </div>

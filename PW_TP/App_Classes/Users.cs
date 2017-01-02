@@ -185,5 +185,36 @@ namespace PW_TP.App_Classes
 
             return value;
         }
+
+        public static bool UpdateWorkshopDetails(string workshopname, string workshopaddress, string workshopregion, string workshopphone, string workshopowner, string workshopownernif, string id)
+        {
+
+            SqlConnection SqlCon = GetSqlCon.GetCon();
+
+            SqlCommand cmd = new SqlCommand("UpdateWorkshopDetails", SqlCon);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@param1", workshopname);
+            cmd.Parameters.AddWithValue("@param2", workshopaddress);
+            cmd.Parameters.AddWithValue("@param3", workshopregion);
+            cmd.Parameters.AddWithValue("@param4", workshopphone);
+            cmd.Parameters.AddWithValue("@param5", workshopowner);
+            cmd.Parameters.AddWithValue("@param6", workshopownernif);
+            cmd.Parameters.AddWithValue("@param7", id);
+
+            try
+            {
+                SqlCon.Open();
+                cmd.ExecuteNonQuery();
+                SqlCon.Close();
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("An error occurred when trying to add a user to the database.");
+                return false;
+            }
+
+            return true;
+        }
     }
 }

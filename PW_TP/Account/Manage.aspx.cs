@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Owin;
 using PW_TP.Models;
+using PW_TP.App_Classes;
 
 namespace PW_TP.Account
 {
@@ -33,7 +34,7 @@ namespace PW_TP.Account
 
         public int LoginsCount { get; set; }
 
-        protected void Page_Load()
+        protected void Page_Init()
         {
             if (!User.Identity.IsAuthenticated)
             {
@@ -41,10 +42,18 @@ namespace PW_TP.Account
 
             }
 
+            if (User.IsInRole("workshop") && User.IsInRole("client")) { accTypeLabel.Text = "Cliente/Oficina";}
+            else if (User.IsInRole("workshop")) { accTypeLabel.Text = "Oficina"; ShowWorkshopForm.Text = "Tornar Cliente"; ShowWorkshopForm.Visible = true; }
+            else if (User.IsInRole("client")) { accTypeLabel.Text = "Cliente"; ShowWorkshopForm.Text = "Tornar Oficina"; ShowWorkshopForm.Visible = true; }
+        }
+        protected void Page_Load()
+        {
+            
+
             var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
 
             HasPhoneNumber = String.IsNullOrEmpty(manager.GetPhoneNumber(User.Identity.GetUserId()));
-
+            
             // Enable this after setting up two-factor authentientication
             //PhoneNumber.Text = manager.GetPhoneNumber(User.Identity.GetUserId()) ?? String.Empty;
 
@@ -129,6 +138,40 @@ namespace PW_TP.Account
             manager.SetTwoFactorEnabled(User.Identity.GetUserId(), true);
 
             Response.Redirect("/Account/Manage");
+        }
+
+        protected void btnRequestDualRole_Click(object sender, EventArgs e)
+        {
+            
+                        
+
+            if (User.IsInRole("client"))
+            {
+                Security w = new Security();
+                if (w.AddUserToRoleByID(User.Identity.GetUserId(), "workshop") == false) { Response.Redirect("~/Error.aspx"); }
+                if (CheckVerified.LockAccount(User.Identity.GetUserId()) == false) { Response.Redirect("~/Error.aspx"); }
+                if (Users.UpdateWorkshopDetails(NomeOficina.Text, MoradaOficina.Text, DdlRegiao.SelectedValue, TelefoneOficina.Text, TitularOficina.Text, NIFTitularOficina.Text, User.Identity.GetUserId()) == false) { Response.Redirect("~/Error.aspx"); }
+                Context.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+                Response.Redirect("ValidationRequired.aspx");
+                
+            }
+            
+        }
+
+        protected void ShowWorkshopForm_Click(object sender, EventArgs e)
+        {
+            if (User.IsInRole("workshop"))
+            {
+                Security w = new Security();
+                if (w.AddUserToRoleByID(User.Identity.GetUserId(), "client") == false) { Response.Redirect("~/Error.aspx"); }
+                Response.Redirect("RoleChangeSuccess.aspx");
+            }
+            else if (PainelOficina.Visible == true)
+            {
+                PainelOficina.Visible = false;
+            }
+            else
+                PainelOficina.Visible = true;
         }
     }
 }

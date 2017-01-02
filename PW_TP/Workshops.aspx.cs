@@ -78,6 +78,7 @@ namespace PW_TP
 
         protected void GetWorkshopDetails(string workshopname)
         {
+            
             SqlConnection con = GetSqlCon.GetCon();
             SqlDataAdapter com = new SqlDataAdapter("GetWorkshopDetails", con);
             com.SelectCommand.CommandType = CommandType.StoredProcedure;
@@ -86,7 +87,13 @@ namespace PW_TP
             com.Fill(dtWorkshops);
             DescOficina.DataSource = dtWorkshops;
             DescOficina.DataBind();
-            
+
+            //rating
+            double rating = Commissions.GetAvgRating(Users.GetWorkshopId(workshopname));
+            Label ratinglb = DescOficina.FindControl("ratinglabel") as Label;
+            if(rating == -1) { ratinglb.Text = "Sem Avaliação"; }
+            else { ratinglb.Text = rating.ToString(); }
+
         }
 
         protected void DdlOficinas_SelectedIndexChanged(object sender, EventArgs e)

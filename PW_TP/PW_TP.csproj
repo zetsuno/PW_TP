@@ -191,6 +191,7 @@
     <Content Include="Content\star-rating.min.css" />
     <Content Include="DualRole\ComissionCreated.aspx" />
     <Content Include="DualRole\Comissions.aspx" />
+    <Content Include="Account\RoleChangeSuccess.aspx" />
     <Content Include="Error.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Logo_site.gif" />
@@ -415,7 +416,7 @@
     <Compile Include="Administration\Manage.aspx.designer.cs">
       <DependentUpon>Manage.aspx</DependentUpon>
     </Compile>
-    <Compile Include="App_Classes\AssignUserRole.cs" />
+    <Compile Include="App_Classes\Security.cs" />
     <Compile Include="App_Classes\CheckVerified.cs" />
     <Compile Include="App_Classes\Commissions.cs" />
     <Compile Include="App_Classes\CountTableEntries.cs" />
@@ -459,6 +460,13 @@
     </Compile>
     <Compile Include="DualRole\Comissions.aspx.designer.cs">
       <DependentUpon>Comissions.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Account\RoleChangeSuccess.aspx.cs">
+      <DependentUpon>RoleChangeSuccess.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Account\RoleChangeSuccess.aspx.designer.cs">
+      <DependentUpon>RoleChangeSuccess.aspx</DependentUpon>
     </Compile>
     <Compile Include="Error.aspx.cs">
       <DependentUpon>Error.aspx</DependentUpon>
