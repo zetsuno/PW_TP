@@ -29,6 +29,8 @@ namespace PW_TP.DualRole
             else {
 
                 PopulateGridViews();
+                PopulateDdlOficinas();
+                
                 UpdateBadges();
                 GetRatings();
             }          
@@ -46,9 +48,29 @@ namespace PW_TP.DualRole
                 PendingComissions.DataBind();
                 HistoryOfComissions.DataBind();
                 Clientes.DataBind();
+                DdlOficinas.DataBind();
+                DdlOficinas.Items.Insert(0, new ListItem("-- Selecione --", "0"));
                 GetRatings();
                 UpdateBadges();
             }
+        }
+
+        protected void PopulateDdlOficinas()
+        {
+
+            SqlConnection con = GetSqlCon.GetCon();
+            SqlDataAdapter com = new SqlDataAdapter("GetWorkshopNamesExceptSelf", con);
+            com.SelectCommand.CommandType = CommandType.StoredProcedure;
+            com.SelectCommand.Parameters.AddWithValue("@param1", User.Identity.GetUserId());
+            DataSet ds1 = new DataSet();
+            if (com != null)
+            { com.Fill(ds1); }
+            con.Open();
+            DdlOficinas.DataSource = ds1;
+            DdlOficinas.DataTextField = "WorkshopName";
+            DdlOficinas.DataValueField = "WorkshopName";
+            DdlOficinas.DataBind();
+            con.Close();
         }
 
         protected void GetRatings()

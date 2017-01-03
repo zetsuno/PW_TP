@@ -99,9 +99,9 @@
                             <div class="form-group">
                                 <asp:Label runat="server" AssociatedControlID="DdlOficinas" CssClass="col-md-4 control-label">Oficina</asp:Label>
                                 <div class="col-md-5">
-                                    <asp:SqlDataSource ID="SqlDataSourceDdlOficinas" runat="server" ConnectionString='<%$ ConnectionStrings:DefaultConnection %>' SelectCommand="GetWorkshopNames" SelectCommandType="StoredProcedure"></asp:SqlDataSource>
-                                    <asp:DropDownList ID="DdlOficinas" runat="server"  AppendDataBoundItems="true"  CssClass="form-control" DataSourceID="SqlDataSourceDdlOficinas" DataTextField="WorkshopName" DataValueField="WorkshopName">
-                                        <asp:ListItem Value="0">-- Selecione --</asp:ListItem>
+                                    
+                                    <asp:DropDownList ID="DdlOficinas" runat="server"  CssClass="form-control" AppendDataBoundItems="false">
+                                    
                                     </asp:DropDownList>
                                     <asp:RequiredFieldValidator ID="RFVDdlOficinas" runat="server" CssClass="text-danger"
                                         ErrorMessage="Selecione uma Oficina" ControlToValidate="DdlOficinas"

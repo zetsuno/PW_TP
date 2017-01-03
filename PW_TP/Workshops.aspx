@@ -61,7 +61,7 @@
                 <div id="two">
                     <p>Ou, pesquise por nome:</p>
                     <div class="w3-container" style="position:relative; display:inline-block"> 
-                            <input runat="server" type="text" class='w3-input w3-border' name='sendmsg' id='txtSearchWorkshop' style="padding-right:30px; width:1500px"  required placeholder="Nome a procurar..." />
+                            <input runat="server" type="text" class='w3-input w3-border' name="sendmsg" id="txtSearchWorkshop" style="padding-right:30px; width:1500px"  required placeholder="Nome a procurar..." />
                             <button runat="server" class="w3-btn w3-green w3-border  w3-round-xlarge " id="btnSearchWorkshop" style="position:absolute; top: 2px; right: 16px;"  onServerClick="SearchWorkshop_OnClick">Procurar</button>
                        
                     </div>

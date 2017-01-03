@@ -6,12 +6,18 @@
         <br />
         <asp:UpdatePanel runat="server" ID="EditTablesUpdatePanel" UpdateMode="Conditional">
             <ContentTemplate>
+                <ul class="nav nav-pills" id="mytabsgeneral" role="tablist">
+                    <li class="active"><a aria-expanded="true" role="tab" href="#tabusers" data-toggle="tab">Users</a></li>
+                    <li><a aria-expanded="true" role="tab" href="#tabcomissions" data-toggle="tab">Commissions</a></li>
+                </ul>
+                <br /><br /><br />  
+                <div class="tab-content"  id="myTabContentGeneral">
+                    <div class="tab-pane fade active in" id="tabusers">
                 <ul class="nav nav-tabs">
                     <li class="active"><a aria-expanded="true" href="#total" data-toggle="tab">Total   <span class="badge"><%= BadgeCountAll.Text%></span></a></li>
                     <li><a aria-expanded="true" href="#toverify" data-toggle="tab">To Verify   <span class="badge"><%= BadgeCountToVerify.Text%></span></a></li>    
                 </ul>
                 <br />
-                <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade active in" id="total">
                         <br />
                         <h3>Users - <%=BadgeCountAll.Text %></h3>
@@ -163,9 +169,50 @@
                                 </asp:TemplateField>                        
                             </Columns>
                         </asp:GridView>
+                        </div>
+                    <div class="tab-pane fade" id="toverify">
+                        <asp:SqlDataSource ID="SqlDSToBeVerified" runat="server" ConnectionString="<%$ ConnectionStrings:DefaultConnection %>" SelectCommand="SELECT * FROM [AspNetUsers] WHERE ([IsEnabled] = @IsEnabled)">
+                            <SelectParameters>
+                                <asp:Parameter DefaultValue="FALSE" Name="IsEnabled" Type="Boolean"></asp:Parameter>
+                            </SelectParameters>
+                        </asp:SqlDataSource>
+                        <asp:GridView ID="GridViewToValidate" runat="server" CssClass="list-group-item table-condensed table-hover table-responsive" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" DataSourceID="SqlDSToBeVerified" DataKeyNames="Id" OnRowCommand="GridViewToValidate_RowCommand">
+                            <Columns>
+                                <asp:TemplateField ShowHeader="False">
+                                    <ItemTemplate>
+                                        <asp:Button ID="ButtonActivateAcc" runat="server" CssClass="btn btn-success" CausesValidation="false" CommandName="ActivateAcc"
+                                            Text="Ativate Account" CommandArgument="<%# ((GridViewRow) Container).RowIndex%>" OnClientClick="return confirm('Are you sure you want to activate the user?'); " />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:BoundField DataField="Id" HeaderText="Id" ReadOnly="True" SortExpression="Id"></asp:BoundField>
+                                <asp:BoundField DataField="Email" HeaderText="Email" SortExpression="Email" ReadOnly="true"></asp:BoundField>
+                                <asp:CheckBoxField DataField="EmailConfirmed" HeaderText="EmailConfirmed" SortExpression="EmailConfirmed"></asp:CheckBoxField>
+                                <asp:BoundField DataField="PasswordHash" HeaderText="PasswordHash" SortExpression="PasswordHash"></asp:BoundField>
+                                <asp:BoundField DataField="SecurityStamp" HeaderText="SecurityStamp" SortExpression="SecurityStamp"></asp:BoundField>
+                                <asp:BoundField DataField="PhoneNumber" HeaderText="PhoneNumber" SortExpression="PhoneNumber"></asp:BoundField>
+                                <asp:CheckBoxField DataField="PhoneNumberConfirmed" HeaderText="PhoneNumberConfirmed" SortExpression="PhoneNumberConfirmed"></asp:CheckBoxField>
+                                <asp:CheckBoxField DataField="TwoFactorEnabled" HeaderText="TwoFactorEnabled" SortExpression="TwoFactorEnabled"></asp:CheckBoxField>
+                                <asp:BoundField DataField="LockoutEndDateUtc" HeaderText="LockoutEndDateUtc" SortExpression="LockoutEndDateUtc"></asp:BoundField>
+                                <asp:CheckBoxField DataField="LockoutEnabled" HeaderText="LockoutEnabled" SortExpression="LockoutEnabled"></asp:CheckBoxField>
+                                <asp:BoundField DataField="AccessFailedCount" HeaderText="AccessFailedCount" SortExpression="AccessFailedCount"></asp:BoundField>
+                                <asp:BoundField DataField="UserName" HeaderText="UserName" SortExpression="UserName"></asp:BoundField>
+                                <asp:BoundField DataField="WorkshopName" HeaderText="WorkshopName" SortExpression="WorkshopName"></asp:BoundField>
+                                <asp:BoundField DataField="WorkshopPhone" HeaderText="WorkshopPhone" SortExpression="WorkshopPhone"></asp:BoundField>
+                                <asp:BoundField DataField="WorkshopOwner" HeaderText="WorkshopOwner" SortExpression="WorkshopOwner"></asp:BoundField>
+                                <asp:BoundField DataField="WorkshopOwnerNIF" HeaderText="WorkshopOwnerNIF" SortExpression="WorkshopOwnerNIF"></asp:BoundField>
+                                <asp:BoundField DataField="WorkshopAddress" HeaderText="WorkshopAddress" SortExpression="WorkshopAddress" ReadOnly="true"></asp:BoundField>
+                                <asp:CheckBoxField DataField="IsEnabled" HeaderText="IsEnabled" SortExpression="IsEnabled"></asp:CheckBoxField>
+                                <asp:BoundField DataField="DisplayName" HeaderText="DisplayName" SortExpression="DisplayName"></asp:BoundField>
+                            </Columns>
+                        </asp:GridView>
+                    </div>            
+                    </div>
+                    <div class="tab-pane fade" id="tabcomissions">
+                   
                         <br /> <br /> <br />
                         <h3>Comissions - <%= BadgeCountComissions.Text %> </h3>
                         <br />
+                        
                         <asp:SqlDataSource ID="SqlDSCommissions" runat="server" ConnectionString='<%$ ConnectionStrings:DefaultConnection %>' SelectCommand="SELECT * FROM [Comissions]"></asp:SqlDataSource>
                         <asp:GridView ID="GridViewComissions" runat="server" CssClass="list-group-item table-condensed table-hover table-responsive" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="false" OnRowCommand="GridViewComissions_RowCommand" OnRowDataBound="GridViewComissions_RowDataBound" OnRowUpdating="GridViewComissions_RowUpdating" DataSourceID="SqlDSCommissions" OnRowUpdated="GridViewComissions_RowUpdated">
                              <Columns>
@@ -257,46 +304,10 @@
                                   </Columns>
                              </asp:GridView>
                          </div>
-                    <div class="tab-pane fade" id="toverify">
-                        <asp:SqlDataSource ID="SqlDSToBeVerified" runat="server" ConnectionString="<%$ ConnectionStrings:DefaultConnection %>" SelectCommand="SELECT * FROM [AspNetUsers] WHERE ([IsEnabled] = @IsEnabled)">
-                            <SelectParameters>
-                                <asp:Parameter DefaultValue="FALSE" Name="IsEnabled" Type="Boolean"></asp:Parameter>
-                            </SelectParameters>
-                        </asp:SqlDataSource>
-                        <asp:GridView ID="GridViewToValidate" runat="server" CssClass="list-group-item table-condensed table-hover table-responsive" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" DataSourceID="SqlDSToBeVerified" DataKeyNames="Id" OnRowCommand="GridViewToValidate_RowCommand">
-                            <Columns>
-                                <asp:TemplateField ShowHeader="False">
-                                    <ItemTemplate>
-                                        <asp:Button ID="ButtonActivateAcc" runat="server" CssClass="btn btn-success" CausesValidation="false" CommandName="ActivateAcc"
-                                            Text="Ativate Account" CommandArgument="<%# ((GridViewRow) Container).RowIndex%>" OnClientClick="return confirm('Are you sure you want to activate the user?'); " />
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:BoundField DataField="Id" HeaderText="Id" ReadOnly="True" SortExpression="Id"></asp:BoundField>
-                                <asp:BoundField DataField="Email" HeaderText="Email" SortExpression="Email" ReadOnly="true"></asp:BoundField>
-                                <asp:CheckBoxField DataField="EmailConfirmed" HeaderText="EmailConfirmed" SortExpression="EmailConfirmed"></asp:CheckBoxField>
-                                <asp:BoundField DataField="PasswordHash" HeaderText="PasswordHash" SortExpression="PasswordHash"></asp:BoundField>
-                                <asp:BoundField DataField="SecurityStamp" HeaderText="SecurityStamp" SortExpression="SecurityStamp"></asp:BoundField>
-                                <asp:BoundField DataField="PhoneNumber" HeaderText="PhoneNumber" SortExpression="PhoneNumber"></asp:BoundField>
-                                <asp:CheckBoxField DataField="PhoneNumberConfirmed" HeaderText="PhoneNumberConfirmed" SortExpression="PhoneNumberConfirmed"></asp:CheckBoxField>
-                                <asp:CheckBoxField DataField="TwoFactorEnabled" HeaderText="TwoFactorEnabled" SortExpression="TwoFactorEnabled"></asp:CheckBoxField>
-                                <asp:BoundField DataField="LockoutEndDateUtc" HeaderText="LockoutEndDateUtc" SortExpression="LockoutEndDateUtc"></asp:BoundField>
-                                <asp:CheckBoxField DataField="LockoutEnabled" HeaderText="LockoutEnabled" SortExpression="LockoutEnabled"></asp:CheckBoxField>
-                                <asp:BoundField DataField="AccessFailedCount" HeaderText="AccessFailedCount" SortExpression="AccessFailedCount"></asp:BoundField>
-                                <asp:BoundField DataField="UserName" HeaderText="UserName" SortExpression="UserName"></asp:BoundField>
-                                <asp:BoundField DataField="WorkshopName" HeaderText="WorkshopName" SortExpression="WorkshopName"></asp:BoundField>
-                                <asp:BoundField DataField="WorkshopPhone" HeaderText="WorkshopPhone" SortExpression="WorkshopPhone"></asp:BoundField>
-                                <asp:BoundField DataField="WorkshopOwner" HeaderText="WorkshopOwner" SortExpression="WorkshopOwner"></asp:BoundField>
-                                <asp:BoundField DataField="WorkshopOwnerNIF" HeaderText="WorkshopOwnerNIF" SortExpression="WorkshopOwnerNIF"></asp:BoundField>
-                                <asp:BoundField DataField="WorkshopAddress" HeaderText="WorkshopAddress" SortExpression="WorkshopAddress" ReadOnly="true"></asp:BoundField>
-                                <asp:CheckBoxField DataField="IsEnabled" HeaderText="IsEnabled" SortExpression="IsEnabled"></asp:CheckBoxField>
-                                <asp:BoundField DataField="DisplayName" HeaderText="DisplayName" SortExpression="DisplayName"></asp:BoundField>
-                            </Columns>
-                        </asp:GridView>
-                    </div>        
-                </div>
                 <asp:Label ID="BadgeCountAll" runat="server" Visible="false"></asp:Label>
                 <asp:Label ID="BadgeCountToVerify" runat="server" Visible="false"></asp:Label>
                 <asp:Label ID="BadgeCountComissions" runat="server" Visible="false"></asp:Label>
+                
             </ContentTemplate>
         </asp:UpdatePanel>
     </div>
