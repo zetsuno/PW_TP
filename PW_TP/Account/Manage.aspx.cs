@@ -147,12 +147,22 @@ namespace PW_TP.Account
 
             if (User.IsInRole("client"))
             {
-                Security w = new Security();
-                if (w.AddUserToRoleByID(User.Identity.GetUserId(), "workshop") == false) { Response.Redirect("~/Error.aspx"); }
-                if (CheckVerified.LockAccount(User.Identity.GetUserId()) == false) { Response.Redirect("~/Error.aspx"); }
-                if (Users.UpdateWorkshopDetails(NomeOficina.Text, MoradaOficina.Text, DdlRegiao.SelectedValue, TelefoneOficina.Text, TitularOficina.Text, NIFTitularOficina.Text, User.Identity.GetUserId()) == false) { Response.Redirect("~/Error.aspx"); }
-                Context.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-                Response.Redirect("ValidationRequired.aspx");
+                int nifcheck = Users.CheckDuplicateNIF(NIFTitularOficina.Text);
+                if (nifcheck == -1) { Response.Redirect("~/Error.aspx"); }
+                else if (nifcheck == 0)
+                {
+                    Security w = new Security();
+                    if (w.AddUserToRoleByID(User.Identity.GetUserId(), "workshop") == false) { Response.Redirect("~/Error.aspx"); }
+                    if (CheckVerified.LockAccount(User.Identity.GetUserId()) == false) { Response.Redirect("~/Error.aspx"); }
+                    if (Users.UpdateWorkshopDetails(NomeOficina.Text, MoradaOficina.Text, DdlRegiao.SelectedValue, TelefoneOficina.Text, TitularOficina.Text, NIFTitularOficina.Text, User.Identity.GetUserId()) == false) { Response.Redirect("~/Error.aspx"); }
+                    Context.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+                    Response.Redirect("ValidationRequired.aspx");
+                }
+                else
+                {
+                    NIFServerValidator.IsValid = false;
+                }
+               
                 
             }
             

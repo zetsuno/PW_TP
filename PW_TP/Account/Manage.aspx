@@ -149,6 +149,8 @@
             </div>
         </div>
     </div>
+        <asp:CustomValidator id="NIFServerValidator" runat="server" 
+        Display="None" EnableClientScript="False" ErrorMessage="O NIF introduzido está a ser usado por outro utilizador!"></asp:CustomValidator>  
     </ContentTemplate>
 </asp:UpdatePanel>
 

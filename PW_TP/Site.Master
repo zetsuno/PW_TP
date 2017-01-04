@@ -63,8 +63,8 @@
                             <asp:RoleGroup Roles="administrator">
                                 <ContentTemplate>
                                  <ul class="nav navbar-nav navbar-right">
-                                     <li><a runat="server" href="~/Administration/Manage" title="Manage the Database">Gerir a Base de Dados</a></li>
-                                     <li><a runat="server" href="~/Account/Manage" title="Manage your account">Olá, <%: Context.User.Identity.GetUserName()  %> !</a></li>
+                                     <li><a runat="server" href="../Administration/Manage" title="Manage the Database">Gerir a Base de Dados</a></li>
+                                     <li><a runat="server" href="../Account/Manage" title="Manage your account">Olá, <%: Context.User.Identity.GetUserName()  %> !</a></li>
                                      <li><asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="Log off" LogoutPageUrl="~/" OnLoggingOut="Unnamed_LoggingOut" /></li>
                                     </ul>
                                 </ContentTemplate>
@@ -73,11 +73,11 @@
                                 <ContentTemplate>
                                  <ul class="nav navbar-nav navbar-right">
                                     <li><a runat="server" onserverclick="DualRole_ServerClick" title="Comissions">Comissões</a></li>
-                                    <li><a runat="server" href="~/Account/Manage" title="Gerir Conta">Olá, <%: Context.User.Identity.GetUserName()  %> !</a></li>
+                                    <li><a runat="server" href="#" title="Gerir Conta">Olá, <%: Context.User.Identity.GetUserName()  %> !</a></li>
                                      <li class="dropdown">
                                          <a class="dropdown-toggle" role="button" aria-expanded="false" href="#" data-toggle="dropdown">Opções<span class="caret"></span></a>
                                      <ul class="dropdown-menu" role="menu">
-                                         <li><a href="~/Account/Manage">Definições de Conta</a></li>
+                                         <li><a href="../Account/Manage.aspx">Definições de Conta</a></li>
                                          <li class="divider"></li>
                                          <li><a href="#">Ajuda</a></li>
                                          <li class="divider"></li>
@@ -89,11 +89,11 @@
                                 <ContentTemplate>
                                  <ul class="nav navbar-nav navbar-right">
                                     <li><a runat="server" onserverclick="DualRole_ServerClick" title="Comissions">Comissões</a></li>
-                                    <li><a runat="server" href="~/Account/Manage" title="Gerir Conta">Olá, <%: Context.User.Identity.GetUserName()  %> !</a></li>
+                                    <li><a runat="server" href="#" title="Gerir Conta">Olá, <%: Context.User.Identity.GetUserName()  %> !</a></li>
                                      <li class="dropdown">
                                          <a class="dropdown-toggle" role="button" aria-expanded="false" href="#" data-toggle="dropdown">Opções<span class="caret"></span></a>
                                      <ul class="dropdown-menu" role="menu">
-                                         <li><a href="Account/Manage">Definições de Conta</a></li>
+                                         <li><a href="../Account/Manage.aspx">Definições de Conta</a></li>
                                          <li class="divider"></li>
                                          <li><a href="#">Ajuda</a></li>
                                          <li class="divider"></li>
@@ -104,8 +104,8 @@
                         </RoleGroups>
                         <AnonymousTemplate>
                             <ul class="nav navbar-nav navbar-right">
-                                <li><a runat="server" href="~/Account/Register">Registar</a></li>
-                                <li><a runat="server" href="~/Account/Login">Entrar</a></li>
+                                <li><a runat="server" href="../Account/Register">Registar</a></li>
+                                <li><a runat="server" href="../Account/Login">Entrar</a></li>
                                 
                             </ul>
                         </AnonymousTemplate> 

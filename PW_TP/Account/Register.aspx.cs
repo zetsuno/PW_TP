@@ -50,10 +50,19 @@ namespace PW_TP.Account
             }
             if (RBtnOficina.Checked == true)
             {
-                App_Classes.Users.RegisterUserTypeWorkshop(Email.Text, NomeOficina.Text, TelefoneOficina.Text, TitularOficina.Text, NIFTitularOficina.Text, MoradaOficina.Text, DdlRegiao.SelectedValue);
-                Security w = new Security();
-                if(w.AddUserToRole(Email.Text, "workshop") == false) { Response.Redirect("~/Error.aspx"); }
-                Response.Redirect("ValidationRequired.aspx");
+                int nifcheck = Users.CheckDuplicateNIF(NIFTitularOficina.Text);
+                if( nifcheck== -1) { Response.Redirect("~/Error.aspx"); }
+                else if(nifcheck == 0) {
+                    App_Classes.Users.RegisterUserTypeWorkshop(Email.Text, NomeOficina.Text, TelefoneOficina.Text, TitularOficina.Text, NIFTitularOficina.Text, MoradaOficina.Text, DdlRegiao.SelectedValue);
+                    Security w = new Security();
+                    if (w.AddUserToRole(Email.Text, "workshop") == false) { Response.Redirect("~/Error.aspx"); }
+                    Response.Redirect("ValidationRequired.aspx");    
+                }
+                else
+                {
+                    NIFServerValidator.IsValid = false;
+                }
+               
 
             }
 
