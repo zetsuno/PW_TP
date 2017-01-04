@@ -1,14 +1,14 @@
 ﻿<%@ Page Title="Registe-se" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Register.aspx.cs" Inherits="PW_TP.Account.Register" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <h2><%: Title %>.</h2>
+    <h2><%: Title %></h2>
     <div class="form-horizontal">
         <h4>Crie uma conta de utilizador ou de oficina</h4>
         <hr />
         <p class="text-danger">
         <asp:Literal runat="server" ID="ErrorMessage" /> </p>
         <asp:ValidationSummary runat="server" CssClass="text-danger" BorderColor="#fa3250" BorderStyle="Dashed" BorderWidth="2px"/>
-        <br /><br />
+        <br />
         <div class="form-group">
             <asp:Label runat="server" AssociatedControlID="Email" CssClass="col-md-2 control-label">Email</asp:Label>
             <div class="col-md-10">
@@ -53,7 +53,7 @@
       </div>
     </div>
       
-    <br /><br /><br />
+    <br /><br />
         <asp:Panel runat="server" ID="PainelOficina" Visible="false">
             <br/>
             <div class="panel panel-primary">
@@ -136,9 +136,9 @@
          </ContentTemplate>
     </asp:UpdatePanel>
         <div class="form-group">
-            <div class="col-md-10">
+            <div class="col-md-offset-2 col-md-10">
                 <br />
-                <asp:Button runat="server" OnClick="CreateUser_Click" Text="Registar-me" CssClass="btn btn-primary col-lg-2 col-lg-offset-2 col-lg-pull-2" />
+                <asp:Button runat="server" OnClick="CreateUser_Click" Text="Register" CssClass="btn btn-default" />
             </div>
         </div>
     </div>

@@ -144,3 +144,17 @@ C:\Users\Zetsuno\Documents\Visual Studio 2015\Projects\PW_TP\PW_TP\PW_TP\bin\ros
 C:\Users\Zetsuno\Documents\Visual Studio 2015\Projects\PW_TP\PW_TP\PW_TP\bin\roslyn\vbc.exe.config
 C:\Users\Zetsuno\Documents\Visual Studio 2015\Projects\PW_TP\PW_TP\PW_TP\bin\roslyn\vbc.rsp
 C:\Users\Zetsuno\Documents\Visual Studio 2015\Projects\PW_TP\PW_TP\PW_TP\obj\Debug\PW_TP.csprojResolveAssemblyReference.cache
+E:\OneDrive\ISEC\3º ano\1º semestre\Programação WEB\Trabalho\PW_TP\PW_TP\bin\roslyn\csc.exe.config
+E:\OneDrive\ISEC\3º ano\1º semestre\Programação WEB\Trabalho\PW_TP\PW_TP\bin\roslyn\csc.rsp
+E:\OneDrive\ISEC\3º ano\1º semestre\Programação WEB\Trabalho\PW_TP\PW_TP\bin\roslyn\csi.exe
+E:\OneDrive\ISEC\3º ano\1º semestre\Programação WEB\Trabalho\PW_TP\PW_TP\bin\roslyn\csi.rsp
+E:\OneDrive\ISEC\3º ano\1º semestre\Programação WEB\Trabalho\PW_TP\PW_TP\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+E:\OneDrive\ISEC\3º ano\1º semestre\Programação WEB\Trabalho\PW_TP\PW_TP\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+E:\OneDrive\ISEC\3º ano\1º semestre\Programação WEB\Trabalho\PW_TP\PW_TP\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+E:\OneDrive\ISEC\3º ano\1º semestre\Programação WEB\Trabalho\PW_TP\PW_TP\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+E:\OneDrive\ISEC\3º ano\1º semestre\Programação WEB\Trabalho\PW_TP\PW_TP\bin\roslyn\System.AppContext.dll
+E:\OneDrive\ISEC\3º ano\1º semestre\Programação WEB\Trabalho\PW_TP\PW_TP\bin\roslyn\System.Diagnostics.StackTrace.dll
+E:\OneDrive\ISEC\3º ano\1º semestre\Programação WEB\Trabalho\PW_TP\PW_TP\bin\roslyn\System.IO.FileSystem.dll
+E:\OneDrive\ISEC\3º ano\1º semestre\Programação WEB\Trabalho\PW_TP\PW_TP\bin\roslyn\System.IO.FileSystem.Primitives.dll
+E:\OneDrive\ISEC\3º ano\1º semestre\Programação WEB\Trabalho\PW_TP\PW_TP\bin\roslyn\vbc.exe.config
+E:\OneDrive\ISEC\3º ano\1º semestre\Programação WEB\Trabalho\PW_TP\PW_TP\bin\roslyn\vbc.rsp

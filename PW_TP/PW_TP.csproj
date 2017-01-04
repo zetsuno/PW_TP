@@ -176,7 +176,8 @@
     <Content Include="Account\ValidationRequired.aspx" />
     <Content Include="Account\VerifyPhoneNumber.aspx" />
     <Content Include="Administration\Manage.aspx" />
-    <Content Include="Assets\Logo_site.png" />
+    <Content Include="Assets\Logo.png" />
+    <Content Include="Assets\Logo_Site.png" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -194,8 +195,6 @@
     <Content Include="Account\RoleChangeSuccess.aspx" />
     <Content Include="Error.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Logo_site.gif" />
-    <Content Include="Logo_site.png" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
