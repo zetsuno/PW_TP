@@ -11,7 +11,7 @@ namespace PW_TP.DualRole
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!User.Identity.IsAuthenticated || (!User.IsInRole("workshop") && !User.IsInRole("cliente")))
+            if (!User.Identity.IsAuthenticated || (!User.IsInRole("workshop") && !User.IsInRole("client")))
             {
                 Response.Redirect("~/UnauthorizedAccess.aspx");
             }

@@ -16,9 +16,10 @@ namespace PW_TP.DualRole
 {
     public partial class Comissions : System.Web.UI.Page
     {
+
         protected void Page_Init(object sender, EventArgs e)
         {
-            if (!User.IsInRole("cliente") && !User.IsInRole("workshop"))
+            if (!(User.IsInRole("client") && User.IsInRole("workshop")))
             {
                 Response.Redirect("~/UnauthorizedAccess.aspx");
             }
@@ -30,7 +31,7 @@ namespace PW_TP.DualRole
 
                 PopulateGridViews();
                 PopulateDdlOficinas();
-                
+                GetPrices();
                 UpdateBadges();
                 GetRatings();
             }          
@@ -51,6 +52,7 @@ namespace PW_TP.DualRole
                 DdlOficinas.DataBind();
                 DdlOficinas.Items.Insert(0, new ListItem("-- Selecione --", "0"));
                 GetRatings();
+                GetPrices();
                 UpdateBadges();
             }
         }
@@ -128,6 +130,8 @@ namespace PW_TP.DualRole
         {
             int Ano;
             int.TryParse(TbAno.Text, out Ano);
+
+            
 
             ApplicationDbContext context = new ApplicationDbContext();
             var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
@@ -277,6 +281,55 @@ namespace PW_TP.DualRole
             Clientes.DataBind();
         }
 
+        protected void GetPrices()
+        {
+            foreach (GridViewRow row in PendingComissions.Rows)
+            {
+                int id, price;
+                int.TryParse(row.Cells[1].Text, out id);
+                price = Commissions.GetPrice(id);
+                TextBox txtPrice = row.FindControl("txtPrice") as TextBox;
+                if (price != 0)
+                {
+                    txtPrice.Text = price.ToString();
+                }
+                else
+                {
+                    txtPrice.ReadOnly = false;
+                    txtPrice.Text = "N/A";
+                    txtPrice.ReadOnly = true;
+                }
+                
+            }
+
+            int value, rejected;
+
+
+            foreach (GridViewRow row in HistoryOfComissions.Rows)
+            {
+                value = Commissions.FillRatings(row.Cells[0].Text);
+                if (value == -1) { Response.Redirect("~/Error.aspx"); }
+                rejected = Commissions.IsRejected(row.Cells[0].Text);
+                if (rejected == -1) { Response.Redirect("~/Error.aspx"); }
+
+                if (value != -2)
+                {
+                    ((HtmlInputGenericControl)row.FindControl("starating")).Value = value.ToString();
+                    ((HtmlInputGenericControl)row.FindControl("starating")).Attributes.Add("readonly", "true");
+                    ((Button)row.FindControl("BtnSubmitRating")).Visible = false;
+                    BadgeCountActiveComissions.Text = rejected.ToString();
+
+                }
+                if (rejected == 0)
+                {
+                    ((HtmlInputGenericControl)row.FindControl("starating")).Visible = false;
+                    ((Label)row.FindControl("labelrejected")).Visible = true;
+                    ((Button)row.FindControl("BtnSubmitRating")).Visible = false;
+                }
+
+            }
+        }
+
         protected void Comissions_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName == "SubmitRating")
@@ -291,16 +344,24 @@ namespace PW_TP.DualRole
                 Response.Redirect("Comissions.aspx");
             }
 
-            if (e.CommandName == "AcceptComission")
+            if (e.CommandName == "SetPrice")
             {
+                int Price_int;
                 int index = Convert.ToInt32(e.CommandArgument), id;
                 GridViewRow row = PendingComissions.Rows[index];
                 int.TryParse(row.Cells[1].Text, out id);
-                LabelComissoesPendentes.Text = id.ToString();
-                if (Commissions.ActivateComission(id) == false) { Response.Redirect("~/Error.aspx"); }
+                TextBox Price = row.FindControl("txtPrice") as TextBox;
+                if(!int.TryParse(Price.Text, out Price_int))
+                {
+                    PriceServerValidator.IsValid = false;
+                    ValSum.ValidationGroup = "ComissionPrice";
+                }
+                else if(PriceServerValidator.IsValid == false) { PriceServerValidator.IsValid = true; }
+                
+                if (Commissions.AddPrice(id, Price_int) == false) { Response.Redirect("~/Error.aspx"); }
 
             }
-            if (e.CommandName == "RejectComission")
+            if (e.CommandName == "RejectComissionWorkshop")
             {
                 int index = Convert.ToInt32(e.CommandArgument), id;
                 GridViewRow row = PendingComissions.Rows[index];
@@ -317,13 +378,55 @@ namespace PW_TP.DualRole
                 if (Commissions.ConcludeComission(id) == false) { Response.Redirect("~/Error.aspx"); }
 
             }
+            if (e.CommandName == "EditPrice")
+            {
+                int index = Convert.ToInt32(e.CommandArgument);
+                GridViewRow row = PendingComissions.Rows[index];
+                TextBox Price = row.FindControl("txtPrice") as TextBox;  
+                if(Price.Text == "N/A")
+                {
+                    Price.ReadOnly = false;
+                    Price.Text = "";
+                    Button BtnSetPrice = row.FindControl("BtnSetPrice") as Button;
+                    BtnSetPrice.Visible = false;
+                    Button BtnAcceptComission = row.FindControl("BtnAcceptComission") as Button;
+                    BtnAcceptComission.Visible = true;
+                }
+                else
+                {
+                    return;
+                }
+                return;
+            }
+
+            if (e.CommandName == "AcceptComission")
+            {
+                int index = Convert.ToInt32(e.CommandArgument), id;
+                GridViewRow row = GridViewComissionsPending.Rows[index];
+                int.TryParse(row.Cells[1].Text, out id);
+                if (Commissions.ActivateComission(id) == false) { Response.Redirect("~/Error.aspx"); }
+
+                Response.Redirect("~/DualRole/Comissions.aspx");//Errado, mas se não for feito, as avaliações não são carregadas. (erro desconhecido)
+            }
+
+            if (e.CommandName == "RejectComission")
+            {
+                int index = Convert.ToInt32(e.CommandArgument), id;
+                GridViewRow row = GridViewComissionsPending.Rows[index];
+                int.TryParse(row.Cells[1].Text, out id);
+                if (Commissions.RejectComission(id) == false) { Response.Redirect("~/Error.aspx"); }
+
+                Response.Redirect("~/DualRole/Comissions.aspx");//Errado, mas se não for feito, as avaliações não são carregadas. (erro desconhecido)
+            }
 
             UpdateBadges();
             PopulateGridViews();
             GetRatings();
+            GetPrices();
             EditTablesUpdatePanel.Update();
         }
 
+       
 
     }
 }

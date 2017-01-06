@@ -31,7 +31,7 @@
     <div class="row">
         <br />
         <br />
-        <asp:UpdatePanel runat="server" ID="EditTablesUpdatePanel" UpdateMode="Conditional">
+        <asp:UpdatePanel runat="server" ID="EditTablesUpdatePanel" UpdateMode="Conditional" ChildrenAsTriggers="true">
             <ContentTemplate>
                 <ul class="nav nav-tabs" id="mytabs" role="tablist">
                     <li class="active"><a aria-expanded="true" role="tab"  href="#tab1" data-toggle="tab">Informação   </a></li>
@@ -138,6 +138,7 @@
                                 <asp:BoundField DataField="WorkshopName" HeaderText="Oficina Encarregue" SortExpression="WorkshopName"></asp:BoundField>
                                 <asp:BoundField DataField="WorkshopPhone" HeaderText="Contacto da Oficina" SortExpression="WorkshopPhone"></asp:BoundField>
                                 <asp:BoundField DataField="Details" HeaderText="Detalhes" SortExpression="Details"></asp:BoundField>
+                                <asp:BoundField DataField="Price" HeaderText="Orçamento(€)" SortExpression="Orçamento(€)" />
                             </Columns>
                         </asp:GridView>
                             </div>
@@ -145,8 +146,16 @@
                         <div class="form-group">
                             <h3>Comissões Pendentes - <%=BadgeCountPendingComissions.Text %></h3>
                            
-                        <asp:GridView ID="GridViewComissionsPending" runat="server"  ShowHeaderWhenEmpty="true" Width="1000px" CssClass="list-group-item table-condensed table-hover table-responsive" AllowPaging="True"  AutoGenerateColumns="false">
+                        <asp:GridView ID="GridViewComissionsPending" runat="server"  ShowHeaderWhenEmpty="true" Width="1000px" CssClass="list-group-item table-condensed table-hover table-responsive" AllowPaging="True"  AutoGenerateColumns="false" OnRowCommand="Comissions_RowCommand">
                             <Columns>
+                                <asp:TemplateField ShowHeader="false">
+                                    <ItemTemplate>     
+                                        <asp:Button ID="BtnAcceptComission" runat="server" CssClass="btn btn-success" CausesValidation="true" CommandName="AcceptComission"
+                                            Text="Aceitar" CommandArgument="<%# ((GridViewRow) Container).RowIndex%>" Width="100px" Visible="true"  OnClientClick="return confirm('De certeza que quer aceitar esta comissão?')"/>
+                                        <asp:Button ID="BtnRejectComission" runat="server" CssClass="btn btn-danger" CausesValidation="false" CommandName="RejectComission"
+                                            Text="Rejeitar" CommandArgument="<%# ((GridViewRow) Container).RowIndex%>" Width="100px"  OnClientClick="return confirm('De certeza que quer rejeitar a comissão?')" Visible="true" />  
+                                    </ItemTemplate>
+                                </asp:TemplateField>
                                 <asp:BoundField DataField="ComissionNo" HeaderText="Identificador da Comissão" SortExpression="ComissionNo"></asp:BoundField>
                                 <asp:BoundField DataField="CreationDate" HeaderText="Data de criação" SortExpression="CreationDate"></asp:BoundField>
                                 <asp:TemplateField HeaderText="Aceite?" SortExpression="Accepted">
@@ -158,6 +167,11 @@
                                 <asp:BoundField DataField="WorkshopName" HeaderText="Oficina Encarregue" SortExpression="WorkshopName"></asp:BoundField>
                                 <asp:BoundField DataField="WorkshopPhone" HeaderText="Contacto da Oficina" SortExpression="WorkshopPhone"></asp:BoundField>
                                 <asp:BoundField DataField="Details" HeaderText="Detalhes" SortExpression="Details"></asp:BoundField>
+                                <asp:TemplateField HeaderText="Orçamento(€)">
+                                    <ItemTemplate>
+                                        <asp:Label runat="server" ID="LabelPrice" Text="N/A" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
                             </Columns>
                         </asp:GridView>
                             </div>
@@ -175,12 +189,13 @@
                                 <asp:BoundField DataField="WorkshopName" HeaderText="Oficina Encarregue" SortExpression="WorkshopName"></asp:BoundField>
                                 <asp:BoundField DataField="WorkshopPhone" HeaderText="Contacto da Oficina" SortExpression="WorkshopPhone"></asp:BoundField>    
                                 <asp:BoundField DataField="Details" HeaderText="Detalhes" SortExpression="Details"></asp:BoundField>
+                                <asp:BoundField DataField="Price" HeaderText="Orçamento(€)" SortExpression="Price" />
                                 <asp:TemplateField HeaderText="Aceite?" SortExpression="Accepted">
                                     <ItemTemplate><%# (Boolean.Parse(Eval("Accepted").ToString())) ? "Sim" : "Não" %></ItemTemplate>
                                 </asp:TemplateField>
                              <asp:TemplateField ShowHeader="true" HeaderText="Avalie o Serviço" ItemSTyle-Width="100px" ItemStyle-HorizontalAlign="Center">
                                     <ItemTemplate>
-                                        <input id="starating" runat="server" name="input-4" type="number" class="rating rating-loading" data-show-clear="false" data-show-caption="false" data-min="0" data-max="5" data-step="1">
+                                        <input id="starating" runat="server" visible="true" name="input-4" type="number" class="rating rating-loading"  data-show-clear="false" data-show-caption="false" data-min="0" data-max="5" data-step="1">
                                         <asp:Label runat="server" ID="labelrejected" Text="Comissão Rejeitada" Visible="false"></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
@@ -200,6 +215,7 @@
                 <asp:Label ID="BadgeComissions" runat="server" Visible="false"></asp:Label>
                 
             </ContentTemplate>
+            
         </asp:UpdatePanel>
     </div>
 

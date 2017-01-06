@@ -24,8 +24,14 @@ namespace PW_TP.Workshop
                 Response.Redirect("~/UnauthorizedAccess.aspx");
             }
 
+            if((User.IsInRole("client") && User.IsInRole("workshop"))){
+
+                Response.Redirect("~/UnauthorizedAccess.aspx");
+            }
+
             PopulateGridViews();
             GetRatings();
+            GetPrices();
             UpdateBadges();
             
 
@@ -123,22 +129,41 @@ namespace PW_TP.Workshop
 
         protected void Comissions_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-
-            if (e.CommandName == "AcceptComission")
+            if (e.CommandName == "SubmitRating")
             {
+
+                int index = Convert.ToInt32(e.CommandArgument), id, rating;
+                GridViewRow row = HistoryOfComissions.Rows[index];
+                int.TryParse(row.Cells[0].Text, out id);
+                int.TryParse(((HtmlInputGenericControl)row.FindControl("starating")).Value, out rating);
+                if (Commissions.SetRating(id, rating) == false) { Response.Redirect("~/Error.aspx"); }
+
+                Response.Redirect("Comissions.aspx");
+            }
+
+            if (e.CommandName == "SetPrice")
+            {
+                int Price_int;
                 int index = Convert.ToInt32(e.CommandArgument), id;
                 GridViewRow row = PendingComissions.Rows[index];
                 int.TryParse(row.Cells[1].Text, out id);
-                LabelComissoesPendentes.Text = id.ToString();
-                if(Commissions.ActivateComission(id) == false) { Response.Redirect("~/Error.aspx"); }
-                
+                TextBox Price = row.FindControl("txtPrice") as TextBox;
+                if (!int.TryParse(Price.Text, out Price_int))
+                {
+                    PriceServerValidator.IsValid = false;
+                    ValSum.ValidationGroup = "ComissionPrice";
+                }
+                else if (PriceServerValidator.IsValid == false) { PriceServerValidator.IsValid = true; }
+                //if (Commissions.ActivateComission(id) == false) { Response.Redirect("~/Error.aspx"); }
+                if (Commissions.AddPrice(id, Price_int) == false) { Response.Redirect("~/Error.aspx"); }
+
             }
             if (e.CommandName == "RejectComission")
             {
                 int index = Convert.ToInt32(e.CommandArgument), id;
                 GridViewRow row = PendingComissions.Rows[index];
                 int.TryParse(row.Cells[1].Text, out id);
-                if(Commissions.RejectComission(id) == false) { Response.Redirect("~/Error.aspx"); }
+                if (Commissions.RejectComission(id) == false) { Response.Redirect("~/Error.aspx"); }
 
             }
             if (e.CommandName == "ConcludeComission")
@@ -147,14 +172,58 @@ namespace PW_TP.Workshop
                 GridViewRow row = ActiveComissions.Rows[index];
                 int.TryParse(row.Cells[1].Text, out id);
                 LabelComissoesAtivas.Text = id.ToString();
-                if(Commissions.ConcludeComission(id) == false) { Response.Redirect("~/Error.aspx"); }
+                if (Commissions.ConcludeComission(id) == false) { Response.Redirect("~/Error.aspx"); }
 
             }
-            
+            if (e.CommandName == "EditPrice")
+            {
+                int index = Convert.ToInt32(e.CommandArgument);
+                GridViewRow row = PendingComissions.Rows[index];
+                TextBox Price = row.FindControl("txtPrice") as TextBox;
+                if (Price.Text == "N/A")
+                {
+                    Price.ReadOnly = false;
+                    Price.Text = "";
+                    Button BtnSetPrice = row.FindControl("BtnSetPrice") as Button;
+                    BtnSetPrice.Visible = false;
+                    Button BtnAcceptComission = row.FindControl("BtnAcceptComission") as Button;
+                    BtnAcceptComission.Visible = true;
+                }
+                else
+                {
+                    return;
+                }
+                return;
+            }
+
             UpdateBadges();
             PopulateGridViews();
             GetRatings();
-            WorkshopUpdatePanel.Update();
+            GetPrices();
+            
+        }
+
+        protected void GetPrices()
+        {
+            foreach (GridViewRow row in PendingComissions.Rows)
+            {
+                int id, price;
+                int.TryParse(row.Cells[1].Text, out id);
+                price = Commissions.GetPrice(id);
+                TextBox txtPrice = row.FindControl("txtPrice") as TextBox;
+                if (price != 0)
+                {
+                    txtPrice.Text = price.ToString();
+                }
+                else
+                {
+                    txtPrice.ReadOnly = false;
+
+                    txtPrice.Text = "N/A";
+                    txtPrice.ReadOnly = true;
+                }
+
+            }
         }
 
         protected void GetRatings()

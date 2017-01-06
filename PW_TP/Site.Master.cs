@@ -78,18 +78,22 @@ namespace PW_TP
         }
 
         protected void DualRole_ServerClick(object sender, EventArgs e)
-        {
-            if(Context.User.IsInRole("workshop") && Context.User.IsInRole("client"))
+        {       
+            if (HttpContext.Current.User.IsInRole("client"))
             {
-                Response.Redirect("~/DualRole/Comissions.aspx");
-            }
-            else if (Context.User.IsInRole("client"))
-            {
+                if (HttpContext.Current.User.IsInRole("workshop"))
+                {
+                    Response.Redirect("~/DualRole/Comissions.aspx");
+                }
                 Response.Redirect("~/Account/Comissions.aspx");
             }
-            else if (Context.User.IsInRole("workshop"))
+            else if (HttpContext.Current.User.IsInRole("workshop"))
             {
-                Response.Redirect("~/Account/Comissions.aspx");
+                if (HttpContext.Current.User.IsInRole("client"))
+                {
+                    Response.Redirect("~/DualRole/Comissions.aspx");
+                }
+                Response.Redirect("~/Workshop/Comissions.aspx");
             }
         }
     }

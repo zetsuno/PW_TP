@@ -104,8 +104,8 @@
                         </RoleGroups>
                         <AnonymousTemplate>
                             <ul class="nav navbar-nav navbar-right">
-                                <li><a runat="server" href="../Account/Register">Registar</a></li>
-                                <li><a runat="server" href="../Account/Login">Entrar</a></li>
+                                <li><a runat="server" href="~/Account/Register">Registar</a></li>
+                                <li><a runat="server" href="~/Account/Login">Entrar</a></li>
                                 
                             </ul>
                         </AnonymousTemplate> 

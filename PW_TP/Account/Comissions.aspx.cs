@@ -23,27 +23,49 @@ namespace PW_TP.Account
                 Response.Redirect("~/UnauthorizedAccess.aspx");
             }
 
-                PopulateGridViews();
-                GetRatings();
-                UpdateBadges();
+            PopulateGridViews();
+            GetRatings();
+            GetPrices();
+            UpdateBadges();
+
         }
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
             if (!Page.IsPostBack)
             {
-                GridViewActiveComissions.DataBind();
-                GridViewComissionsPending.DataBind();
-                HistoryOfComissions.DataBind();
-                GetRatings();
-                UpdateBadges();
-          }       
+              
+            }               
         }
+        protected void GetPrices()
+        {
+            foreach (GridViewRow row in GridViewComissionsPending.Rows)
+            {
+                int id, price;
+                int.TryParse(row.Cells[1].Text, out id);
+                price = Commissions.GetPrice(id);
+                Label LabelPrice = row.FindControl("LabelPrice") as Label;
+                if (price != 0)
+                {
+                    LabelPrice.Text = price.ToString();
+                }
+                else
+                {
+                    Button BtnAcceptComission = row.FindControl("BtnAcceptComission") as Button;
+                    Button BtnRejectComission = row.FindControl("BtnRejectComission") as Button;
+                    BtnAcceptComission.Visible = false;
+                    BtnRejectComission.Visible = false;
+                    LabelPrice.Text = "N/A";
+                    
+                }
 
+            }
+
+        }
         protected void GetRatings()
         {
             int value, rejected;
+           
 
             foreach (GridViewRow row in HistoryOfComissions.Rows)
             {
@@ -158,15 +180,40 @@ namespace PW_TP.Account
         {
             if (e.CommandName == "SubmitRating")
             {
-
                 int index = Convert.ToInt32(e.CommandArgument), id, rating;
                 GridViewRow row = HistoryOfComissions.Rows[index];
                 int.TryParse(row.Cells[0].Text, out id);
                 int.TryParse(((HtmlInputGenericControl)row.FindControl("starating")).Value, out rating);
                 if (Commissions.SetRating(id, rating) == false) { Response.Redirect("~/Error.aspx"); }
 
-                Response.Redirect("~/Account/Comissions.aspx");
+                Response.Redirect("~/Account/Comissions.aspx");//Errado, mas se não for feito, as avaliações não são carregadas. (erro desconhecido)
             }
+
+            if (e.CommandName == "AcceptComission")
+            {
+                int index = Convert.ToInt32(e.CommandArgument), id;
+                GridViewRow row = GridViewComissionsPending.Rows[index];
+                int.TryParse(row.Cells[1].Text, out id);
+                if(Commissions.ActivateComission(id) == false) { Response.Redirect("~/Error.aspx"); }
+
+                Response.Redirect("~/Account/Comissions.aspx");//Errado, mas se não for feito, as avaliações não são carregadas. (erro desconhecido)
+            }
+
+            if (e.CommandName == "RejectComission")
+            {
+                int index = Convert.ToInt32(e.CommandArgument), id;
+                GridViewRow row = GridViewComissionsPending.Rows[index];
+                int.TryParse(row.Cells[1].Text, out id);
+                if(Commissions.RejectComission(id) == false) { Response.Redirect("~/Error.aspx"); }
+
+                Response.Redirect("~/Account/Comissions.aspx");//Errado, mas se não for feito, as avaliações não são carregadas. (erro desconhecido)
+            }
+
+            PopulateGridViews();
+            GetRatings();
+            GetPrices();
+            UpdateBadges();
         }
+
     }
 }

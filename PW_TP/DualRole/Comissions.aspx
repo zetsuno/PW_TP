@@ -38,6 +38,7 @@
                     <li><a aria-expanded="true" role="tab" href="#tabworkshop" data-toggle="tab">Funções Oficina</a></li>
                 </ul>
                 <br /><br /><br />  
+                
                 <div class="tab-content"  id="myTabContentGeneral">
                     <div class="tab-pane fade active in" id="tabclient">
 
@@ -112,14 +113,14 @@
                                 <asp:Label runat="server" AssociatedControlID="TbAno" CssClass="col-md-4 control-label">Ano de Aquisição</asp:Label>
                                 <div class="col-md-5">
                                     <asp:TextBox runat="server" ID="TbAno" CssClass="form-control" TextMode="Number" />
-                                    <asp:RangeValidator runat="server" ID="RngValTbAno"  CssClass="text-danger" Display="Dynamic" EnableClientScript="true" ErrorMessage="Ano inválido!" SetFocusOnError="true" MinimumValue="1950" MaximumValue="2017"  Type="Integer" ControlToValidate="TbAno"></asp:RangeValidator> 
+                                    <asp:RangeValidator runat="server" ID="RngValTbAno"  CssClass="text-danger" Display="Dynamic" EnableClientScript="true" ErrorMessage="Ano inválido!" SetFocusOnError="true"  MinimumValue="1950" MaximumValue="2017"  Type="Integer" ControlToValidate="TbAno"></asp:RangeValidator> 
                                 </div>
                             </div>
                             <div class="form-group">
                                 <asp:Label runat="server" AssociatedControlID="TbDetails" CssClass="col-md-4 control-label">Detalhes</asp:Label>
                                 <div class="col-md-8">
                                    <asp:TextBox id="TbDetails" Height="180px" CssClass="form-control" runat="server" TextMode="MultiLine"></asp:TextBox>
-                                    <asp:RequiredFieldValidator runat="server" ID="RFVDetails" CssClass="text-danger"  Display="Dynamic" EnableClientScript="true" ErrorMessage="Os detalhes do problema são obrigatórios!" SetFocusOnError="true" ControlToValidate="TbDetails"></asp:RequiredFieldValidator>
+                                    <asp:RequiredFieldValidator runat="server" ID="RFVDetails" CssClass="text-danger"  Display="Dynamic" EnableClientScript="true" ErrorMessage="Os detalhes do problema são obrigatórios!" SetFocusOnError="true" ControlToValidate="TbDetails" ></asp:RequiredFieldValidator>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -146,6 +147,7 @@
                                 <asp:BoundField DataField="WorkshopName" HeaderText="Oficina Encarregue" SortExpression="WorkshopName"></asp:BoundField>
                                 <asp:BoundField DataField="WorkshopPhone" HeaderText="Contacto da Oficina" SortExpression="WorkshopPhone"></asp:BoundField>
                                 <asp:BoundField DataField="Details" HeaderText="Detalhes" SortExpression="Details"></asp:BoundField>
+                                <asp:BoundField DataField="Price" HeaderText="Orçamento(€)" SortExpression="Price" />
                             </Columns>
                         </asp:GridView>
                             </div>
@@ -153,8 +155,16 @@
                         <div class="form-group">
                             <h3>Comissões Pendentes - <%=BadgeCountPendingComissions.Text %></h3>
                            
-                        <asp:GridView ID="GridViewComissionsPending" runat="server"  ShowHeaderWhenEmpty="true" Width="1000px" CssClass="list-group-item table-condensed table-hover table-responsive" AllowPaging="True"  AutoGenerateColumns="false">
+                        <asp:GridView ID="GridViewComissionsPending" runat="server"  ShowHeaderWhenEmpty="true" Width="1000px" CssClass="list-group-item table-condensed table-hover table-responsive" AllowPaging="True"  AutoGenerateColumns="false" OnRowCommand="Comissions_RowCommand">
                             <Columns>
+                                 <asp:TemplateField ShowHeader="false">
+                                    <ItemTemplate>     
+                                        <asp:Button ID="BtnAcceptComission" runat="server" CssClass="btn btn-success" CausesValidation="true" CommandName="AcceptComission"
+                                            Text="Aceitar" CommandArgument="<%# ((GridViewRow) Container).RowIndex%>" Width="100px" Visible="true"  OnClientClick="return confirm('De certeza que quer aceitar esta comissão?')"/>
+                                        <asp:Button ID="BtnRejectComission" runat="server" CssClass="btn btn-danger" CausesValidation="false" CommandName="RejectComission"
+                                            Text="Rejeitar" CommandArgument="<%# ((GridViewRow) Container).RowIndex%>" Width="100px"  OnClientClick="return confirm('De certeza que quer rejeitar a comissão?')" Visible="true" />  
+                                    </ItemTemplate>
+                                </asp:TemplateField>
                                 <asp:BoundField DataField="ComissionNo" HeaderText="Identificador da Comissão" SortExpression="ComissionNo"></asp:BoundField>
                                 <asp:BoundField DataField="CreationDate" HeaderText="Data de criação" SortExpression="CreationDate"></asp:BoundField>
                                 <asp:TemplateField HeaderText="Aceite?" SortExpression="Accepted">
@@ -164,8 +174,14 @@
                                 <asp:BoundField DataField="BicycleType" HeaderText="Tipo da Bicicleta" SortExpression="BicycleType"></asp:BoundField>
                                 <asp:BoundField DataField="YearOfAquisition" HeaderText="Ano de Aquisição" SortExpression="YearOfAquisition"></asp:BoundField>
                                 <asp:BoundField DataField="WorkshopName" HeaderText="Oficina Encarregue" SortExpression="WorkshopName"></asp:BoundField>
-                                <asp:BoundField DataField="WorkshopPhone" HeaderText="Contacto da Oficina" SortExpression="WorkshopPhone"></asp:BoundField>
+                                <asp:BoundField DataField="WorkshopPhone" HeaderText="Contacto da Oficina" SortExpression="WorkshopPhone"></asp:BoundField> 
                                 <asp:BoundField DataField="Details" HeaderText="Detalhes" SortExpression="Details"></asp:BoundField>
+                                <asp:TemplateField HeaderText="Orçamento(€)">
+                                    <ItemTemplate>
+                                        <asp:Label runat="server" ID="LabelPrice" Text="N/A" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                
                             </Columns>
                         </asp:GridView>
                             </div>
@@ -183,6 +199,7 @@
                                 <asp:BoundField DataField="WorkshopName" HeaderText="Oficina Encarregue" SortExpression="WorkshopName"></asp:BoundField>
                                 <asp:BoundField DataField="WorkshopPhone" HeaderText="Contacto da Oficina" SortExpression="WorkshopPhone"></asp:BoundField>    
                                 <asp:BoundField DataField="Details" HeaderText="Detalhes" SortExpression="Details"></asp:BoundField>
+                                <asp:BoundField DataField="Price" HeaderText="Orçamento(€)" SortExpression="Orçamento(€)" />
                                 <asp:TemplateField HeaderText="Aceite?" SortExpression="Accepted">
                                     <ItemTemplate><%# (Boolean.Parse(Eval("Accepted").ToString())) ? "Sim" : "Não" %></ItemTemplate>
                                 </asp:TemplateField>
@@ -217,6 +234,8 @@
                     
                 </ul>
                 <br />
+                <asp:ValidationSummary runat="server" ID="ValSum" CssClass="text-danger" BorderColor="#fa3250" BorderStyle="Dashed" BorderWidth="2px" ValidationGroup="ComissionCreate"/>
+                <br />
                 <div class="tab-content"  id="myTabContentWorkshop">
                     <div class="tab-pane fade active in" id="tab5">
                         <h3>Comissões Ativas - <%= LabelComissoesAtivas.Text%></h3><br />
@@ -237,18 +256,21 @@
                                 <asp:BoundField DataField="Details" HeaderText="Detalhes" SortExpression="Details"></asp:BoundField>
                                 <asp:BoundField DataField="DisplayName" HeaderText="Nome de Utilizador" SortExpression="DisplayName"></asp:BoundField>
                                 <asp:BoundField DataField="Email" HeaderText="Email" SortExpression="Email"></asp:BoundField>
+                                <asp:BoundField DataField="Price" HeaderText="Orçamento(€)" SortExpression="Price" />
                             </Columns>
                          </asp:GridView>
                     </div>
                     <div class="tab-pane fade" id="tab6">
                         <h3>Comissões Pendentes - <%= LabelComissoesPendentes.Text%></h3><br />
-                         <asp:GridView ID="PendingComissions" runat="server" ShowHeaderWhenEmpty="true" Width="1100px" CssClass="list-group-item table-condensed table-hover table-responsive" AllowPaging="True"  AutoGenerateColumns="false" OnRowCommand="Comissions_RowCommand">
+                         <asp:GridView ID="PendingComissions" runat="server" ShowHeaderWhenEmpty="true" Width="1200px" CssClass="list-group-item table-condensed table-hover table-responsive" AllowPaging="True"  AutoGenerateColumns="false" OnRowCommand="Comissions_RowCommand">
                              <Columns>
                                 <asp:TemplateField ShowHeader="false">
                                     <ItemTemplate>
-                                        <asp:Button ID="BtnAcceptComission" runat="server" CssClass="btn btn-success" CausesValidation="false" CommandName="AcceptComission"
-                                            Text="Aceitar" CommandArgument="<%# ((GridViewRow) Container).RowIndex%>" Width="100px" Visible="true"  OnClientClick="return confirm('De certeza que quer aceitar a comissão?')"/>
-                                        <asp:Button ID="BtnRejectComission" runat="server" CssClass="btn btn-danger" CausesValidation="false" CommandName="RejectComission"
+                                         <asp:Button ID="BtnSetPrice" runat="server" CssClass="btn btn-info" CausesValidation="false" CommandName="EditPrice"
+                                            Text="Orçamento" CommandArgument="<%# ((GridViewRow) Container).RowIndex%>" Width="100px" Visible="true" />
+                                        <asp:Button ID="BtnAcceptComission" runat="server" CssClass="btn btn-success" CausesValidation="true" CommandName="SetPrice"
+                                            Text="Aceitar" CommandArgument="<%# ((GridViewRow) Container).RowIndex%>" Width="100px" Visible="false"  OnClientClick="return confirm('De certeza que quer atribuir o preço a essa comissão?')"/>
+                                        <asp:Button ID="BtnRejectComission" runat="server" CssClass="btn btn-danger" CausesValidation="false" CommandName="RejectComissionWorkshop"
                                             Text="Rejeitar" CommandArgument="<%# ((GridViewRow) Container).RowIndex%>" Width="100px" OnClientClick="return confirm('De certeza que quer rejeitar a comissão?')" Visible="true" />  
                                     </ItemTemplate>
                                 </asp:TemplateField>
@@ -261,8 +283,15 @@
                                 <asp:BoundField DataField="Details" HeaderText="Detalhes" SortExpression="Details"></asp:BoundField>
                                 <asp:BoundField DataField="DisplayName" HeaderText="Nome de Utilizador" SortExpression="DisplayName"></asp:BoundField>
                                 <asp:BoundField DataField="Email" HeaderText="Email" SortExpression="Email"></asp:BoundField>
+                                  <asp:TemplateField HeaderText="Orçamento">
+                                      <ItemTemplate>
+                                          <asp:TextBox runat="server" ID="txtPrice" ReadOnly="true" CssClass="form-control" />
+                                      </ItemTemplate>
+                                </asp:TemplateField>
                             </Columns>
                          </asp:GridView>
+                          <asp:CustomValidator id="PriceServerValidator" runat="server" 
+                            Display="None" EnableClientScript="False" ErrorMessage="Preco inválido!" ValidationGroup="ComissionPrice"></asp:CustomValidator>
                     </div>
                     <div class="tab-pane fade" id="tab7">
                      <h3>Histórico de Comissões</h3><br />
@@ -277,6 +306,7 @@
                                 <asp:BoundField DataField="Details" HeaderText="Detalhes" SortExpression="Details"></asp:BoundField>
                                 <asp:BoundField DataField="DisplayName" HeaderText="Nome de Utilizador" SortExpression="DisplayName"></asp:BoundField>
                                 <asp:BoundField DataField="Email" HeaderText="Email" SortExpression="Email"></asp:BoundField>
+                                <asp:BoundField DataField="Price" HeaderText="Orçamento(€)" SortExpression="Price" />
                                  <asp:TemplateField ShowHeader="true" HeaderText="Avaliação" ItemSTyle-Width="100px"  ItemStyle-HorizontalAlign="Center">
                                     <ItemTemplate>
                                         <asp:label runat="server" ID="ratinglabel" Text="Sem Avaliação" Visible="false"></asp:label>

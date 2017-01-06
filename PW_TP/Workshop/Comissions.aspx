@@ -16,6 +16,8 @@
                     
                 </ul>
                 <br />
+                <asp:ValidationSummary runat="server" ID="ValSum" CssClass="text-danger" BorderColor="#fa3250" BorderStyle="Dashed" BorderWidth="2px" ValidationGroup="ComissionCreate"/>
+                <br />
                 <div class="tab-content"  id="myTabContent">
                     <div class="tab-pane fade active in" id="tab1">
                         <h3>Comissões Ativas - <%= LabelComissoesAtivas.Text%></h3><br />
@@ -36,6 +38,7 @@
                                 <asp:BoundField DataField="Details" HeaderText="Detalhes" SortExpression="Details"></asp:BoundField>
                                 <asp:BoundField DataField="DisplayName" HeaderText="Nome de Utilizador" SortExpression="DisplayName"></asp:BoundField>
                                 <asp:BoundField DataField="Email" HeaderText="Email" SortExpression="Email"></asp:BoundField>
+                                <asp:BoundField DataField="Price" HeaderText="Orçamento(€)" SortExpression="Price" />
                             </Columns>
                          </asp:GridView>
                     </div>
@@ -43,10 +46,12 @@
                         <h3>Comissões Pendentes - <%= LabelComissoesPendentes.Text%></h3><br />
                          <asp:GridView ID="PendingComissions" runat="server" ShowHeaderWhenEmpty="true" Width="1100px" CssClass="list-group-item table-condensed table-hover table-responsive" AllowPaging="True"  AutoGenerateColumns="false" OnRowCommand="Comissions_RowCommand">
                              <Columns>
-                                <asp:TemplateField ShowHeader="false">
+                               <asp:TemplateField ShowHeader="false">
                                     <ItemTemplate>
-                                        <asp:Button ID="BtnAcceptComission" runat="server" CssClass="btn btn-success" CausesValidation="false" CommandName="AcceptComission"
-                                            Text="Aceitar" CommandArgument="<%# ((GridViewRow) Container).RowIndex%>" Width="100px" Visible="true"  OnClientClick="return confirm('De certeza que quer aceitar a comissão?')"/>
+                                         <asp:Button ID="BtnSetPrice" runat="server" CssClass="btn btn-info" CausesValidation="false" CommandName="EditPrice"
+                                            Text="Orçamento" CommandArgument="<%# ((GridViewRow) Container).RowIndex%>" Width="100px" Visible="true" />
+                                        <asp:Button ID="BtnAcceptComission" runat="server" CssClass="btn btn-success" CausesValidation="true" CommandName="SetPrice"
+                                            Text="Aceitar" CommandArgument="<%# ((GridViewRow) Container).RowIndex%>" Width="100px" Visible="false"  OnClientClick="return confirm('De certeza que quer atribuir o preço a essa comissão?')"/>
                                         <asp:Button ID="BtnRejectComission" runat="server" CssClass="btn btn-danger" CausesValidation="false" CommandName="RejectComission"
                                             Text="Rejeitar" CommandArgument="<%# ((GridViewRow) Container).RowIndex%>" Width="100px" OnClientClick="return confirm('De certeza que quer rejeitar a comissão?')" Visible="true" />  
                                     </ItemTemplate>
@@ -60,8 +65,15 @@
                                 <asp:BoundField DataField="Details" HeaderText="Detalhes" SortExpression="Details"></asp:BoundField>
                                 <asp:BoundField DataField="DisplayName" HeaderText="Nome de Utilizador" SortExpression="DisplayName"></asp:BoundField>
                                 <asp:BoundField DataField="Email" HeaderText="Email" SortExpression="Email"></asp:BoundField>
+                                <asp:TemplateField HeaderText="Orçamento">
+                                      <ItemTemplate>
+                                          <asp:TextBox runat="server" ID="txtPrice" ReadOnly="true" CssClass="form-control" />
+                                      </ItemTemplate>
+                                </asp:TemplateField>
                             </Columns>
                          </asp:GridView>
+                         <asp:CustomValidator id="PriceServerValidator" runat="server" 
+                            Display="None" EnableClientScript="False" ErrorMessage="Preco inválido!" ValidationGroup="ComissionPrice"></asp:CustomValidator>
                     </div>
                     <div class="tab-pane fade" id="tab3">
                      <h3>Histórico de Comissões</h3><br />
@@ -76,6 +88,7 @@
                                 <asp:BoundField DataField="Details" HeaderText="Detalhes" SortExpression="Details"></asp:BoundField>
                                 <asp:BoundField DataField="DisplayName" HeaderText="Nome de Utilizador" SortExpression="DisplayName"></asp:BoundField>
                                 <asp:BoundField DataField="Email" HeaderText="Email" SortExpression="Email"></asp:BoundField>
+                                <asp:BoundField DataField="Price" HeaderText="Orçamento(€)" SortExpression="Price" />
                                  <asp:TemplateField ShowHeader="true" HeaderText="Avaliação" ItemSTyle-Width="100px"  ItemStyle-HorizontalAlign="Center">
                                     <ItemTemplate>
                                         <asp:label runat="server" ID="ratinglabel" Text="Sem Avaliação" Visible="false"></asp:label>

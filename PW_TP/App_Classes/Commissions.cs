@@ -292,6 +292,56 @@ namespace PW_TP.App_Classes
             return value;
         }
 
+        public static bool AddPrice(int commissionid, int price)
+        {
+            SqlConnection SqlCon = GetSqlCon.GetCon();
+
+            SqlCommand cmd = new SqlCommand("AddPrice", SqlCon);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@param1", commissionid);
+            cmd.Parameters.AddWithValue("@param2", price);
+
+            try
+            {
+                SqlCon.Open();
+                cmd.ExecuteNonQuery();
+                SqlCon.Close();
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("An error occurred when trying to add a price to a commission.");
+                return false;
+            }
+
+            return true;
+
+        }
+
+        public static int GetPrice(int id)
+        {
+            SqlConnection SqlCon = GetSqlCon.GetCon();
+            int value;
+            SqlCommand cmd = new SqlCommand("GetComissionPrice", SqlCon);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@param1", id);
+
+            try
+            {
+                SqlCon.Open();
+                value = (int)cmd.ExecuteScalar();
+                SqlCon.Close();
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("An error occurred when trying to get the comission's price.");
+                return -1;
+            }
+
+            return value;
+
+        }
+
     }
 
     }
