@@ -48,7 +48,7 @@ namespace PW_TP.App_Classes
 
         }
 
-      
+
 
         public static bool ActivateComission(int id)
         {
@@ -146,11 +146,11 @@ namespace PW_TP.App_Classes
                 return -1;
             }
 
-            
+
             return value;
         }
 
-        public static bool SetRating(int id, int rating) 
+        public static bool SetRating(int id, int rating)
         {
 
             SqlConnection SqlCon = GetSqlCon.GetCon();
@@ -222,7 +222,7 @@ namespace PW_TP.App_Classes
             cmd.Parameters.AddWithValue("@param10", Accepted);
             cmd.Parameters.AddWithValue("@param11", comission_num);
             cmd.Parameters.AddWithValue("@param12", rating_num);
-            
+
 
             try
             {
@@ -248,7 +248,7 @@ namespace PW_TP.App_Classes
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
             cmd.Parameters.AddWithValue("@param1", id);
-            
+
 
             try
             {
@@ -268,7 +268,7 @@ namespace PW_TP.App_Classes
         public static int IsRejected(string id)
         {
             bool rejected;
-            int value;   
+            int value;
 
             SqlConnection SqlCon = GetSqlCon.GetCon();
             SqlCommand cmd = new SqlCommand("CheckIfComissionRejected", SqlCon);
@@ -339,10 +339,44 @@ namespace PW_TP.App_Classes
             }
 
             return value;
+        }
+
+        public static bool CreateComissionGroup(string model, string type, string workshop, int year, string details, string userid, int groupno)
+        {
+
+            string workshopid = Users.GetWorkshopId(workshop);
+            SqlConnection SqlCon = GetSqlCon.GetCon();
+            DateTime now = DateTime.Now;
+            SqlCommand cmd = new SqlCommand("NewComissionGroup", SqlCon);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@param1", model);
+            cmd.Parameters.AddWithValue("@param2", type);
+            cmd.Parameters.AddWithValue("@param3", workshop);
+            cmd.Parameters.AddWithValue("@param4", year);
+            cmd.Parameters.AddWithValue("@param5", details);
+            cmd.Parameters.AddWithValue("@param6", workshopid);
+            cmd.Parameters.AddWithValue("@param7", userid);
+            cmd.Parameters.AddWithValue("@param8", now);
+            cmd.Parameters.AddWithValue("@param9", groupno);
+
+
+            try
+            {
+                SqlCon.Open();
+                cmd.ExecuteNonQuery();
+                SqlCon.Close();
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("An error occurred when trying to create a commission.");
+                return false;
+            }
+
+            return true;
 
         }
 
     }
-
-    }
+}
         

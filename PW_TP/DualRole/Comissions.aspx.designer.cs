@@ -67,22 +67,40 @@ namespace PW_TP.DualRole {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RFVDdlTipo;
         
         /// <summary>
-        /// DdlOficinas control.
+        /// DdlOficinasRegiao control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DdlOficinas;
+        protected global::System.Web.UI.WebControls.DropDownList DdlOficinasRegiao;
         
         /// <summary>
-        /// RFVDdlOficinas control.
+        /// RFVDdlOficinasRegiao control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFVDdlOficinas;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFVDdlOficinasRegiao;
+        
+        /// <summary>
+        /// LbOficinas control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ListBox LbOficinas;
+        
+        /// <summary>
+        /// RFVLbOficinas control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RFVLbOficinas;
         
         /// <summary>
         /// TbAno control.
@@ -137,6 +155,24 @@ namespace PW_TP.DualRole {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView GridViewActiveComissions;
+        
+        /// <summary>
+        /// GridViewGroupComissions control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GridViewGroupComissions;
+        
+        /// <summary>
+        /// GridViewGroupDetails control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GridViewGroupDetails;
         
         /// <summary>
         /// GridViewComissionsPending control.

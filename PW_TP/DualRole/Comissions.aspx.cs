@@ -30,10 +30,10 @@ namespace PW_TP.DualRole
             else {
 
                 PopulateGridViews();
-                PopulateDdlOficinas();
                 GetPrices();
                 UpdateBadges();
                 GetRatings();
+                
             }          
         }
 
@@ -49,31 +49,13 @@ namespace PW_TP.DualRole
                 PendingComissions.DataBind();
                 HistoryOfComissions.DataBind();
                 Clientes.DataBind();
-                DdlOficinas.DataBind();
-                DdlOficinas.Items.Insert(0, new ListItem("-- Selecione --", "0"));
                 GetRatings();
                 GetPrices();
                 UpdateBadges();
             }
         }
 
-        protected void PopulateDdlOficinas()
-        {
-
-            SqlConnection con = GetSqlCon.GetCon();
-            SqlDataAdapter com = new SqlDataAdapter("GetWorkshopNamesExceptSelf", con);
-            com.SelectCommand.CommandType = CommandType.StoredProcedure;
-            com.SelectCommand.Parameters.AddWithValue("@param1", User.Identity.GetUserId());
-            DataSet ds1 = new DataSet();
-            if (com != null)
-            { com.Fill(ds1); }
-            con.Open();
-            DdlOficinas.DataSource = ds1;
-            DdlOficinas.DataTextField = "WorkshopName";
-            DdlOficinas.DataValueField = "WorkshopName";
-            DdlOficinas.DataBind();
-            con.Close();
-        }
+        
 
         protected void GetRatings()
         {
@@ -131,18 +113,41 @@ namespace PW_TP.DualRole
             int Ano;
             int.TryParse(TbAno.Text, out Ano);
 
-            
 
+            if (!Page.IsValid) { return; }
             ApplicationDbContext context = new ApplicationDbContext();
             var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
             string user = User.Identity.GetUserId();
 
             BtnCreateComission.Enabled = false; //Prevenir Flood
+            Random rnd = new Random();
 
-            if (Commissions.CreateComission(TbModelo.Text, DdlTipo.SelectedValue, DdlOficinas.SelectedValue, Ano, TbDetails.Text, user) == false)
+            if(LbOficinas.GetSelectedIndices().Count() > 1)
             {
-                Response.Redirect("~/Error.aspx");
+                int groupno = rnd.Next(1, 10000);
+
+                foreach (int i in LbOficinas.GetSelectedIndices())
+                {
+
+                    if (Commissions.CreateComissionGroup(TbModelo.Text, DdlTipo.SelectedValue, LbOficinas.Items[i].Value, Ano, TbDetails.Text, user, groupno) == false)
+                    {
+                        Response.Redirect("~/Error.aspx");
+                    }
+
+                }
             }
+            else
+            {
+                foreach (int i in LbOficinas.GetSelectedIndices())
+                {
+
+                    if (Commissions.CreateComission(TbModelo.Text, DdlTipo.SelectedValue, LbOficinas.Items[i].Value, Ano, TbDetails.Text, user ) == false)
+                    {
+                        Response.Redirect("~/Error.aspx");
+                    }
+                }
+            }
+
             Response.Redirect("ComissionCreated.aspx");
         }
 
@@ -191,7 +196,7 @@ namespace PW_TP.DualRole
             GridViewActiveComissions.DataBind();
             cn.Close();
 
-            //Pending
+            //Pending - Singles
             string storedprocedure2 = "GetPendingComissions";
             SqlConnection cn2 = GetSqlCon.GetCon();
             if (cn2 == null) { Response.Redirect("~/Error.aspx"); }
@@ -205,6 +210,21 @@ namespace PW_TP.DualRole
             GridViewComissionsPending.DataSource = dt2;
             GridViewComissionsPending.DataBind();
             cn2.Close();
+
+            //Pending - Group
+            string storedprocedure8 = "GetPendingGroupComissions";
+            SqlConnection cn8 = GetSqlCon.GetCon();
+            if (cn8 == null) { Response.Redirect("~/Error.aspx"); }
+
+            DataTable dt8 = new DataTable();
+            SqlCommand cmd8 = new SqlCommand(storedprocedure8, cn8);
+            cmd8.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd8.Parameters.AddWithValue("@param1", user.Id);
+            SqlDataAdapter da8 = new SqlDataAdapter(cmd8);
+            da8.Fill(dt8);
+            GridViewGroupComissions.DataSource = dt8;
+            GridViewGroupComissions.DataBind();
+            cn8.Close();
 
             //History
             string storedprocedure3 = "HistoryOfcomissions";
@@ -289,46 +309,22 @@ namespace PW_TP.DualRole
                 int.TryParse(row.Cells[1].Text, out id);
                 price = Commissions.GetPrice(id);
                 TextBox txtPrice = row.FindControl("txtPrice") as TextBox;
+                Button BtnOrcamento = row.FindControl("BtnSetPrice") as Button;
+                Button BtnReject = row.FindControl("BtnRejectComission") as Button;
+
                 if (price != 0)
                 {
+                    
+                    BtnOrcamento.Visible = false;
+                    BtnReject.Visible = false;
                     txtPrice.Text = price.ToString();
                 }
                 else
                 {
-                    txtPrice.ReadOnly = false;
                     txtPrice.Text = "N/A";
-                    txtPrice.ReadOnly = true;
-                }
-                
-            }
-
-            int value, rejected;
-
-
-            foreach (GridViewRow row in HistoryOfComissions.Rows)
-            {
-                value = Commissions.FillRatings(row.Cells[0].Text);
-                if (value == -1) { Response.Redirect("~/Error.aspx"); }
-                rejected = Commissions.IsRejected(row.Cells[0].Text);
-                if (rejected == -1) { Response.Redirect("~/Error.aspx"); }
-
-                if (value != -2)
-                {
-                    ((HtmlInputGenericControl)row.FindControl("starating")).Value = value.ToString();
-                    ((HtmlInputGenericControl)row.FindControl("starating")).Attributes.Add("readonly", "true");
-                    ((Button)row.FindControl("BtnSubmitRating")).Visible = false;
-                    BadgeCountActiveComissions.Text = rejected.ToString();
-
-                }
-                if (rejected == 0)
-                {
-                    ((HtmlInputGenericControl)row.FindControl("starating")).Visible = false;
-                    ((Label)row.FindControl("labelrejected")).Visible = true;
-                    ((Button)row.FindControl("BtnSubmitRating")).Visible = false;
-                }
-
-            }
-        }
+                } 
+            }  
+         }
 
         protected void Comissions_RowCommand(object sender, GridViewCommandEventArgs e)
         {
@@ -402,8 +398,8 @@ namespace PW_TP.DualRole
             if (e.CommandName == "AcceptComission")
             {
                 int index = Convert.ToInt32(e.CommandArgument), id;
-                GridViewRow row = GridViewComissionsPending.Rows[index];
-                int.TryParse(row.Cells[1].Text, out id);
+                GridViewRow row = GridViewGroupDetails.Rows[index];
+                int.TryParse(row.Cells[0].Text, out id);
                 if (Commissions.ActivateComission(id) == false) { Response.Redirect("~/Error.aspx"); }
 
                 Response.Redirect("~/DualRole/Comissions.aspx");//Errado, mas se não for feito, as avaliações não são carregadas. (erro desconhecido)
@@ -412,11 +408,20 @@ namespace PW_TP.DualRole
             if (e.CommandName == "RejectComission")
             {
                 int index = Convert.ToInt32(e.CommandArgument), id;
-                GridViewRow row = GridViewComissionsPending.Rows[index];
-                int.TryParse(row.Cells[1].Text, out id);
+                GridViewRow row = GridViewGroupDetails.Rows[index];
+                int.TryParse(row.Cells[0].Text, out id);
                 if (Commissions.RejectComission(id) == false) { Response.Redirect("~/Error.aspx"); }
 
                 Response.Redirect("~/DualRole/Comissions.aspx");//Errado, mas se não for feito, as avaliações não são carregadas. (erro desconhecido)
+            }
+
+            if (e.CommandName == "ShowGroupDetails")
+            {
+                int index = Convert.ToInt32(e.CommandArgument), groupno;
+                GridViewRow row = GridViewGroupComissions.Rows[index];
+                int.TryParse(row.Cells[0].Text, out groupno);
+
+                Populate_Details(groupno); 
             }
 
             UpdateBadges();
@@ -426,7 +431,71 @@ namespace PW_TP.DualRole
             EditTablesUpdatePanel.Update();
         }
 
-       
+        protected void DdlOficinasRegiao_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string proc = "GetWorkshopsInRegionExceptSelf";
+
+            if (DdlOficinasRegiao.SelectedValue == "0") { LbOficinas.Items.Clear(); return; }
+            if (DdlOficinasRegiao.SelectedValue == "Total") { proc = "GetWorkshopNames"; }
+
+            SqlConnection con = GetSqlCon.GetCon();
+            SqlDataAdapter com = new SqlDataAdapter(proc, con);
+            com.SelectCommand.CommandType = CommandType.StoredProcedure;
+            com.SelectCommand.Parameters.AddWithValue("@param1", User.Identity.GetUserId());
+            com.SelectCommand.Parameters.AddWithValue("@param2", DdlOficinasRegiao.SelectedValue);
+            DataSet ds1 = new DataSet();
+            if (com != null)
+            { com.Fill(ds1); }
+            con.Open();
+            LbOficinas.DataSource = ds1;
+            LbOficinas.DataTextField = "WorkshopName";
+            LbOficinas.DataValueField = "WorkshopName";
+            LbOficinas.DataBind();
+            con.Close();
+       }
+
+        protected void Populate_Details(int groupno)
+        {
+
+            string storedprocedure = "GetComissionDetails";
+            SqlConnection cn = GetSqlCon.GetCon();
+            if (cn == null) { Response.Redirect("~/Error.aspx"); }
+
+            DataTable dt = new DataTable();
+            SqlCommand cmd = new SqlCommand(storedprocedure, cn);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@param1", groupno);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            da.Fill(dt);
+            GridViewGroupDetails.DataSource = dt;
+            GridViewGroupDetails.DataBind();
+            cn.Close();
+            GridViewGroupDetails.Visible = true;
+
+            foreach (GridViewRow row in GridViewGroupDetails.Rows)
+            {
+               
+                    int id, price;
+                    int.TryParse(row.Cells[0].Text, out id);
+                    price = Commissions.GetPrice(id);
+                    Label LabelPrice = row.FindControl("LabelPrice") as Label;
+                    if (price != 0)
+                    {
+                        LabelPrice.Text = price.ToString();
+                    }
+                    else
+                    {
+                        Button BtnAcceptComission = row.FindControl("BtnAcceptComission") as Button;
+                        Button BtnRejectComission = row.FindControl("BtnRejectComission") as Button;
+                        BtnAcceptComission.Visible = false;
+                        BtnRejectComission.Visible = false;
+                        LabelPrice.Text = "N/A";
+                    }
+                
+            }
+
+        }
+
 
     }
 }
