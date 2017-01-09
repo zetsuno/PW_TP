@@ -17,6 +17,67 @@ html {
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
 }
+
+#LogoIMG{
+    width: 14%; 
+    height: 14%; 
+    padding: 1%;
+    padding-left:2%;
+}
+ @media screen and (min-width: 428px){
+    #LogoIMG{
+        width: 12%;
+        height: 12%;
+        padding: 1%;
+        padding-left:2%;
+    }          
+}
+ @media screen and (min-width: 528px){
+    #LogoIMG{
+        width: 11%;
+        height: 11%;
+        padding: 1%;
+        padding-left:2%;
+    }          
+}
+  @media screen and (min-width: 628px){
+    #LogoIMG{
+        width: 10%;
+        height: 10%;
+        padding: 1%;
+        padding-left:2%;
+    }          
+}
+   @media screen and (min-width: 728px){
+    #LogoIMG{
+        width: 9%;
+        height: 9%;
+        padding: 1%;
+        padding-left:2%;
+    }        
+    #LogoName{
+        padding-left: 2%;
+    }  
+}
+ @media screen and (min-width: 768px){
+    #LogoIMG{
+        width: 28%;
+        height: 28%;
+        padding: 2%;
+    }             
+    #LogoName{
+        padding-left: 3%;
+    }
+}
+@media screen and (min-width: 968px) {
+    #LogoName{
+        padding-left: 2%;
+    }
+
+}
+
+
+
 body {
   margin: 0;
 }

@@ -6,7 +6,7 @@
 <head runat="server">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%: Page.Title %> - Bicycle shop</title>
+    <title><%: Page.Title %> - Bicycle Fix</title>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
    
@@ -43,13 +43,15 @@
         <div class="navbar navbar-default navbar-fixed-top">
             <div class="container-fluid">
                 <div class="navbar-header">
+                    <!--
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <img src="/Assets/Logo_site.png" style="padding: 2%; width: 28%; height: 28%; position: inherit; " />
-                    <a class="navbar-brand" runat="server" href="~/" style="position: fixed; padding-left: 2%;">Bicycle shop</a>
+                    -->
+                    <asp:Image ImageUrl="~/Assets/Logo_site.png" runat="server" style=" position: inherit;" ID="LogoIMG"/>
+                    <a class="navbar-brand" runat="server" href="~/" style="position: fixed;" ID="LogoName">Bicycle Fix</a>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
@@ -95,7 +97,7 @@
                                      <ul class="dropdown-menu" role="menu">
                                          <li><a href="../Account/Manage.aspx">Definições de Conta</a></li>
                                          <li class="divider"></li>
-                                         <li><a href="#">Ajuda</a></li>
+                                         <li><a href="~/About.aspx">Ajuda</a></li>
                                          <li class="divider"></li>
                                          <li><asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="Sair" LogoutPageUrl="~/" OnLoggingOut="Unnamed_LoggingOut" /></li>
                                     </ul>
@@ -119,7 +121,7 @@
             </asp:ContentPlaceHolder>
             <hr />
             <footer>
-                <p>&copy; <%: DateTime.Now.Year %> - Bicycle shop</p>
+                <p>&copy; <%: DateTime.Now.Year %> - Bicycle Fix</p>
             </footer>
         </div>
     </form>

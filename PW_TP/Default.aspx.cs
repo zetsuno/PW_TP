@@ -14,5 +14,17 @@ namespace PW_TP
         {
             
         }
+
+        protected void Orcament_Click(object sender, ImageClickEventArgs e)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                Response.Redirect("~/Account/Comissions.aspx");
+            }
+            else
+            {
+                Response.Redirect("~/Account/Login.aspx");
+            }
+        }
     }
 }

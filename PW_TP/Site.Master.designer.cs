@@ -22,6 +22,24 @@ namespace PW_TP {
         protected global::System.Web.UI.ScriptManager ScriptManagerDefault;
         
         /// <summary>
+        /// LogoIMG control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image LogoIMG;
+        
+        /// <summary>
+        /// LogoName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor LogoName;
+        
+        /// <summary>
         /// MainContent control.
         /// </summary>
         /// <remarks>
