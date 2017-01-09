@@ -118,10 +118,10 @@ namespace PW_TP.Workshop
             var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
             string user = User.Identity.GetUserId();
 
-            int value = CountTableEntries.CountActiveComissionsWorkshop(user);
+            int value = Badges.CountActiveComissionsWorkshop(user);
             if(value == -1) { Response.Redirect("~/Error.aspx"); }
             LabelComissoesAtivas.Text = value.ToString();
-            int value2 = CountTableEntries.CountPendingComissionsWorkshop(user);
+            int value2 = Badges.CountPendingComissionsWorkshop(user);
             if(value2 == -1) { Response.Redirect("~/Error.aspx"); }
             LabelComissoesPendentes.Text = value2.ToString();
 

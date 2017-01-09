@@ -99,13 +99,8 @@ namespace PW_TP.DualRole
                 {
                     ((HtmlInputGenericControl)row.FindControl("starating")).Visible = false;
                     ((Label)row.FindControl("ratinglabel")).Visible = true;
-
                 }
-
-
             }
-
-
         }
 
         protected void BtnCreateComission_Click(object sender, EventArgs e)
@@ -124,8 +119,15 @@ namespace PW_TP.DualRole
 
             if(LbOficinas.GetSelectedIndices().Count() > 1)
             {
-                int groupno = rnd.Next(1, 10000);
+                int var, groupno;
 
+                do
+                {
+                    groupno = rnd.Next(1, 10000);
+                    var = Commissions.CheckIfGroupExists(groupno);
+                    if (var == -1) { Response.Redirect("~/Error.aspx"); }
+                } while (var != 0);
+              
                 foreach (int i in LbOficinas.GetSelectedIndices())
                 {
 
@@ -157,18 +159,18 @@ namespace PW_TP.DualRole
             var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
             string user = User.Identity.GetUserId();
 
-            int value = CountTableEntries.CountActiveComissions(user);
+            int value = Badges.CountActiveComissions(user);
             if (value == -1) { Response.Redirect("~/Error.aspx"); }
             BadgeCountActiveComissions.Text = value.ToString();
-            int value2 = CountTableEntries.CountPendingComissions(user);
+            int value2 = Badges.CountPendingComissions(user);
             if (value == -1) { Response.Redirect("~/Error.aspx"); }
             BadgeCountPendingComissions.Text = value2.ToString();
             BadgeComissions.Text = (value2 + value).ToString();
 
-            int value3 = CountTableEntries.CountActiveComissionsWorkshop(user);
+            int value3 = Badges.CountActiveComissionsWorkshop(user);
             if (value3 == -1) { Response.Redirect("~/Error.aspx"); }
             LabelComissoesAtivas.Text = value3.ToString();
-            int value4 = CountTableEntries.CountPendingComissionsWorkshop(user);
+            int value4 = Badges.CountPendingComissionsWorkshop(user);
             if (value4 == -1) { Response.Redirect("~/Error.aspx"); }
             LabelComissoesPendentes.Text = value4.ToString();
         }
@@ -402,6 +404,8 @@ namespace PW_TP.DualRole
                 int.TryParse(row.Cells[0].Text, out id);
                 if (Commissions.ActivateComission(id) == false) { Response.Redirect("~/Error.aspx"); }
 
+                RejectOthers(row.Cells[0].Text);
+
                 Response.Redirect("~/DualRole/Comissions.aspx");//Errado, mas se não for feito, as avaliações não são carregadas. (erro desconhecido)
             }
 
@@ -490,10 +494,26 @@ namespace PW_TP.DualRole
                         BtnAcceptComission.Visible = false;
                         BtnRejectComission.Visible = false;
                         LabelPrice.Text = "N/A";
-                    }
-                
-            }
+                    }   
+                 }
+             }
 
+        protected void RejectOthers(string id)
+        {
+
+            foreach(GridViewRow row in GridViewGroupDetails.Rows)
+            {
+                
+
+                if(row.Cells[0].Text != id)
+                {
+                    int comid;
+                    int.TryParse(row.Cells[0].Text, out comid);
+                    Commissions.RejectComission(comid);
+
+                }
+
+            }
         }
 
 

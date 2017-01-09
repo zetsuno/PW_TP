@@ -60,7 +60,7 @@ namespace PW_TP.Account
                 switch (result)
                 {
                     case SignInStatus.Success:
-                        if (CheckVerified.CheckAccount(Email.Text) == false)
+                        if (AccStatus.CheckAccount(Email.Text) == false)
                         {
                             Context.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
                             Response.Redirect("ValidationRequired.aspx");    

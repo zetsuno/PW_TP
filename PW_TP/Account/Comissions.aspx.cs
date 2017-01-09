@@ -103,7 +103,15 @@ namespace PW_TP.Account
 
             if (LbOficinas.GetSelectedIndices().Count() > 1)
             {
-                int groupno = rnd.Next(1, 10000);
+                int var, groupno;
+
+                do
+                {
+                    groupno = rnd.Next(1, 10000);
+                    var = Commissions.CheckIfGroupExists(groupno);
+                    if (var == -1) { Response.Redirect("~/Error.aspx"); }
+                } while (var != 0);
+
 
                 foreach (int i in LbOficinas.GetSelectedIndices())
                 {
@@ -133,10 +141,10 @@ namespace PW_TP.Account
             var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
             string user = User.Identity.GetUserId();
 
-            int value = CountTableEntries.CountActiveComissions(user);
+            int value = Badges.CountActiveComissions(user);
             if(value == -1) { Response.Redirect("~/Error.aspx"); }    
             BadgeCountActiveComissions.Text  = value.ToString();
-            int value2 = CountTableEntries.CountPendingComissions(user);
+            int value2 = Badges.CountPendingComissions(user);
             if(value == -1) { Response.Redirect("~/Error.aspx"); }
             BadgeCountPendingComissions.Text = value2.ToString();
             BadgeComissions.Text = (value2 + value).ToString();
@@ -225,9 +233,11 @@ namespace PW_TP.Account
             if (e.CommandName == "AcceptComission")
             {
                 int index = Convert.ToInt32(e.CommandArgument), id;
-                GridViewRow row = GridViewComissionsPending.Rows[index];
-                int.TryParse(row.Cells[1].Text, out id);
+                GridViewRow row = GridViewGroupDetails.Rows[index];
+                int.TryParse(row.Cells[0].Text, out id);
                 if(Commissions.ActivateComission(id) == false) { Response.Redirect("~/Error.aspx"); }
+
+                RejectOthers(row.Cells[0].Text);
 
                 Response.Redirect("~/Account/Comissions.aspx");//Errado, mas se não for feito, as avaliações não são carregadas. (erro desconhecido)
             }
@@ -235,8 +245,8 @@ namespace PW_TP.Account
             if (e.CommandName == "RejectComission")
             {
                 int index = Convert.ToInt32(e.CommandArgument), id;
-                GridViewRow row = GridViewComissionsPending.Rows[index];
-                int.TryParse(row.Cells[1].Text, out id);
+                GridViewRow row = GridViewGroupDetails.Rows[index];
+                int.TryParse(row.Cells[0].Text, out id);
                 if(Commissions.RejectComission(id) == false) { Response.Redirect("~/Error.aspx"); }
 
                 Response.Redirect("~/Account/Comissions.aspx");//Errado, mas se não for feito, as avaliações não são carregadas. (erro desconhecido)
@@ -250,6 +260,25 @@ namespace PW_TP.Account
 
                 Populate_Details(groupno);
             }
+            if (e.CommandName == "AcceptComissionNonGroup")
+            {
+                int index = Convert.ToInt32(e.CommandArgument), id;
+                GridViewRow row = GridViewComissionsPending.Rows[index];
+                int.TryParse(row.Cells[1].Text, out id);
+                if (Commissions.ActivateComission(id) == false) { Response.Redirect("~/Error.aspx"); }
+
+                Response.Redirect("~/Account/Comissions.aspx");//Errado, mas se não for feito, as avaliações não são carregadas. (erro desconhecido)
+            }
+            if (e.CommandName == "RejectComissionNonGroup")
+            {
+                int index = Convert.ToInt32(e.CommandArgument), id;
+                GridViewRow row = GridViewComissionsPending.Rows[index];
+                int.TryParse(row.Cells[1].Text, out id);
+                if (Commissions.RejectComission(id) == false) { Response.Redirect("~/Error.aspx"); }
+
+                Response.Redirect("~/Account/Comissions.aspx");//Errado, mas se não for feito, as avaliações não são carregadas. (erro desconhecido)
+            }
+
 
             PopulateGridViews();
             GetRatings();
@@ -302,7 +331,6 @@ namespace PW_TP.Account
 
             foreach (GridViewRow row in GridViewGroupDetails.Rows)
             {
-
                 int id, price;
                 int.TryParse(row.Cells[0].Text, out id);
                 price = Commissions.GetPrice(id);
@@ -322,6 +350,26 @@ namespace PW_TP.Account
 
             }
 
+        }
+
+        protected void RejectOthers(string id)
+        {
+
+            foreach (GridViewRow row in GridViewGroupDetails.Rows)
+            {
+
+                if (row.Cells[0].Text != id)
+                {
+                    int comid;
+                    int.TryParse(row.Cells[0].Text, out comid);
+                    if(Commissions.RejectComission(comid) == false)
+                    {
+                        Response.Redirect("~/Error.aspx");
+                    }
+
+                }
+
+            }
         }
 
     }

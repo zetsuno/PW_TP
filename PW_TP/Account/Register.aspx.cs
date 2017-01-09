@@ -45,7 +45,7 @@ namespace PW_TP.Account
             if (RBtnCliente.Checked == true)
             {
                 App_Classes.Users.RegisterUserTypeClient(NomeCliente.Text, Email.Text, TelefoneClient.Text);
-                Security c = new Security();
+                Roles c = new Roles();
                 if (c.AddUserToRole(Email.Text, "client") == false) { Response.Redirect("~/Error.aspx"); }
             }
             if (RBtnOficina.Checked == true)
@@ -54,7 +54,7 @@ namespace PW_TP.Account
                 if( nifcheck== -1) { Response.Redirect("~/Error.aspx"); }
                 else if(nifcheck == 0) {
                     App_Classes.Users.RegisterUserTypeWorkshop(Email.Text, NomeOficina.Text, TelefoneOficina.Text, TitularOficina.Text, NIFTitularOficina.Text, MoradaOficina.Text, DdlRegiao.SelectedValue);
-                    Security w = new Security();
+                    Roles w = new Roles();
                     if (w.AddUserToRole(Email.Text, "workshop") == false) { Response.Redirect("~/Error.aspx"); }
                     Response.Redirect("ValidationRequired.aspx");    
                 }

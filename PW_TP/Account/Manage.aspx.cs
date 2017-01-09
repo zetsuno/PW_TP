@@ -151,9 +151,9 @@ namespace PW_TP.Account
                 if (nifcheck == -1) { Response.Redirect("~/Error.aspx"); }
                 else if (nifcheck == 0)
                 {
-                    Security w = new Security();
+                    Roles w = new Roles();
                     if (w.AddUserToRoleByID(User.Identity.GetUserId(), "workshop") == false) { Response.Redirect("~/Error.aspx"); }
-                    if (CheckVerified.LockAccount(User.Identity.GetUserId()) == false) { Response.Redirect("~/Error.aspx"); }
+                    if (AccStatus.LockAccount(User.Identity.GetUserId()) == false) { Response.Redirect("~/Error.aspx"); }
                     if (Users.UpdateWorkshopDetails(NomeOficina.Text, MoradaOficina.Text, DdlRegiao.SelectedValue, TelefoneOficina.Text, TitularOficina.Text, NIFTitularOficina.Text, User.Identity.GetUserId()) == false) { Response.Redirect("~/Error.aspx"); }
                     Context.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
                     Response.Redirect("ValidationRequired.aspx");
@@ -172,7 +172,7 @@ namespace PW_TP.Account
         {
             if (User.IsInRole("workshop"))
             {
-                Security w = new Security();
+                Roles w = new Roles();
                 if (w.AddUserToRoleByID(User.Identity.GetUserId(), "client") == false) { Response.Redirect("~/Error.aspx"); }
                 Response.Redirect("RoleChangeSuccess.aspx");
             }

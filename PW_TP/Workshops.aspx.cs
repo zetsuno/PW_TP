@@ -47,7 +47,7 @@ namespace PW_TP
             DdlOficinas.DataBind();
             con.Close();
 
-            val = CountTableEntries.CountWorkshopsInRegion(DdlRegiao.SelectedValue);
+            val = Badges.CountWorkshopsInRegion(DdlRegiao.SelectedValue);
             if(val == -1) { Response.Redirect("~/Error.aspx"); }
             return val;
         }
@@ -92,7 +92,7 @@ namespace PW_TP
             double rating = Commissions.GetAvgRating(Users.GetWorkshopId(workshopname));
             Label ratinglb = DescOficina.FindControl("ratinglabel") as Label;
             if(rating == -1) { ratinglb.Text = "Sem Avaliação"; }
-            else { ratinglb.Text = rating.ToString(); }
+            else { ratinglb.Text = rating.ToString() + "/5" + "&#9733"; }
 
         }
 

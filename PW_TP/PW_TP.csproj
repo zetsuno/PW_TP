@@ -417,10 +417,10 @@
     <Compile Include="Administration\Manage.aspx.designer.cs">
       <DependentUpon>Manage.aspx</DependentUpon>
     </Compile>
-    <Compile Include="App_Classes\Security.cs" />
-    <Compile Include="App_Classes\CheckVerified.cs" />
+    <Compile Include="App_Classes\Roles.cs" />
+    <Compile Include="App_Classes\AccStatus.cs" />
     <Compile Include="App_Classes\Commissions.cs" />
-    <Compile Include="App_Classes\CountTableEntries.cs" />
+    <Compile Include="App_Classes\Badges.cs" />
     <Compile Include="App_Classes\GetSqlCon.cs" />
     <Compile Include="App_Classes\Users.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />

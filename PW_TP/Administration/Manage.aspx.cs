@@ -37,7 +37,7 @@ namespace PW_TP.Administration
                 GridViewRow row = GridViewToValidate.Rows[index];
                 string id = row.Cells[1].Text;
 
-                if(CheckVerified.EnableAccount(id) == false) { Response.Redirect("~/Error.aspx"); }
+                if(AccStatus.EnableAccount(id) == false) { Response.Redirect("~/Error.aspx"); }
             }
  
            UpdateBadges();
@@ -135,13 +135,13 @@ namespace PW_TP.Administration
 
         protected void UpdateBadges()
         {
-            int value = CountTableEntries.GetToVerifyCount();
+            int value = Badges.GetToVerifyCount();
             if(value == -1) { Response.Redirect("~/Error.aspx"); }
             BadgeCountToVerify.Text = value.ToString();
-            int value2 = CountTableEntries.AllAccsCount();
+            int value2 = Badges.AllAccsCount();
             if (value2 == -1) { Response.Redirect("~/Error.aspx"); }
             BadgeCountAll.Text = value2.ToString();
-            int value3 = CountTableEntries.CountComissions();
+            int value3 = Badges.CountComissions();
             if(value3 == -1) { Response.Redirect("~/Error.aspx"); }
             BadgeCountComissions.Text = value3.ToString();
         }
