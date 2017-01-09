@@ -222,9 +222,9 @@
                             <Columns>
                                  <asp:TemplateField ShowHeader="false">
                                     <ItemTemplate>     
-                                        <asp:Button ID="BtnAcceptComission" runat="server" CssClass="btn btn-success" CausesValidation="true" CommandName="AcceptComission"
+                                        <asp:Button ID="BtnAcceptComission" runat="server" CssClass="btn btn-success" CausesValidation="true" CommandName="AcceptComissionNonGroup"
                                             Text="Aceitar" CommandArgument="<%# ((GridViewRow) Container).RowIndex%>" Width="100px" Visible="true"  OnClientClick="return confirm('De certeza que quer aceitar esta comissão?')"/>
-                                        <asp:Button ID="BtnRejectComission" runat="server" CssClass="btn btn-danger" CausesValidation="false" CommandName="RejectComission"
+                                        <asp:Button ID="BtnRejectComission" runat="server" CssClass="btn btn-danger" CausesValidation="false" CommandName="RejectComissionNonGroup"
                                             Text="Rejeitar" CommandArgument="<%# ((GridViewRow) Container).RowIndex%>" Width="100px"  OnClientClick="return confirm('De certeza que quer rejeitar a comissão?')" Visible="true" />  
                                     </ItemTemplate>
                                 </asp:TemplateField>

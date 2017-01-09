@@ -77,3 +77,4 @@ C:\Users\Zetsuno\Documents\Visual Studio 2015\Projects\PW_TP\PW_TP\PW_TP\bin\Mic
 C:\Users\Zetsuno\Documents\Visual Studio 2015\Projects\PW_TP\PW_TP\PW_TP\bin\Microsoft.Owin.Security.OAuth.xml
 C:\Users\Zetsuno\Documents\Visual Studio 2015\Projects\PW_TP\PW_TP\PW_TP\obj\Debug\PW_TP.dll
 C:\Users\Zetsuno\Documents\Visual Studio 2015\Projects\PW_TP\PW_TP\PW_TP\obj\Debug\PW_TP.pdb
+C:\Users\Zetsuno\Documents\Visual Studio 2015\Projects\PW_TP\PW_TP\PW_TP\obj\Debug\PW_TP.csprojResolveAssemblyReference.cache

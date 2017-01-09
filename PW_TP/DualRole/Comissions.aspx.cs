@@ -428,6 +428,25 @@ namespace PW_TP.DualRole
                 Populate_Details(groupno); 
             }
 
+            if (e.CommandName == "AcceptComissionNonGroup")
+            {
+                int index = Convert.ToInt32(e.CommandArgument), id;
+                GridViewRow row = GridViewComissionsPending.Rows[index];
+                int.TryParse(row.Cells[1].Text, out id);
+                if (Commissions.ActivateComission(id) == false) { Response.Redirect("~/Error.aspx"); }
+
+                Response.Redirect("~/DualRole/Comissions.aspx");//Errado, mas se não for feito, as avaliações não são carregadas. (erro desconhecido)
+            }
+            if (e.CommandName == "RejectComissionNonGroup")
+            {
+                int index = Convert.ToInt32(e.CommandArgument), id;
+                GridViewRow row = GridViewComissionsPending.Rows[index];
+                int.TryParse(row.Cells[1].Text, out id);
+                if (Commissions.RejectComission(id) == false) { Response.Redirect("~/Error.aspx"); }
+
+                Response.Redirect("~/DualRole/Comissions.aspx");//Errado, mas se não for feito, as avaliações não são carregadas. (erro desconhecido)
+            }
+
             UpdateBadges();
             PopulateGridViews();
             GetRatings();
