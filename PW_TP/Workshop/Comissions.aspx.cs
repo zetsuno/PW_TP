@@ -154,7 +154,6 @@ namespace PW_TP.Workshop
                     ValSum.ValidationGroup = "ComissionPrice";
                 }
                 else if (PriceServerValidator.IsValid == false) { PriceServerValidator.IsValid = true; }
-                //if (Commissions.ActivateComission(id) == false) { Response.Redirect("~/Error.aspx"); }
                 if (Commissions.AddPrice(id, Price_int) == false) { Response.Redirect("~/Error.aspx"); }
 
             }
@@ -211,8 +210,14 @@ namespace PW_TP.Workshop
                 int.TryParse(row.Cells[1].Text, out id);
                 price = Commissions.GetPrice(id);
                 TextBox txtPrice = row.FindControl("txtPrice") as TextBox;
+                Button BtnOrcamento = row.FindControl("BtnSetPrice") as Button;
+                Button BtnReject = row.FindControl("BtnRejectComission") as Button;
+
                 if (price != 0)
                 {
+
+                    BtnOrcamento.Visible = false;
+                    BtnReject.Visible = false;
                     txtPrice.Text = price.ToString();
                 }
                 else

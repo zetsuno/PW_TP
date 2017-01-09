@@ -56,11 +56,8 @@ namespace PW_TP.Account
                     BtnAcceptComission.Visible = false;
                     BtnRejectComission.Visible = false;
                     LabelPrice.Text = "N/A";
-                    
                 }
-
             }
-
         }
         protected void GetRatings()
         {
@@ -102,12 +99,33 @@ namespace PW_TP.Account
             string user = User.Identity.GetUserId();
 
             BtnCreateComission.Enabled = false; //Prevenir Flood
+            Random rnd = new Random();
 
-            if(Commissions.CreateComission(TbModelo.Text, DdlTipo.SelectedValue, DdlOficinas.SelectedValue, Ano, TbDetails.Text, user) == false){
-                Response.Redirect("~/Error.aspx");
+            if (LbOficinas.GetSelectedIndices().Count() > 1)
+            {
+                int groupno = rnd.Next(1, 10000);
+
+                foreach (int i in LbOficinas.GetSelectedIndices())
+                {
+                    if (Commissions.CreateComissionGroup(TbModelo.Text, DdlTipo.SelectedValue, LbOficinas.Items[i].Value, Ano, TbDetails.Text, user, groupno) == false)
+                    {
+                        Response.Redirect("~/Error.aspx");
+                    }
+                }
             }
-            Response.Redirect("ComissionCreated.aspx");     
+            else
+            {
+                foreach (int i in LbOficinas.GetSelectedIndices())
+                {
+                    if (Commissions.CreateComission(TbModelo.Text, DdlTipo.SelectedValue, LbOficinas.Items[i].Value, Ano, TbDetails.Text, user) == false)
+                    {
+                        Response.Redirect("~/Error.aspx");
+                    }
+                }
+            }
+            Response.Redirect("ComissionCreated.aspx");
         }
+
 
         protected void UpdateBadges()
         {
@@ -145,10 +163,10 @@ namespace PW_TP.Account
             GridViewActiveComissions.DataBind();
             cn.Close();
 
-            //Pending
+            //Pending - Singles
             string storedprocedure2 = "GetPendingComissions";
             SqlConnection cn2 = GetSqlCon.GetCon();
-            if(cn2 == null) { Response.Redirect("~/Error.aspx"); }
+            if (cn2 == null) { Response.Redirect("~/Error.aspx"); }
 
             DataTable dt2 = new DataTable();
             SqlCommand cmd2 = new SqlCommand(storedprocedure2, cn2);
@@ -159,6 +177,21 @@ namespace PW_TP.Account
             GridViewComissionsPending.DataSource = dt2;
             GridViewComissionsPending.DataBind();
             cn2.Close();
+
+            //Pending - Group
+            string storedprocedure8 = "GetPendingGroupComissions";
+            SqlConnection cn8 = GetSqlCon.GetCon();
+            if (cn8 == null) { Response.Redirect("~/Error.aspx"); }
+
+            DataTable dt8 = new DataTable();
+            SqlCommand cmd8 = new SqlCommand(storedprocedure8, cn8);
+            cmd8.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd8.Parameters.AddWithValue("@param1", user.Id);
+            SqlDataAdapter da8 = new SqlDataAdapter(cmd8);
+            da8.Fill(dt8);
+            GridViewGroupComissions.DataSource = dt8;
+            GridViewGroupComissions.DataBind();
+            cn8.Close();
 
             //History
             string storedprocedure3 = "HistoryOfcomissions";
@@ -209,10 +242,86 @@ namespace PW_TP.Account
                 Response.Redirect("~/Account/Comissions.aspx");//Errado, mas se não for feito, as avaliações não são carregadas. (erro desconhecido)
             }
 
+            if (e.CommandName == "ShowGroupDetails")
+            {
+                int index = Convert.ToInt32(e.CommandArgument), groupno;
+                GridViewRow row = GridViewGroupComissions.Rows[index];
+                int.TryParse(row.Cells[0].Text, out groupno);
+
+                Populate_Details(groupno);
+            }
+
             PopulateGridViews();
             GetRatings();
             GetPrices();
             UpdateBadges();
+        }
+
+        protected void DdlOficinasRegiao_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            string proc = "GetWorkshopsInRegionExceptSelf";
+
+            if (DdlOficinasRegiao.SelectedValue == "0") { LbOficinas.Items.Clear(); return; }
+            if (DdlOficinasRegiao.SelectedValue == "Total") { proc = "GetWorkshopNames"; }
+
+
+            SqlConnection con = GetSqlCon.GetCon();
+            SqlDataAdapter com = new SqlDataAdapter(proc, con);
+            com.SelectCommand.CommandType = CommandType.StoredProcedure;
+            com.SelectCommand.Parameters.AddWithValue("@param1", User.Identity.GetUserId());
+            com.SelectCommand.Parameters.AddWithValue("@param2", DdlOficinasRegiao.SelectedValue);
+            DataSet ds1 = new DataSet();
+            if (com != null)
+            { com.Fill(ds1); }
+            con.Open();
+            LbOficinas.DataSource = ds1;
+            LbOficinas.DataTextField = "WorkshopName";
+            LbOficinas.DataValueField = "WorkshopName";
+            LbOficinas.DataBind();
+            con.Close();
+        }
+
+        protected void Populate_Details(int groupno)
+        {
+
+            string storedprocedure = "GetComissionDetails";
+            SqlConnection cn = GetSqlCon.GetCon();
+            if (cn == null) { Response.Redirect("~/Error.aspx"); }
+
+            DataTable dt = new DataTable();
+            SqlCommand cmd = new SqlCommand(storedprocedure, cn);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@param1", groupno);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            da.Fill(dt);
+            GridViewGroupDetails.DataSource = dt;
+            GridViewGroupDetails.DataBind();
+            cn.Close();
+            GridViewGroupDetails.Visible = true;
+
+            foreach (GridViewRow row in GridViewGroupDetails.Rows)
+            {
+
+                int id, price;
+                int.TryParse(row.Cells[0].Text, out id);
+                price = Commissions.GetPrice(id);
+                Label LabelPrice = row.FindControl("LabelPrice") as Label;
+                if (price != 0)
+                {
+                    LabelPrice.Text = price.ToString();
+                }
+                else
+                {
+                    Button BtnAcceptComission = row.FindControl("BtnAcceptComission") as Button;
+                    Button BtnRejectComission = row.FindControl("BtnRejectComission") as Button;
+                    BtnAcceptComission.Visible = false;
+                    BtnRejectComission.Visible = false;
+                    LabelPrice.Text = "N/A";
+                }
+
+            }
+
         }
 
     }
