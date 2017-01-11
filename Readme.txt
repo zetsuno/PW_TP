@@ -6,11 +6,19 @@ Trabalho Pratico de Programacao Web
 Dados de acesso
 
 User | Pass
+
 Administrador
-- admin@pweb.pt | TPpweb2017
+- admin@pweb.com | PWEB7!
 
 Clientes
 
+- (cliente1 - cliente11)@pweb.com | TPpweb7!
+
 Oficinas
 
-Clientes e Oficinas
+- (oficina1 - oficina9)@pweb.com | TPpweb7!
+
+
+Cliente / Oficina
+
+- (clicina1 - clicina2)@pweb.com | TPpweb7!

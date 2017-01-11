@@ -316,17 +316,39 @@ namespace PW_TP.DualRole
 
                 if (price != 0)
                 {
-                    
+
                     BtnOrcamento.Visible = false;
                     BtnReject.Visible = false;
                     txtPrice.Text = price.ToString();
+                   
                 }
                 else
                 {
+                    
                     txtPrice.Text = "N/A";
                 } 
-            }  
-         }
+            }
+
+            foreach (GridViewRow row in GridViewComissionsPending.Rows)
+            {
+                int id, price;
+                int.TryParse(row.Cells[1].Text, out id);
+                price = Commissions.GetPrice(id);
+                Label LabelPrice = row.FindControl("LabelPrice") as Label;
+                if (price != 0)
+                {
+                    LabelPrice.Text = price.ToString();
+                }
+                else
+                {
+                    Button BtnAcceptComission = row.FindControl("BtnAcceptComission") as Button;
+                    Button BtnRejectComission = row.FindControl("BtnRejectComission") as Button;
+                    BtnAcceptComission.Visible = false;
+                    BtnRejectComission.Visible = false;
+                    LabelPrice.Text = "N/A";
+                }
+            }
+        }
 
         protected void Comissions_RowCommand(object sender, GridViewCommandEventArgs e)
         {

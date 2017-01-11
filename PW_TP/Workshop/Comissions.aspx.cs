@@ -223,7 +223,6 @@ namespace PW_TP.Workshop
                 else
                 {
                     txtPrice.ReadOnly = false;
-
                     txtPrice.Text = "N/A";
                     txtPrice.ReadOnly = true;
                 }
