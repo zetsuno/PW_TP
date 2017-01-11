@@ -51,7 +51,7 @@
                     </button>
                     -->
                     <asp:Image ImageUrl="~/Assets/Logo_site.png" runat="server" style=" position: inherit;" ID="LogoIMG"/>
-                    <a class="navbar-brand" runat="server" href="~/" style="position: fixed;" ID="LogoName">Bicycle Fix</a>
+                    <a class="navbar-brand" runat="server" href="#" style="position: fixed;" ID="LogoName">Bicycle Fix</a>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
@@ -65,8 +65,8 @@
                             <asp:RoleGroup Roles="administrator">
                                 <ContentTemplate>
                                  <ul class="nav navbar-nav navbar-right">
-                                     <li><a runat="server" href="../Administration/Manage" title="Manage the Database">Gerir a Base de Dados</a></li>
-                                     <li><a runat="server" href="../Account/Manage" title="Manage your account">Olá, <%: Context.User.Identity.GetUserName()  %> !</a></li>
+                                     <li><a runat="server" href="~/Administration/Manage" title="Manage the Database">Gerir a Base de Dados</a></li>
+                                     <li><a runat="server" href="~/Account/Manage" title="Manage your account">Olá, <%: Context.User.Identity.GetUserName()  %> !</a></li>
                                      <li><asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="Log off" LogoutPageUrl="~/" OnLoggingOut="Unnamed_LoggingOut" /></li>
                                     </ul>
                                 </ContentTemplate>

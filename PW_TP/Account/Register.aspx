@@ -169,7 +169,7 @@
                                     CssClass="text-danger" Display="Dynamic" ErrorMessage="O NIF da oficina é necessário." />
                                 <asp:RegularExpressionValidator ID="RegExTelefoneClient" runat="server" CssClass="text-danger" 
                                     Font-Bold="true" Display="Dynamic"  EnableClientScript="true" SetFocusOnError="true"  
-                                    ErrorMessage="Formato de NIF inválido." ControlToValidate="TelefoneClient"  ValidationExpression="^[0-9]{9}$">
+                                    ErrorMessage="Formato de nº de telefone inválido." ControlToValidate="TelefoneClient"  ValidationExpression="^[0-9]{9}$">
                                 </asp:RegularExpressionValidator><br/>
                             </div>
                         </div>

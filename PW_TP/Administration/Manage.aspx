@@ -20,7 +20,7 @@
                 <br />
                     <div class="tab-pane fade active in" id="total">
                         <br />
-                        <h3>Users - <%=BadgeCountAll.Text %></h3>
+                        <h3>Users - <%= BadgeCountAll.Text %></h3>
                         <br />
                         <asp:SqlDataSource ID="SqlDSAdminTable" runat="server" ConnectionString="<%$ ConnectionStrings:DefaultConnection %>" SelectCommand="SELECT * FROM [AspNetUsers]"></asp:SqlDataSource>
                         <asp:GridView ID="GridViewTotal" runat="server" CssClass="list-group-item table-condensed table-hover table-responsive" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="false" DataKeyNames="Id" DataSourceID="SqlDSAdminTable" OnRowCommand="GridViewTotal_RowCommand" OnRowDataBound="GridViewTotal_RowDataBound" OnRowUpdating="GridViewTotal_RowUpdating" >

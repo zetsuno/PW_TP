@@ -10,7 +10,7 @@ namespace PW_TP
     public partial class Startup {
         public void Configuration(IAppBuilder app) {
             ConfigureAuth(app);
-            //createRolesandUsers();
+            createRolesandUsers();
         }
 
         // Quando for preciso criar um admin
@@ -21,10 +21,10 @@ namespace PW_TP
             var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
 
                 var user = new ApplicationUser();
-                user.UserName = "admin@hotmail.com";
-                user.Email = "admin@hotmail.com";
+                user.UserName = "admin@pweb.com";
+                user.Email = "admin@pweb.com";
 
-                string userPWD = "Agenda69!";
+                string userPWD = "PWEB7!";
             
                 var chkUser = UserManager.Create(user, userPWD);
 

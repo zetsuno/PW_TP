@@ -252,7 +252,7 @@
                                 <asp:BoundField DataField="YearOfAquisition" HeaderText="Ano de Aquisição" SortExpression="YearOfAquisition"></asp:BoundField>
                                 <asp:BoundField DataField="WorkshopName" HeaderText="Oficina Encarregue" SortExpression="WorkshopName"></asp:BoundField>
                                 <asp:BoundField DataField="WorkshopPhone" HeaderText="Contacto da Oficina" SortExpression="WorkshopPhone"></asp:BoundField>    
-                                <asp:BoundField DataField="Details" HeaderText="Detalhes" SortExpression="Details"></asp:BoundField>
+                                <asp:BoundField DataField="Details" HeaderText="Detalhes" SortExpression="Details" ItemStyle-Width="150px"></asp:BoundField>
                                 <asp:BoundField DataField="Price" HeaderText="Orçamento(€)" SortExpression="Price" />
                                 <asp:TemplateField HeaderText="Aceite?" SortExpression="Accepted">
                                     <ItemTemplate><%# (Boolean.Parse(Eval("Accepted").ToString())) ? "Sim" : "Não" %></ItemTemplate>
