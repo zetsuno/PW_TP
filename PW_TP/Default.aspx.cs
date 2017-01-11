@@ -19,7 +19,22 @@ namespace PW_TP
         {
             if (User.Identity.IsAuthenticated)
             {
-                Response.Redirect("~/Account/Comissions.aspx");
+                if (HttpContext.Current.User.IsInRole("client"))
+                {
+                    if (HttpContext.Current.User.IsInRole("workshop"))
+                    {
+                        Response.Redirect("~/DualRole/Comissions.aspx");
+                    }
+                    Response.Redirect("~/Account/Comissions.aspx");
+                }
+                else if (HttpContext.Current.User.IsInRole("workshop"))
+                {
+                    if (HttpContext.Current.User.IsInRole("client"))
+                    {
+                        Response.Redirect("~/DualRole/Comissions.aspx");
+                    }
+                    Response.Redirect("~/Workshop/Comissions.aspx");
+                }
             }
             else
             {

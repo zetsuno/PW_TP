@@ -97,7 +97,7 @@
                                      <ul class="dropdown-menu" role="menu">
                                          <li><a href="../Account/Manage.aspx">Definições de Conta</a></li>
                                          <li class="divider"></li>
-                                         <li><a href="~/About.aspx">Ajuda</a></li>
+                                         <li><a href="#">Ajuda</a></li>
                                          <li class="divider"></li>
                                          <li><asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="Sair" LogoutPageUrl="~/" OnLoggingOut="Unnamed_LoggingOut" /></li>
                                     </ul>

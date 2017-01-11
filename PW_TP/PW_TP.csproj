@@ -176,8 +176,12 @@
     <Content Include="Account\ValidationRequired.aspx" />
     <Content Include="Account\VerifyPhoneNumber.aspx" />
     <Content Include="Administration\Manage.aspx" />
+    <Content Include="Assets\1.PNG" />
+    <Content Include="Assets\2.PNG" />
+    <Content Include="Assets\3.PNG" />
+    <Content Include="Assets\4.PNG" />
+    <Content Include="Assets\5.PNG" />
     <Content Include="Assets\bikefix.jpg" />
-    <Content Include="Assets\icon_oficina.png" />
     <Content Include="Assets\Logo_site.png" />
     <Content Include="Assets\peca_orcamento.png" />
     <Content Include="Contact.aspx" />
